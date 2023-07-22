@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 export default function Navbar() {
@@ -8,8 +9,16 @@ export default function Navbar() {
           <span>LOGO</span>
         </li>
         <li className="flex gap-8">
-          <Button variant="ghost">Dashboard</Button>
-          <Button variant="ghost">History</Button>
+          <Link href="/dashboard">
+            <Button variant="ghost" className="text-lg">
+              Dashboard
+            </Button>
+          </Link>
+          <Link href="/history">
+            <Button variant="ghost" className="text-lg">
+              History
+            </Button>
+          </Link>
         </li>
         <li>
           <Button variant="outline">Sign In</Button>

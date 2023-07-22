@@ -23,14 +23,14 @@ export default function Form() {
 
     const allNutrients = [];
 
-    for (const text in fullText) {
+    for (const text of fullText) {
       const res = await fetch("/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ textInput: text }),
       });
       const nutrients = await res.json();
-      allNutrients.push(nutrients);
+      allNutrients.push(nutrients.body);
     }
 
     setNutrients(allNutrients);
