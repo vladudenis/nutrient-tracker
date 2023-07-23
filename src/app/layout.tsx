@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
 import AuthContext from "./AuthContext";
 import ConvexClientProvider from "./ConvexClientProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <AuthContext>
           <ConvexClientProvider>
+            <Toaster position="top-center" reverseOrder={false} />
             <div className="w-full flex">
               <Navbar />
             </div>

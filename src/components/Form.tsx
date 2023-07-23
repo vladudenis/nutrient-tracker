@@ -7,6 +7,8 @@ import { Textarea } from "./ui/textarea";
 import { Loader2 } from "lucide-react";
 import store from "@/lib/store";
 import { useForm } from "react-hook-form";
+import { api } from "../../convex/_generated/api";
+import { useAction } from "convex/react";
 
 export default function Form() {
   const {
@@ -16,23 +18,13 @@ export default function Form() {
   } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const { setNutrients } = store();
+  const fetchNutrients = useAction(api.nutrientInfo.fetchNutrientInfo);
 
   const onSubmit = async (data: any) => {
-    const fullText = data.textInput.split("\n");
+    const textInputs = data.textInput.split("\n");
     setIsLoading(true);
 
-    const allNutrients = [];
-
-    for (const text of fullText) {
-      const res = await fetch("/api", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ textInput: text }),
-      });
-      const nutrients = await res.json();
-      allNutrients.push(nutrients.body);
-    }
-
+    const allNutrients = await fetchNutrients({ textInputs });
     setNutrients(allNutrients);
     setIsLoading(false);
   };
@@ -41,7 +33,7 @@ export default function Form() {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
         <Label htmlFor="food-info" className="text-lg">
-          Enter some food you ate below
+          Enter some food and a unit of measurement:
         </Label>
         <Textarea
           {...register("textInput", { required: true })}
@@ -56,7 +48,7 @@ export default function Form() {
       <div className="flex justify-center">
         {isLoading ? (
           <Button className="h-10 w-40 text-lg">
-            <Loader2 className="animate-spin" />
+            <Loader2 className="animate-spin mr-2" />
             Submit
           </Button>
         ) : (

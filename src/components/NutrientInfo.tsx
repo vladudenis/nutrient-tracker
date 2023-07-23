@@ -3,8 +3,24 @@ function round(num: number) {
 }
 
 export default function NutrientInfo({ nutrientInfo }: { nutrientInfo: any }) {
-  const foodName = nutrientInfo?.ingredients[0].parsed[0].foodMatch;
+  const parsed = nutrientInfo?.ingredients[0].parsed;
+  let foodName;
+
+  if (parsed) {
+    foodName = parsed[0].foodMatch;
+  }
+
   const { totalWeight, calories, totalNutrients, totalDaily } = nutrientInfo;
+
+  if (!parsed) {
+    return (
+      <div className="flex p-4 rounded-lg shadow-md hover:shadow-2xl border transition-shadow">
+        <h1 className="text-lg text-red-600 font-semibold">
+          The food that you entered could not be parsed!
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl border py-2 px-3 transition-shadow">
@@ -23,75 +39,90 @@ export default function NutrientInfo({ nutrientInfo }: { nutrientInfo: any }) {
         <ul>
           <li className="flex justify-between border-y">
             <span className="flex gap-2 capitalize">
-              <p className="font-semibold">{totalNutrients.FAT.label}</p>{" "}
-              {round(totalNutrients.FAT.quantity)}
-              {totalNutrients.FAT.unit}
+              <p className="font-semibold">
+                {totalNutrients.FAT?.label || "Total Lipid (Fat)"}
+              </p>{" "}
+              {round(totalNutrients.FAT?.quantity || 0)}
+              {totalNutrients.FAT?.unit || "g"}
             </span>
             <p>
-              {round(totalDaily.FAT.quantity)}
-              {totalDaily.FAT.unit}
+              {round(totalDaily.FAT?.quantity || 0)}
+              {totalDaily.FAT?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
-              <p>{totalNutrients.FASAT.label.split(", ")[1]}</p>{" "}
-              {round(totalNutrients.FASAT.quantity)}
-              {totalNutrients.FASAT.unit}
+              <p>
+                {totalNutrients.FASAT?.label.split(", ")[1] ||
+                  "Total Saturated"}
+              </p>{" "}
+              {round(totalNutrients.FASAT?.quantity || 0)}
+              {totalNutrients.FASAT?.unit || "g"}
             </span>
             <p>
-              {round(totalDaily.FASAT.quantity)}
-              {totalDaily.FASAT.unit}
+              {round(totalDaily.FASAT?.quantity || 0)}
+              {totalDaily.FASAT?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
-              <p>{totalNutrients.FAMS.label.split(", ")[1]}</p>{" "}
-              {round(totalNutrients.FAMS.quantity)}
-              {totalNutrients.FAMS.unit}
+              <p>
+                {totalNutrients.FAMS?.label.split(", ")[1] ||
+                  "Total Monosaturated"}
+              </p>{" "}
+              {round(totalNutrients.FAMS?.quantity || 0)}
+              {totalNutrients.FAMS?.unit || "g"}
             </span>
             <p></p>
           </li>
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
-              <p>{totalNutrients.FAPU.label.split(", ")[1]}</p>{" "}
-              {round(totalNutrients.FAPU.quantity)}
-              {totalNutrients.FAPU.unit}
+              <p>
+                {totalNutrients.FAPU?.label.split(", ")[1] ||
+                  "Total Polyunsaturated"}
+              </p>{" "}
+              {round(totalNutrients.FAPU?.quantity || 0)}
+              {totalNutrients.FAPU?.unit || "g"}
             </span>
             <p></p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
               <p className="font-semibold">
-                {totalNutrients.CHOCDF.label.split(", ")[0]}
+                {totalNutrients.CHOCDF?.label.split(", ")[0] || "Carbohydrate"}
               </p>{" "}
-              {round(totalNutrients.CHOCDF.quantity)}
-              {totalNutrients.CHOCDF.unit}
+              {round(totalNutrients.CHOCDF?.quantity || 0)}
+              {totalNutrients.CHOCDF?.unit || "g"}
             </span>
             <p>
-              {round(totalDaily.CHOCDF.quantity)}
-              {totalDaily.CHOCDF.unit}
+              {round(totalDaily.CHOCDF?.quantity || 0)}
+              {totalDaily.CHOCDF?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p className="font-semibold">{totalNutrients.PROCNT.label}</p>{" "}
-              {round(totalNutrients.PROCNT.quantity)}
-              {totalNutrients.PROCNT.unit}
+              <p className="font-semibold">
+                {totalNutrients.PROCNT?.label || "Protein"}
+              </p>{" "}
+              {round(totalNutrients.PROCNT?.quantity || 0)}
+              {totalNutrients.PROCNT?.unit || "g"}
             </span>
             <p>
-              {round(totalDaily.PROCNT.quantity)}
-              {totalDaily.PROCNT.unit}
+              {round(totalDaily.PROCNT?.quantity || 0)}
+              {totalDaily.PROCNT?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between">
             <span className="flex gap-2">
-              <p className="font-semibold">{totalNutrients.CHOLE.label}</p>{" "}
-              {round(totalNutrients.CHOLE.quantity)}
-              {totalNutrients.CHOLE.unit}
+              <p className="font-semibold">
+                {totalNutrients.CHOLE?.label || "Cholesterol"}
+              </p>{" "}
+              {round(totalNutrients.CHOLE?.quantity || 0)}
+              {totalNutrients.CHOLE?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.CHOLE.quantity)}
-              {totalDaily.CHOLE.unit}
+              {round(totalDaily.CHOLE?.quantity || 0)}
+              {totalDaily.CHOLE?.unit || "%"}
             </p>
           </li>
         </ul>
@@ -100,175 +131,175 @@ export default function NutrientInfo({ nutrientInfo }: { nutrientInfo: any }) {
         <ul>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.NA.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.NA.quantity)}
-              {totalNutrients.NA.unit}
+              <p>{totalNutrients.NA?.label.split(", ")[0] || "Sodium"}</p>{" "}
+              {round(totalNutrients.NA?.quantity || 0)}
+              {totalNutrients.NA?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.NA.quantity)}
-              {totalDaily.NA.unit}
+              {round(totalDaily.NA?.quantity || 0)}
+              {totalDaily.NA?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.CA.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.CA.quantity)}
-              {totalNutrients.CA.unit}
+              <p>{totalNutrients.CA?.label.split(", ")[0] || "Calcium"}</p>{" "}
+              {round(totalNutrients.CA?.quantity || 0)}
+              {totalNutrients.CA?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.CA.quantity)}
-              {totalDaily.CA.unit}
+              {round(totalDaily.CA?.quantity || 0)}
+              {totalDaily.CA?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.MG.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.MG.quantity)}
-              {totalNutrients.MG.unit}
+              <p>{totalNutrients.MG?.label.split(", ")[0] || "Magnesium"}</p>{" "}
+              {round(totalNutrients.MG?.quantity || 0)}
+              {totalNutrients.MG?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.MG.quantity)}
-              {totalDaily.MG.unit}
+              {round(totalDaily.MG?.quantity || 0)}
+              {totalDaily.MG?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.K.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.K.quantity)}
-              {totalNutrients.K.unit}
+              <p>{totalNutrients.K?.label.split(", ")[0] || "Potassium"}</p>{" "}
+              {round(totalNutrients.K?.quantity || 0)}
+              {totalNutrients.K?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.K.quantity)}
-              {totalDaily.K.unit}
+              {round(totalDaily.K?.quantity || 0)}
+              {totalDaily.K?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.FE.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.FE.quantity)}
-              {totalNutrients.FE.unit}
+              <p>{totalNutrients.FE?.label.split(", ")[0] || "Iron"}</p>{" "}
+              {round(totalNutrients.FE?.quantity || 0)}
+              {totalNutrients.FE?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.FE.quantity)}
-              {totalDaily.FE.unit}
+              {round(totalDaily.FE?.quantity || 0)}
+              {totalDaily.FE?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.ZN.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.ZN.quantity)}
-              {totalNutrients.ZN.unit}
+              <p>{totalNutrients.ZN?.label.split(", ")[0] || "Zinc"}</p>{" "}
+              {round(totalNutrients.ZN?.quantity || 0)}
+              {totalNutrients.ZN?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.ZN.quantity)}
-              {totalDaily.ZN.unit}
+              {round(totalDaily.ZN?.quantity || 0)}
+              {totalDaily.ZN?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.P.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.P.quantity)}
-              {totalNutrients.P.unit}
+              <p>{totalNutrients.P?.label.split(", ")[0] || "Phosphorus"}</p>{" "}
+              {round(totalNutrients.P?.quantity || 0)}
+              {totalNutrients.P?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.P.quantity)}
-              {totalDaily.P.unit}
+              {round(totalDaily.P?.quantity || 0)}
+              {totalDaily.P?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.VITC.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.VITC.quantity)}
-              {totalNutrients.VITC.unit}
+              <p>{totalNutrients.VITC?.label.split(", ")[0] || "Vitamin C"}</p>{" "}
+              {round(totalNutrients.VITC?.quantity || 0)}
+              {totalNutrients.VITC?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.VITC.quantity)}
-              {totalDaily.VITC.unit}
+              {round(totalDaily.VITC?.quantity || 0)}
+              {totalDaily.VITC?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.THIA.label}</p>{" "}
-              {round(totalNutrients.THIA.quantity)}
-              {totalNutrients.THIA.unit}
+              <p>{totalNutrients.THIA?.label || "Thiamin"}</p>{" "}
+              {round(totalNutrients.THIA?.quantity || 0)}
+              {totalNutrients.THIA?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.THIA.quantity)}
-              {totalDaily.THIA.unit}
+              {round(totalDaily.THIA?.quantity || 0)}
+              {totalDaily.THIA?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.RIBF.label}</p>{" "}
-              {round(totalNutrients.RIBF.quantity)}
-              {totalNutrients.RIBF.unit}
+              <p>{totalNutrients.RIBF?.label || "Riboflavin"}</p>{" "}
+              {round(totalNutrients.RIBF?.quantity || 0)}
+              {totalNutrients.RIBF?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.RIBF.quantity)}
-              {totalDaily.RIBF.unit}
+              {round(totalDaily.RIBF?.quantity || 0)}
+              {totalDaily.RIBF?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.NIA.label}</p>{" "}
-              {round(totalNutrients.NIA.quantity)}
-              {totalNutrients.NIA.unit}
+              <p>{totalNutrients.NIA?.label || "Niacin"}</p>{" "}
+              {round(totalNutrients.NIA?.quantity || 0)}
+              {totalNutrients.NIA?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.NIA.quantity)}
-              {totalDaily.NIA.unit}
+              {round(totalDaily.NIA?.quantity || 0)}
+              {totalDaily.NIA?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.VITB6A.label}</p>{" "}
-              {round(totalNutrients.VITB6A.quantity)}
-              {totalNutrients.VITB6A.unit}
+              <p>{totalNutrients.VITB6A?.label || "Vitamin B-6"}</p>{" "}
+              {round(totalNutrients.VITB6A?.quantity || 0)}
+              {totalNutrients.VITB6A?.unit || "mg"}
             </span>
             <p>
-              {round(totalDaily.VITB6A.quantity)}
-              {totalDaily.VITB6A.unit}
+              {round(totalDaily.VITB6A?.quantity || 0)}
+              {totalDaily.VITB6A?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.FOLDFE.label.split(", ")[0]}</p>{" "}
-              {round(totalNutrients.FOLDFE.quantity)}
-              {totalNutrients.FOLDFE.unit}
+              <p>{totalNutrients.FOLDFE?.label.split(", ")[0] || "Folate"}</p>{" "}
+              {round(totalNutrients.FOLDFE?.quantity || 0)}
+              {totalNutrients.FOLDFE?.unit || "µg"}
             </span>
             <p>
-              {round(totalDaily.FOLDFE.quantity)}
-              {totalDaily.FOLDFE.unit}
+              {round(totalDaily.FOLDFE?.quantity || 0)}
+              {totalDaily.FOLDFE?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b capitalize">
             <span className="flex gap-2">
-              <p>{totalNutrients.FOLAC.label}</p>{" "}
-              {round(totalNutrients.FOLAC.quantity)}
-              {totalNutrients.FOLAC.unit}
+              <p>{totalNutrients.FOLAC?.label || "Folic Acid"}</p>{" "}
+              {round(totalNutrients.FOLAC?.quantity || 0)}
+              {totalNutrients.FOLAC?.unit || "µg"}
             </span>
             <p></p>
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.VITB12.label}</p>{" "}
-              {round(totalNutrients.VITB12.quantity)}
-              {totalNutrients.VITB12.unit}
+              <p>{totalNutrients.VITB12?.label || "Vitamin B-12"}</p>{" "}
+              {round(totalNutrients.VITB12.quantity || 0)}
+              {totalNutrients.VITB12?.unit || "µg"}
             </span>
             <p>
-              {round(totalDaily.VITB12.quantity)}
-              {totalDaily.VITB12.unit}
+              {round(totalDaily.VITB12?.quantity || 0)}
+              {totalDaily.VITB12?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between">
             <span className="flex gap-2">
-              <p>{totalNutrients.VITD.label}</p>{" "}
-              {round(totalNutrients.VITD.quantity)}
-              {totalNutrients.VITD.unit}
+              <p>{totalNutrients.VITD?.label || "Vitamin D (D2 + D3)"}</p>{" "}
+              {round(totalNutrients.VITD?.quantity || 0)}
+              {totalNutrients.VITD?.unit || "µg"}
             </span>
             <p>
-              {round(totalDaily.VITD.quantity)}
-              {totalDaily.VITD.unit}
+              {round(totalDaily.VITD?.quantity || 0)}
+              {totalDaily.VITD?.unit || "%"}
             </p>
           </li>
         </ul>

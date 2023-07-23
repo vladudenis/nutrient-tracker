@@ -35,7 +35,7 @@ export default function Navbar() {
                 </Link>
                 <Link href="/history">
                   <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                    History
+                    Nutrition History
                   </span>
                 </Link>
               </span>

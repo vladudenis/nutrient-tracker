@@ -24,7 +24,7 @@ npx convex dev
 
 ## TODO
 
-Make NextAuth work:
-https://github.com/settings/applications/2268676
-https://console.cloud.google.com/apis/credentials/consent?project=divine-ceremony-329317
-https://discord.com/developers/applications/1132575530508615721/information
+1 - Add functionality to the save nutrient intake button when not signed in
+2 - Button for calculating the total nutrients if there are multiple nutrient cards being shown
+3 - Nutrition History
+4 - Dashboard
