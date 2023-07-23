@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
 import AuthContext from "./AuthContext";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nutrition Tracker",
+  title: "NutriTracker",
   description: "Nutrition Tracker",
 };
 
@@ -20,10 +21,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthContext>
-          <div className="w-full flex">
-            <Navbar />
-          </div>
-          {children}
+          <ConvexClientProvider>
+            <div className="w-full flex">
+              <Navbar />
+            </div>
+            {children}
+          </ConvexClientProvider>
         </AuthContext>
       </body>
     </html>

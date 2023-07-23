@@ -1,11 +1,6 @@
 import HomeAction from "@/components/HomeAction";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 
-export default async function Home() {
-  const session = await getServerSession(authOptions);
-  console.log(session);
-
+export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
       <section className="bg-zinc-800 p-8 rounded-lg text-white shadow-2xl">

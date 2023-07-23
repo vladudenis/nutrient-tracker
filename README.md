@@ -21,3 +21,10 @@ Run Convex development environment:
 ```bash
 npx convex dev
 ```
+
+## TODO
+
+Make NextAuth work:
+https://github.com/settings/applications/2268676
+https://console.cloud.google.com/apis/credentials/consent?project=divine-ceremony-329317
+https://discord.com/developers/applications/1132575530508615721/information
