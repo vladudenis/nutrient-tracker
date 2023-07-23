@@ -1,27 +1,34 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
+import DialogComponent from "./Dialog";
+import { Separator } from "./ui/separator";
 
 export default function Navbar() {
   return (
-    <nav className="w-full px-48 py-4 border-b">
+    <nav className="w-full px-64 py-4 border-b">
       <ul className="flex justify-between">
-        <li className="h-10 px-4 py-2">
-          <span>LOGO</span>
-        </li>
-        <li className="flex gap-8">
-          <Link href="/dashboard">
-            <Button variant="ghost" className="text-lg">
-              Dashboard
-            </Button>
+        <li className="flex gap-4 h-10 py-2">
+          <Link href="/">
+            <span className="font-semibold text-lg">NutriTracker</span>
           </Link>
-          <Link href="/history">
-            <Button variant="ghost" className="text-lg">
-              History
-            </Button>
-          </Link>
+          <Separator orientation="vertical" />
+          <span className="h-10 flex gap-8">
+            <Link href="/dashboard">
+              <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                Dashboard
+              </span>
+            </Link>
+            <Link href="/history">
+              <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                History
+              </span>
+            </Link>
+          </span>
         </li>
-        <li>
-          <Button variant="outline">Sign In</Button>
+        <li className="pr-24">
+          <DialogComponent>
+            <Button variant="outline">Sign In</Button>
+          </DialogComponent>
         </li>
       </ul>
     </nav>

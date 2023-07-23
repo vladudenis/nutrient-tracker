@@ -55,7 +55,7 @@ export default function Form() {
 
       <div className="flex justify-center">
         {isLoading ? (
-          <Button className="h-10 w-40 text-lg flex gap-2">
+          <Button className="h-10 w-40 text-lg">
             <Loader2 className="animate-spin" />
             Submit
           </Button>

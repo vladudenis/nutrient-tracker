@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ReactElement,
   JSXElementConstructor,
@@ -10,13 +12,12 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { BsDiscord, BsGoogle, BsGithub } from "react-icons/bs";
+import { signIn } from "next-auth/react";
 
 export default function DialogComponent(props: {
   children:
@@ -35,28 +36,28 @@ export default function DialogComponent(props: {
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Sign In</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Please sign in using an authentication provider below.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+          <Button className="flex gap-2" onClick={() => signIn("github")}>
+            <BsGithub /> Sign in with GitHub
+          </Button>
+          <Button
+            className="flex gap-2 bg-amber-500 hover:bg-amber-400"
+            onClick={() => signIn("google")}
+          >
+            <BsGoogle /> Sign in with Google
+          </Button>
+          <Button
+            className="flex gap-2 bg-blue-600 hover:bg-blue-500"
+            onClick={() => signIn("discord")}
+          >
+            <BsDiscord /> Sign in with Discord
+          </Button>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

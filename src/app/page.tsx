@@ -1,9 +1,13 @@
 import HomeAction from "@/components/HomeAction";
-import Result from "@/components/Result";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
-    <main className="flex min-h-screen flex-col items-center gap-24 p-24">
+    <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
       <section className="bg-zinc-800 p-8 rounded-lg text-white shadow-2xl">
         <h1 className="text-4xl font-semibold font-mono">
           Track your nutrient intake with each meal you eat

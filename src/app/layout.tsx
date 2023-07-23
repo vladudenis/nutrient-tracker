@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
+import AuthContext from "./AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   description: "Nutrition Tracker",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -18,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="w-full flex">
-          <Navbar />
-        </div>
-        {children}
+        <AuthContext>
+          <div className="w-full flex">
+            <Navbar />
+          </div>
+          {children}
+        </AuthContext>
       </body>
     </html>
   );
