@@ -4,6 +4,41 @@ export function calculateTotal(objs: any[] | null) {
   }
 
   const totalObj = JSON.parse(JSON.stringify(objs[0]));
+  const essentialProperties = [
+    "FAT",
+    "FASAT",
+    "FAMS",
+    "FAPU",
+    "CHOCDF",
+    "PROCNT",
+    "CHOLE",
+    "NA",
+    "CA",
+    "MG",
+    "K",
+    "FE",
+    "ZN",
+    "P",
+    "VITC",
+    "THIA",
+    "RIBF",
+    "NIA",
+    "VITB6A",
+    "FOLDFE",
+    "FOLAC",
+    "VITB12",
+    "VITD",
+  ];
+
+  for (const prop of essentialProperties) {
+    if (!Object.hasOwn(totalObj.totalNutrients, prop)) {
+      totalObj.totalNutrients[prop] = { quantity: 0 };
+    }
+
+    if (!Object.hasOwn(totalObj.totalDaily, prop)) {
+      totalObj.totalDaily[prop] = { quantity: 0 };
+    }
+  }
 
   for (let i = 1; i <= objs.length - 1; i++) {
     const obj = objs[i];

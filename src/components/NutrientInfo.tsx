@@ -70,7 +70,7 @@ export default function NutrientInfo({
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
               <p>
-                {totalNutrients.FASAT?.label.split(", ")[1] ||
+                {totalNutrients.FASAT?.label?.split(", ")[1] ||
                   "Total Saturated"}
               </p>{" "}
               {round(totalNutrients.FASAT?.quantity || 0)}
@@ -84,7 +84,7 @@ export default function NutrientInfo({
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
               <p>
-                {totalNutrients.FAMS?.label.split(", ")[1] ||
+                {totalNutrients.FAMS?.label?.split(", ")[1] ||
                   "Total Monosaturated"}
               </p>{" "}
               {round(totalNutrients.FAMS?.quantity || 0)}
@@ -95,7 +95,7 @@ export default function NutrientInfo({
           <li className="flex justify-between border-b">
             <span className="capitalize pl-8 flex gap-2">
               <p>
-                {totalNutrients.FAPU?.label.split(", ")[1] ||
+                {totalNutrients.FAPU?.label?.split(", ")[1] ||
                   "Total Polyunsaturated"}
               </p>{" "}
               {round(totalNutrients.FAPU?.quantity || 0)}
@@ -106,7 +106,7 @@ export default function NutrientInfo({
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
               <p className="font-semibold">
-                {totalNutrients.CHOCDF?.label.split(", ")[0] || "Carbohydrate"}
+                {totalNutrients.CHOCDF?.label?.split(", ")[0] || "Carbohydrate"}
               </p>{" "}
               {round(totalNutrients.CHOCDF?.quantity || 0)}
               {totalNutrients.CHOCDF?.unit || "g"}
@@ -148,7 +148,7 @@ export default function NutrientInfo({
         <ul>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.NA?.label.split(", ")[0] || "Sodium"}</p>{" "}
+              <p>{totalNutrients.NA?.label?.split(", ")[0] || "Sodium"}</p>{" "}
               {round(totalNutrients.NA?.quantity || 0)}
               {totalNutrients.NA?.unit || "mg"}
             </span>
@@ -159,7 +159,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.CA?.label.split(", ")[0] || "Calcium"}</p>{" "}
+              <p>{totalNutrients.CA?.label?.split(", ")[0] || "Calcium"}</p>{" "}
               {round(totalNutrients.CA?.quantity || 0)}
               {totalNutrients.CA?.unit || "mg"}
             </span>
@@ -170,7 +170,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.MG?.label.split(", ")[0] || "Magnesium"}</p>{" "}
+              <p>{totalNutrients.MG?.label?.split(", ")[0] || "Magnesium"}</p>{" "}
               {round(totalNutrients.MG?.quantity || 0)}
               {totalNutrients.MG?.unit || "mg"}
             </span>
@@ -181,7 +181,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.K?.label.split(", ")[0] || "Potassium"}</p>{" "}
+              <p>{totalNutrients.K?.label?.split(", ")[0] || "Potassium"}</p>{" "}
               {round(totalNutrients.K?.quantity || 0)}
               {totalNutrients.K?.unit || "mg"}
             </span>
@@ -192,7 +192,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.FE?.label.split(", ")[0] || "Iron"}</p>{" "}
+              <p>{totalNutrients.FE?.label?.split(", ")[0] || "Iron"}</p>{" "}
               {round(totalNutrients.FE?.quantity || 0)}
               {totalNutrients.FE?.unit || "mg"}
             </span>
@@ -203,7 +203,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.ZN?.label.split(", ")[0] || "Zinc"}</p>{" "}
+              <p>{totalNutrients.ZN?.label?.split(", ")[0] || "Zinc"}</p>{" "}
               {round(totalNutrients.ZN?.quantity || 0)}
               {totalNutrients.ZN?.unit || "mg"}
             </span>
@@ -214,7 +214,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.P?.label.split(", ")[0] || "Phosphorus"}</p>{" "}
+              <p>{totalNutrients.P?.label?.split(", ")[0] || "Phosphorus"}</p>{" "}
               {round(totalNutrients.P?.quantity || 0)}
               {totalNutrients.P?.unit || "mg"}
             </span>
@@ -225,7 +225,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.VITC?.label.split(", ")[0] || "Vitamin C"}</p>{" "}
+              <p>{totalNutrients.VITC?.label?.split(", ")[0] || "Vitamin C"}</p>{" "}
               {round(totalNutrients.VITC?.quantity || 0)}
               {totalNutrients.VITC?.unit || "mg"}
             </span>
@@ -280,7 +280,7 @@ export default function NutrientInfo({
           </li>
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
-              <p>{totalNutrients.FOLDFE?.label.split(", ")[0] || "Folate"}</p>{" "}
+              <p>{totalNutrients.FOLDFE?.label?.split(", ")[0] || "Folate"}</p>{" "}
               {round(totalNutrients.FOLDFE?.quantity || 0)}
               {totalNutrients.FOLDFE?.unit || "µg"}
             </span>
@@ -300,7 +300,7 @@ export default function NutrientInfo({
           <li className="flex justify-between border-b">
             <span className="flex gap-2">
               <p>{totalNutrients.VITB12?.label || "Vitamin B-12"}</p>{" "}
-              {round(totalNutrients.VITB12.quantity || 0)}
+              {round(totalNutrients.VITB12?.quantity || 0)}
               {totalNutrients.VITB12?.unit || "µg"}
             </span>
             <p>

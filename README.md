@@ -48,3 +48,7 @@ npx convex dev
 - Report Bug button next to profile area in navbar
   .
 - Profile picture placeholder (in case user doesn't have image on third party platform)
+
+## Test cases and bug fix
+
+- Nutrient intake + parse failure
