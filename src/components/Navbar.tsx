@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "./ui/button";
-import DialogComponent from "./Dialog";
+import SignInDialog from "./SignInDialog";
 import { Separator } from "./ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
@@ -71,9 +71,9 @@ export default function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
           ) : (
-            <DialogComponent>
+            <SignInDialog>
               <Button variant="outline">Sign In</Button>
-            </DialogComponent>
+            </SignInDialog>
           )}
         </li>
       </ul>

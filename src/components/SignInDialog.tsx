@@ -19,7 +19,7 @@ import {
 import { BsDiscord, BsGoogle, BsGithub } from "react-icons/bs";
 import { signIn } from "next-auth/react";
 
-export default function DialogComponent(props: {
+export default function SignInDialog(props: {
   children:
     | string
     | number
