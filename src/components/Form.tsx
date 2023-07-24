@@ -30,7 +30,10 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-8 animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out"
+    >
       <div className="flex flex-col gap-4">
         <Label htmlFor="food-info" className="text-lg">
           Enter some food and a unit of measurement:

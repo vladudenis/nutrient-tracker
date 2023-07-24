@@ -13,9 +13,10 @@ import {
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <nav className="w-full px-64 py-4 border-b">
@@ -24,18 +25,35 @@ export default function Navbar() {
           <Link href="/">
             <span className="font-semibold text-lg">NutriTracker</span>
           </Link>
-          {session ? (
+          {status == "loading" ? (
+            <span className="flex items-center gap-8 pt-2">
+              <Skeleton className="h-5 w-[125px]" />
+              <Skeleton className="h-5 w-[125px]" />
+              <Skeleton className="h-5 w-[125px]" />
+              <Skeleton className="h-5 w-[125px]" />
+            </span>
+          ) : session ? (
             <>
               <Separator orientation="vertical" />
               <span className="h-10 flex gap-8">
-                <Link href="/dashboard">
-                  <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                    Dashboard
-                  </span>
-                </Link>
                 <Link href="/history">
                   <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
                     Nutrition History
+                  </span>
+                </Link>
+                <Link href="/statistics">
+                  <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                    My Statistics
+                  </span>
+                </Link>
+                <Link href="/plan">
+                  <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                    Nutrition Plan
+                  </span>
+                </Link>
+                <Link href="/body">
+                  <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                    My Body
                   </span>
                 </Link>
               </span>
@@ -45,7 +63,12 @@ export default function Navbar() {
           )}
         </li>
         <li className="pr-24">
-          {session ? (
+          {status == "loading" ? (
+            <div className="flex items-center gap-4 pt-1">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <Skeleton className="h-5 w-[200px]" />
+            </div>
+          ) : session ? (
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>

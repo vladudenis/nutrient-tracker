@@ -2,7 +2,19 @@ function round(num: number) {
   return Math.round(num * 10) / 10;
 }
 
-export default function NutrientInfo({ nutrientInfo }: { nutrientInfo: any }) {
+type Props = {
+  nutrientInfo: any;
+  hidden?: boolean;
+  mealName?: string;
+  id?: string;
+};
+
+export default function NutrientInfo({
+  nutrientInfo,
+  hidden,
+  mealName,
+  id,
+}: Props) {
   const parsed = nutrientInfo?.ingredients[0].parsed;
   let foodName;
 
@@ -23,9 +35,14 @@ export default function NutrientInfo({ nutrientInfo }: { nutrientInfo: any }) {
   }
 
   return (
-    <div className="w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl border py-2 px-3 transition-shadow">
+    <div
+      id={`${id ? id : "nutrientInfo"}`}
+      className={`w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl border py-2 px-3 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out${
+        hidden && " hidden"
+      }`}
+    >
       <h1 className="text-3xl border-b-2 font-semibold capitalize leading-10">
-        {foodName} ({round(totalWeight)}g)
+        {mealName || foodName} ({round(totalWeight)}g)
       </h1>
       <div className="border-b-4 pt-1">
         <span className="flex justify-between">

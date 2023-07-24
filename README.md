@@ -24,7 +24,27 @@ npx convex dev
 
 ## TODO
 
-1 - Add functionality to the save nutrient intake button when not signed in
-2 - Button for calculating the total nutrients if there are multiple nutrient cards being shown
-3 - Nutrition History
-4 - Dashboard
+- Button for calculating the total nutrients if there are multiple nutrient cards being shown
+  .
+- Functionality to the save nutrient intake button when not signed in
+- After first signing in, redirect to My Body and open a configuration dialog
+  - Let user enter his sex, height, weight, training intensity, optionally bodyfat%
+  - Optionally let user enter a nutrition plan
+    - Three accordion options: default="I want to maintain my weight", "I want to gain weight", "I want to lose weight"
+    - Let user enter target weight
+    - Let user enter target macro intake
+    - Calculate caloric intake for reaching weight target
+  - Calculate BMI
+  - Show recommended caloric intake to maintain weight
+  - Show caloric intake thresholds for weight loss/gain
+  - Update % Daily Value for every nutrientInfo of a signed in user that has configured their body info
+    .
+- Design pages Nutrition History, My Statistics, Nutrition Plan and My Body
+  .
+- Profile hover menu
+  - Caloric intake so far today out of recommended value / target
+  - Caloric intake status: Red arrow down = heavy deficit, yellow wave = small deficit or surplus, green check = approximately reached goal, red arrow up = heavy surplus
+  - Same for all macros
+- Report Bug button next to profile area in navbar
+  .
+- Profile picture placeholder (in case user doesn't have image on third party platform)
