@@ -1,6 +1,4 @@
-function round(num: number) {
-  return Math.round(num * 10) / 10;
-}
+import { round } from "@/lib/utilFuncs";
 
 type Props = {
   nutrientInfo: any;
@@ -9,7 +7,7 @@ type Props = {
   id?: string;
 };
 
-export default function NutrientInfo({
+export default function NutrientInfoCard({
   nutrientInfo,
   hidden,
   mealName,
@@ -37,7 +35,7 @@ export default function NutrientInfo({
   return (
     <div
       id={`${id ? id : "nutrientInfo"}`}
-      className={`w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl border py-2 px-3 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out${
+      className={`w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl duration-500 border py-2 px-3 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out${
         hidden && " hidden"
       }`}
     >

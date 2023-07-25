@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "./ui/button";
-import NutrientInfo from "./NutrientInfo";
+import NutrientInfo from "./NutrientInfoCard";
 import store from "@/lib/store";
 import { Save, RotateCw, Calculator, Eye } from "lucide-react";
 import SignInDialog from "./SignInDialog";
@@ -10,7 +10,7 @@ import NutrientIntakeDialog from "./NutrientIntakeDialog";
 import { useState } from "react";
 import { calculateTotal } from "@/lib/utilFuncs";
 
-export default function Result() {
+export default function Result({}) {
   const { nutrients, setNutrients } = store();
   const { data: session } = useSession();
   const hideButtons =

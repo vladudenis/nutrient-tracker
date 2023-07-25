@@ -50,7 +50,7 @@ export default function NutrientIntakeDialog(props: {
   const { register, handleSubmit } = useForm();
   const { data: session } = useSession();
   const saveNutrientIntakeMutation = useMutation(
-    api.nutrientIntake.saveNutrientIntake
+    api.nutrientInfo.saveNutritionalInformation
   );
   const [isLoading, setIsLoading] = useState(false);
   const { nutrients, setNutrients } = store();

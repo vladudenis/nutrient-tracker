@@ -1,5 +1,10 @@
-import { action } from "./_generated/server";
+import { action, mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
+import { Id } from "./_generated/dataModel";
 
+/**
+ * Fetches nutritional value from edamame api given a text input
+ */
 export const fetchNutrientInfo = action(
   async ({}, { textInputs }: { textInputs: string[] }) => {
     if (!textInputs.length) return;
@@ -27,5 +32,118 @@ export const fetchNutrientInfo = action(
     }
 
     return allNutrients;
+  }
+);
+
+/**
+ * Saves multiple nutritional values and inserts a single entry of nutritional info into the db
+ */
+export const saveNutritionalInformation = mutation(
+  async (
+    { db, scheduler },
+    {
+      nutrientIntake,
+      user,
+      mealType,
+      notes,
+    }: {
+      nutrientIntake: Object[];
+      user: string;
+      mealType: string;
+      notes: string;
+    }
+  ) => {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    await db.insert("nutritionalInfo", {
+      day: days[new Date().getDay()],
+      user,
+      mealType,
+      notes,
+    });
+
+    scheduler.runAfter(0, internal.nutrientIntake.saveNutrientIntakes, {
+      nutrientIntake,
+      user,
+    });
+  }
+);
+
+/**
+ * Fetches a single entry of nutritional info and the list of all corresponding nutritional values
+ */
+export const fetchNutritionalInformation = query(
+  async (
+    { db },
+    {
+      id,
+    }: {
+      id: Id;
+    }
+  ) => {
+    const nutritionalInformation = await db.get(id);
+
+    const entries = await db
+      .query("nutrientIntake")
+      .filter(
+        (q) =>
+          q.eq(
+            q.field("_creationTime"),
+            nutritionalInformation._creationDate
+          ) && q.eq(q.field("user"), nutritionalInformation.user)
+      )
+      .collect();
+
+    nutritionalInformation.intakes = entries.map((entry) =>
+      JSON.parse(entry.nutrientIntake)
+    );
+
+    return nutritionalInformation;
+  }
+);
+
+/**
+ * Fetches 10 entries of nutritional info and a list of all the corresponding nutritional values for every nutritional info from the db
+ */
+export const fetchNutritionalInformations = query(
+  async (
+    { db },
+    {
+      user,
+    }: {
+      user: string;
+    }
+  ) => {
+    const nutritionalInformations = await db
+      .query("nutritionalInfo")
+      .filter((q) => q.eq(q.field("user"), user))
+      .take(10);
+
+    for (const nutritionalInformation of nutritionalInformations) {
+      const entries = await db
+        .query("nutrientIntake")
+        .filter(
+          (q) =>
+            q.eq(
+              q.field("_creationTime"),
+              nutritionalInformation._creationTime
+            ) && q.eq(q.field("user"), user)
+        )
+        .collect();
+
+      nutritionalInformation.intakes = entries.map((entry) =>
+        JSON.parse(entry.nutrientIntake)
+      );
+    }
+
+    return nutritionalInformations || [];
   }
 );

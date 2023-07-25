@@ -1,4 +1,8 @@
-export function calculateTotal(objs: any[] | null) {
+export function round(num: number) {
+  return Math.round(num * 10) / 10;
+}
+
+export function calculateTotal(objs: any[] | null | undefined) {
   if (!objs) {
     return null;
   }
@@ -111,4 +115,20 @@ export function calculateTotal(objs: any[] | null) {
   }
 
   return totalObj;
+}
+
+export function calculateInsufficiencies(obj: any | null | undefined) {
+  if (!obj) {
+    return null;
+  }
+
+  // TODO
+}
+
+export function calculateSurpluses(obj: any | null | undefined) {
+  if (!obj) {
+    return null;
+  }
+
+  // TODO
 }
