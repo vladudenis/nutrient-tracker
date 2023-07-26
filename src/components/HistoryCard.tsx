@@ -17,7 +17,11 @@ export default function HistoryCard({
   const date = new Date(_creationTime);
   const formattedDate = `${date.getDate()}/${
     date.getMonth() + 1
-  }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  }/${date.getFullYear()} ${date.getHours()}:${
+    date.getMinutes().toString().length == 1
+      ? `0${date.getMinutes()}`
+      : date.getMinutes()
+  }`;
   const { setShowHistoryDetails, setNutritionInfo } = useStore();
 
   return (

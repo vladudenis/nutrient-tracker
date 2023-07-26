@@ -1,3 +1,4 @@
+import { Id } from "./_generated/dataModel";
 import { internalMutation } from "./_generated/server";
 
 /**
@@ -9,15 +10,18 @@ export const saveNutrientIntakes = internalMutation(
     {
       nutrientIntake,
       user,
+      refId,
     }: {
       nutrientIntake: Object[];
       user: string;
+      refId: Id;
     }
   ) => {
     for (const intake of nutrientIntake) {
       await db.insert("nutrientIntake", {
         nutrientIntake: JSON.stringify(intake),
         user,
+        refId,
       });
     }
   }

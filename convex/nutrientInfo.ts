@@ -1,6 +1,7 @@
 import { action, mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
+import { v } from "convex/values";
 
 /**
  * Fetches nutritional value from edamame api given a text input
@@ -63,7 +64,7 @@ export const saveNutritionalInformation = mutation(
       "Saturday",
     ];
 
-    await db.insert("nutritionalInfo", {
+    const id = await db.insert("nutritionalInfo", {
       day: days[new Date().getDay()],
       user,
       mealType,
@@ -71,6 +72,7 @@ export const saveNutritionalInformation = mutation(
     });
 
     scheduler.runAfter(0, internal.nutrientIntake.saveNutrientIntakes, {
+      refId: id,
       nutrientIntake,
       user,
     });
@@ -93,13 +95,7 @@ export const fetchNutritionalInformation = query(
 
     const entries = await db
       .query("nutrientIntake")
-      .filter(
-        (q) =>
-          q.eq(
-            q.field("_creationTime"),
-            nutritionalInformation._creationDate
-          ) && q.eq(q.field("user"), nutritionalInformation.user)
-      )
+      .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
       .collect();
 
     nutritionalInformation.intakes = entries.map((entry) =>
@@ -130,16 +126,12 @@ export const fetchNutritionalInformations = query(
     for (const nutritionalInformation of nutritionalInformations) {
       const entries = await db
         .query("nutrientIntake")
-        .filter(
-          (q) =>
-            q.eq(
-              q.field("_creationTime"),
-              nutritionalInformation._creationTime
-            ) && q.eq(q.field("user"), user)
-        )
+        .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
         .collect();
 
-      nutritionalInformation.intakes = entries.map((entry) =>
+      console.log(entries.length);
+
+      nutritionalInformation.intakes = entries.map((entry: any) =>
         JSON.parse(entry.nutrientIntake)
       );
     }

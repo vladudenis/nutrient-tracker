@@ -35,7 +35,11 @@ export default function Page() {
     formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
     }/${date.getFullYear()}`;
-    formattedTime = `${date.getHours()}:${date.getMinutes()}`;
+    formattedTime = `${date.getHours()}:${
+      date.getMinutes().toString().length == 1
+        ? `0${date.getMinutes()}`
+        : date.getMinutes()
+    }`;
   }
 
   return (
