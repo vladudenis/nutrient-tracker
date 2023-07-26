@@ -2,14 +2,14 @@ import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { calculateTotal, round } from "@/lib/utilFuncs";
 import { Separator } from "./ui/separator";
-import Link from "next/link";
+import useStore from "@/lib/store";
 
 export default function HistoryCard({
   nutritionalInfo,
 }: {
   nutritionalInfo: any;
 }) {
-  const { day, _creationTime, mealType, notes, _id } = nutritionalInfo;
+  const { day, _creationTime, mealType, notes } = nutritionalInfo;
   const totalNutrientIntake = calculateTotal(nutritionalInfo.intakes);
   const insufficiencies: any[] = [];
   const surpluses: any[] = [];
@@ -18,17 +18,25 @@ export default function HistoryCard({
   const formattedDate = `${date.getDate()}/${
     date.getMonth() + 1
   }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  const { setShowHistoryDetails, setNutritionInfo } = useStore();
 
   return (
-    <div className="flex gap-4 justify-center h-[250px] rounded-lg shadow-md hover:shadow-2xl border duration-500">
+    <div className="flex gap-4 justify-center h-[250px] rounded-lg shadow-md hover:shadow-2xl border duration-500 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
       <div className="flex flex-col items-center justify-center gap-5 px-4 py-2 w-48">
         <span className="text-center">
           <p className="text-2xl font-semibold">{day}</p>
           <p>{formattedDate}</p>
         </span>
         <p className="text-lg font-mono">{mealType}</p>
-        <Button>
-          <Link href={`history/${_id}`}>See Details</Link>
+        <Button
+          onClick={() => {
+            nutritionalInfo.totalNutrientIntake = totalNutrientIntake;
+
+            setShowHistoryDetails(true);
+            setNutritionInfo(nutritionalInfo);
+          }}
+        >
+          See Details
         </Button>
       </div>
 

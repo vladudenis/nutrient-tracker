@@ -3,20 +3,16 @@
 import { Button } from "./ui/button";
 import NutrientInfo from "./NutrientInfoCard";
 import store from "@/lib/store";
-import { Save, RotateCw, Calculator, Eye } from "lucide-react";
-import SignInDialog from "./SignInDialog";
-import { useSession } from "next-auth/react";
-import NutrientIntakeDialog from "./NutrientIntakeDialog";
+import { ArrowBigLeft, Calculator, Eye } from "lucide-react";
 import { useState } from "react";
-import { calculateTotal } from "@/lib/utilFuncs";
 
-export default function Result() {
-  const { nutrients, setNutrients } = store();
-  const { data: session } = useSession();
+export default function SavedResult() {
+  const { nutritionInfo, setShowHistoryDetails } = store();
+  const nutrients: any[] = nutritionInfo.intakes;
   const hideButtons =
     nutrients && nutrients.length == 1 && !nutrients[0]?.ingredients[0].parsed;
   const [showTotal, setShowTotal] = useState(false);
-  const totalNutrients = calculateTotal(nutrients);
+  const totalNutrients = nutritionInfo.totalNutrientIntake;
 
   return (
     <div className="flex flex-col gap-12">
@@ -92,31 +88,15 @@ export default function Result() {
                 Calculate Total
               </Button>
             ))}
-          {session
-            ? !hideButtons && (
-                <NutrientIntakeDialog>
-                  <Button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2">
-                    <Save />
-                    Save nutrient intake
-                  </Button>
-                </NutrientIntakeDialog>
-              )
-            : !hideButtons && (
-                <SignInDialog>
-                  <Button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2">
-                    <Save />
-                    Save nutrient intake
-                  </Button>
-                </SignInDialog>
-              )}
+
           <Button
             className="bg-red-600 hover:bg-red-500 flex gap-2"
             onClick={() => {
-              setNutrients(null);
+              setShowHistoryDetails(false);
             }}
           >
-            <RotateCw />
-            Try with other food
+            <ArrowBigLeft />
+            Go back to history
           </Button>
         </div>
       </div>
