@@ -24,20 +24,26 @@ export default function Page() {
     }
   );
   const { showHistoryDetails, nutritionInfo } = useStore();
-  const { _creationTime, mealType, notes } = nutritionInfo;
   // TODO maybe render notes on the page too
 
-  const date = new Date(_creationTime);
-  const formattedDate = `${date.getDate()}/${
-    date.getMonth() + 1
-  }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  let date;
+  let formattedDate;
+  let formattedTime;
+
+  if (showHistoryDetails) {
+    date = new Date(nutritionInfo._creationTime);
+    formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    formattedTime = `${date.getHours()}:${date.getMinutes()}`;
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
       <PageHeader
         text={
           showHistoryDetails
-            ? `Nutrition Details: ${mealType} on ${formattedDate}`
+            ? `Nutrition Details: ${nutritionInfo.mealType} on ${formattedDate} at ${formattedTime}`
             : "Your Nutrition History"
         }
       />
@@ -45,7 +51,7 @@ export default function Page() {
       {showHistoryDetails ? (
         <SavedResult />
       ) : (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-8">
           {nutritionalInfos ? (
             nutritionalInfos.length ? (
               nutritionalInfos.map((nutritionalInfo, idx) => (

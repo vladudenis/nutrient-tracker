@@ -41,19 +41,14 @@ export default function Navbar() {
                     Nutrition History
                   </span>
                 </Link>
-                <Link href="/statistics">
-                  <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                    My Statistics
-                  </span>
-                </Link>
                 <Link href="/plan">
                   <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
                     Nutrition Plan
                   </span>
                 </Link>
-                <Link href="/body">
+                <Link href="/statistics">
                   <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                    My Body
+                    Statistics
                   </span>
                 </Link>
               </span>
@@ -80,6 +75,11 @@ export default function Navbar() {
                     <span className="py-2">{session.user?.name}</span>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
+                    <div className="w-32 h-10">
+                      <Button className="w-full" variant="outline">
+                        <Link href="body">My Body</Link>
+                      </Button>
+                    </div>
                     <div className="w-32 h-10">
                       <Button
                         className="w-full"
