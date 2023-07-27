@@ -11,7 +11,11 @@ import useStore from "@/lib/store";
 import SavedResult from "@/components/SavedResult";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status == "loading") {
+    return;
+  }
 
   if (!session || !session.user || !session.user.email) {
     redirect("/");

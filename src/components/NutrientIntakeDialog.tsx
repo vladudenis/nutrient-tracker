@@ -53,6 +53,7 @@ export default function NutrientIntakeDialog(props: {
     api.nutrientInfo.saveNutritionalInformation
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [mealType, setMealType] = useState("Breakfast");
   const { nutrients, setNutrients } = store();
 
   const onSubmit = async (data: any) => {
@@ -61,7 +62,6 @@ export default function NutrientIntakeDialog(props: {
     }
 
     const notes = data.notes || "";
-    const mealType = (document.querySelector("option[selected]") as any)?.value;
 
     setIsLoading(true);
 
@@ -89,7 +89,11 @@ export default function NutrientIntakeDialog(props: {
           <div className="grid gap-4 py-4">
             <div className="mb-4 flex flex-col gap-2">
               <Label className="text-left">Meal Type</Label>
-              <Select {...register("mealType")} defaultValue="Breakfast">
+              <Select
+                onValueChange={(v) => setMealType(v)}
+                value={mealType}
+                defaultValue="Breakfast"
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a meal type" />
                 </SelectTrigger>

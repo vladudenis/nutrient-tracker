@@ -14,6 +14,7 @@ import {
 } from "./ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
+import { LogOut, Bug } from "lucide-react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -28,9 +29,8 @@ export default function Navbar() {
           {status == "loading" ? (
             <span className="flex items-center gap-8 pt-2">
               <Skeleton className="h-5 w-[125px]" />
-              <Skeleton className="h-5 w-[125px]" />
-              <Skeleton className="h-5 w-[125px]" />
-              <Skeleton className="h-5 w-[125px]" />
+              <Skeleton className="h-5 w-[100px]" />
+              <Skeleton className="h-5 w-[80px]" />
             </span>
           ) : session ? (
             <>
@@ -57,42 +57,63 @@ export default function Navbar() {
             <></>
           )}
         </li>
-        <li className="pr-24">
+        <li className="pr-24 flex gap-4 items-center">
           {status == "loading" ? (
             <div className="flex items-center gap-4 pt-1">
               <Skeleton className="h-8 w-8 rounded-full" />
               <Skeleton className="h-5 w-[200px]" />
+              <Skeleton className="h-6 w-6" />
             </div>
           ) : session ? (
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="flex gap-4">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={session.user?.image!} />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <span className="py-2">{session.user?.name}</span>
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-32 h-10">
-                      <Button className="w-full" variant="outline">
-                        <Link href="body">My Body</Link>
-                      </Button>
-                    </div>
-                    <div className="w-32 h-10">
-                      <Button
-                        className="w-full"
-                        variant="outline"
-                        onClick={() => signOut()}
-                      >
-                        Sign Out
-                      </Button>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="flex gap-4">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={session.user?.image!} />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <span className="py-2">{session.user?.name}</span>
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="w-[200px]">
+                        <div className="flex flex-col justify-center items-center gap-2 my-2">
+                          <div className="flex justify-center items-center gap-2">
+                            <Avatar className="h-10 w-10">
+                              <AvatarImage src={session.user?.image!} />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <span className="truncate text-xs w-32">
+                              {session.user?.name}
+                            </span>
+                          </div>
+                          <span className="truncate text-sm">
+                            {session.user?.email}
+                          </span>
+                        </div>
+                        <div className="my-2 px-4 flex flex-col gap-2">
+                          <Separator orientation="horizontal" />
+                          <Button
+                            className="w-full border-none"
+                            variant="outline"
+                            onClick={() => signOut()}
+                          >
+                            <LogOut className="mr-2" />
+                            Sign Out
+                          </Button>
+                        </div>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+              <Link href="https://github.com/vladudenis/nutrient-tracker/issues/new">
+                <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                  <Bug />
+                </span>
+              </Link>
+            </>
           ) : (
             <SignInDialog>
               <Button variant="outline">Sign In</Button>

@@ -129,8 +129,6 @@ export const fetchNutritionalInformations = query(
         .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
         .collect();
 
-      console.log(entries.length);
-
       nutritionalInformation.intakes = entries.map((entry: any) =>
         JSON.parse(entry.nutrientIntake)
       );
