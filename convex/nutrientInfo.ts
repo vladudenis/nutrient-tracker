@@ -1,7 +1,6 @@
 import { action, mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { Id } from "./_generated/dataModel";
-import { v } from "convex/values";
 
 /**
  * Fetches nutritional value from edamame api given a text input

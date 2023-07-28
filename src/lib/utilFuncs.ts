@@ -132,3 +132,39 @@ export function calculateSurpluses(obj: any | null | undefined) {
 
   // TODO
 }
+
+export enum caloricResults {
+  SLIGHT_GAIN = "Slow Weight Gain",
+  GAIN = "Weight Gain",
+  EXTREME_GAIN = "Extreme Weight Gain",
+  SLIGHT_LOSS = "Slow Weight Loss",
+  LOSS = "Weight Loss",
+  EXTREME_LOSS = "Extreme Weight Loss",
+  NEUTRAL = "Weight Maintenance",
+}
+
+export function calculateCaloricResult(
+  rCaloricIntake: number,
+  caloricIntake: number
+) {
+  const prcntDiff = caloricIntake / rCaloricIntake;
+  let result;
+
+  if (prcntDiff >= 1.1) {
+    result = caloricResults.SLIGHT_GAIN;
+  } else if (prcntDiff >= 1.2) {
+    result = caloricResults.GAIN;
+  } else if (prcntDiff >= 1.4) {
+    result = caloricResults.EXTREME_GAIN;
+  } else if (prcntDiff <= 0.9) {
+    result = caloricResults.SLIGHT_LOSS;
+  } else if (prcntDiff <= 0.8) {
+    result = caloricResults.LOSS;
+  } else if (prcntDiff <= 0.6) {
+    result = caloricResults.EXTREME_LOSS;
+  } else {
+    result = caloricResults.NEUTRAL;
+  }
+
+  return result;
+}

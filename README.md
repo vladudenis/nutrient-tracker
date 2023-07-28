@@ -12,24 +12,26 @@ Run the Next.js development server (localhost:3000):
 npm run dev
 ```
 
+Run the Convex development environment:
+
+```bash
+npx convex dev
+```
+
 ## TODO
 
-- Nutrition Plan Page
-  - Optionally let user enter a nutrition plan
-    - Three accordion options: default="I want to maintain my weight", "I want to gain weight", "I want to lose weight"
-    - Let user enter target weight
-    - Let user enter target macro intake
-    - Calculate caloric intake for reaching weight target
-  - Calculate BMI
-  - Show caloric intake thresholds for weight loss/gain
+- Nutrition Plan page
+  - User should enter % instead of grams of macronutrients to ensure that 100% of caloric value cannot be surpassed (steps of 5)
+  - User cannot set/update daily target unless the total is equal to 100%
+  - Fix problems with insert/update
   - Update % Daily Value for every nutrientInfo of a signed in user that has configured their body info
-    .
 - Profile hover menu
   - Caloric intake so far today out of recommended value / target
   - Caloric intake status: Red arrow down = heavy deficit, yellow wave = small deficit or surplus, green check = approximately reached goal, red arrow up = heavy surplus
   - Same for all macros
-    .
-- Profile picture placeholder (in case user doesn't have image on third party platform)
+- Nutrition History page
+  - Implement logic for calculating deficiencies and surpluses
+  - Pagination or "load 10 more entries" logic
 
 ## Test cases and bug fix
 

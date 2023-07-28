@@ -12,6 +12,14 @@ import SavedResult from "@/components/SavedResult";
 
 export default function Page() {
   const { data: session, status } = useSession();
+  const nutritionalInfos = useQuery(
+    api.nutrientInfo.fetchNutritionalInformations,
+    {
+      user: session?.user?.email!,
+    }
+  );
+  const { showHistoryDetails, nutritionInfo } = useStore();
+  // TODO maybe render notes on the page too
 
   if (status == "loading") {
     return;
@@ -20,15 +28,6 @@ export default function Page() {
   if (!session || !session.user || !session.user.email) {
     redirect("/");
   }
-
-  const nutritionalInfos = useQuery(
-    api.nutrientInfo.fetchNutritionalInformations,
-    {
-      user: session.user.email,
-    }
-  );
-  const { showHistoryDetails, nutritionInfo } = useStore();
-  // TODO maybe render notes on the page too
 
   let date;
   let formattedDate;

@@ -9,6 +9,9 @@ type Store = {
 
   showHistoryDetails: boolean;
   setShowHistoryDetails: (showHistoryDetails: boolean) => void;
+
+  rCaloricIntake: number;
+  setRCaloricIntake: (caloricIntake: number) => void;
 };
 
 const useStore = create<Store>((set) => ({
@@ -22,6 +25,10 @@ const useStore = create<Store>((set) => ({
   showHistoryDetails: false,
   setShowHistoryDetails: (showHistoryDetails) =>
     set((state) => ({ ...state, showHistoryDetails })),
+
+  rCaloricIntake: 1850,
+  setRCaloricIntake: (caloricIntake) =>
+    set((state) => ({ ...state, caloricIntake })),
 }));
 
 export default useStore;

@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as healthParameters from "../healthParameters";
 import type * as nutrientInfo from "../nutrientInfo";
 import type * as nutrientIntake from "../nutrientIntake";
 
@@ -26,6 +27,7 @@ import type * as nutrientIntake from "../nutrientIntake";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  healthParameters: typeof healthParameters;
   nutrientInfo: typeof nutrientInfo;
   nutrientIntake: typeof nutrientIntake;
 }>;

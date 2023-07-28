@@ -22,19 +22,74 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { round } from "@/lib/utilFuncs";
+import useStore from "@/lib/store";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { Id } from "../../convex/_generated/dataModel";
+import { Loader2 } from "lucide-react";
 
-export default function BodyParametersCard() {
+export default function BodyParametersCard({
+  user,
+  id,
+  weight,
+  height,
+  sex,
+  age,
+  pal,
+}: {
+  user: string;
+  id: Id | null;
+  weight: number;
+  height: number;
+  sex: string;
+  age: number;
+  pal: number;
+}) {
+  const setBodyParameters = useMutation(api.healthParameters.setBodyParameters);
+  const updateBodyParameters = useMutation(
+    api.healthParameters.updateBodyParameters
+  );
   const form = useForm();
-  const [sexValue, setSexValue] = useState("male");
-  const [heightValue, setHeightValue] = useState(175);
-  const [weightValue, setWeightValue] = useState(60);
-  const [ageValue, setAgeValue] = useState(30);
-  const [pal, setPal] = useState(1.2);
+  const { setRCaloricIntake } = useStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [sexValue, setSexValue] = useState(sex);
+  const [heightValue, setHeightValue] = useState(height);
+  const [weightValue, setWeightValue] = useState(weight);
+  const [ageValue, setAgeValue] = useState(age);
+  const [palValue, setPalValue] = useState(pal);
 
   const bmr = 10 * weightValue + 6.25 * heightValue - 5 * ageValue;
   const bmi = weightValue / Math.pow(heightValue / 100, 2);
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    setIsLoading(true);
+    setRCaloricIntake(Math.round((bmr - 161) * Number(palValue)));
+
+    if (id) {
+      updateBodyParameters({
+        id,
+        weight: weightValue,
+        height: heightValue,
+        sex: sexValue,
+        age: ageValue,
+        pal: palValue,
+      });
+    }
+    {
+      setBodyParameters({
+        user,
+        weight: weightValue,
+        height: heightValue,
+        sex: sexValue,
+        age: ageValue,
+        pal: palValue,
+      });
+    }
+
+    setIsLoading(false);
+  };
+
   return (
     <div className="flex flex-col gap-5 items-center w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
       <p className="font-semibold text-xl mb-2">Body Parameters</p>
@@ -51,7 +106,7 @@ export default function BodyParametersCard() {
                 <FormControl>
                   <RadioGroup
                     onValueChange={() => setSexValue(field.value)}
-                    defaultValue="male"
+                    defaultValue={sex}
                     className="flex gap-12"
                   >
                     <FormItem className="flex items-center space-x-1 space-y-0">
@@ -85,7 +140,7 @@ export default function BodyParametersCard() {
             </span>
             <Slider
               id="height"
-              defaultValue={[175]}
+              defaultValue={[height]}
               max={250}
               min={120}
               step={1}
@@ -99,7 +154,7 @@ export default function BodyParametersCard() {
             </span>
             <Slider
               id="weight"
-              defaultValue={[60]}
+              defaultValue={[weight]}
               max={200}
               min={1}
               step={1}
@@ -113,7 +168,7 @@ export default function BodyParametersCard() {
             </span>
             <Slider
               id="age"
-              defaultValue={[30]}
+              defaultValue={[age]}
               max={100}
               min={18}
               step={1}
@@ -130,9 +185,9 @@ export default function BodyParametersCard() {
                 <FormItem>
                   <FormControl>
                     <Select
-                      onValueChange={(v) => setPal(Number(v))}
-                      value={pal.toString()}
-                      defaultValue="1.2"
+                      onValueChange={(v) => setPalValue(Number(v))}
+                      value={palValue.toString()}
+                      defaultValue={pal.toString()}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select intensity of physical activity" />
@@ -149,7 +204,7 @@ export default function BodyParametersCard() {
                           Hard Exercise 3-5 times/week
                         </SelectItem>
                         <SelectItem value="2">
-                          Physical job or hard exercise 6-7 times/week
+                          Physical Job or Hard Exercise 6-7 times/week
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -159,7 +214,14 @@ export default function BodyParametersCard() {
             />
           </div>
 
-          <Button>Update Parameters</Button>
+          {isLoading ? (
+            <Button>
+              <Loader2 className="animate-spin mr-2" />
+              Update Parameters
+            </Button>
+          ) : (
+            <Button type="submit">Update Parameters</Button>
+          )}
         </form>
       </Form>
 
@@ -177,8 +239,8 @@ export default function BodyParametersCard() {
           <p>Weight Maintenance</p>
           <p>
             {sexValue == "male"
-              ? Math.round((bmr + 5) * Number(pal))
-              : Math.round((bmr - 161) * Number(pal))}{" "}
+              ? Math.round((bmr + 5) * Number(palValue))
+              : Math.round((bmr - 161) * Number(palValue))}{" "}
             kcal/day
           </p>
         </span>

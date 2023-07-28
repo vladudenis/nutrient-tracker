@@ -14,7 +14,7 @@ import {
 } from "./ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
-import { LogOut, Bug } from "lucide-react";
+import { LogOut, Bug, UserCircle } from "lucide-react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -70,20 +70,26 @@ export default function Navbar() {
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="flex gap-4">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={session.user?.image!} />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
+                      {session.user?.image ? (
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={session.user?.image} />
+                        </Avatar>
+                      ) : (
+                        <UserCircle className="h-8 w-8" />
+                      )}
                       <span className="py-2">{session.user?.name}</span>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <div className="w-[200px]">
                         <div className="flex flex-col justify-center items-center gap-2 my-2">
                           <div className="flex justify-center items-center gap-2">
-                            <Avatar className="h-10 w-10">
-                              <AvatarImage src={session.user?.image!} />
-                              <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
+                            {session.user?.image ? (
+                              <Avatar className="h-10 w-10">
+                                <AvatarImage src={session.user?.image} />
+                              </Avatar>
+                            ) : (
+                              <UserCircle className="h-10 w-10" />
+                            )}
                             <span className="truncate text-xs w-32">
                               {session.user?.name}
                             </span>

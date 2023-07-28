@@ -1,14 +1,38 @@
+"use client";
+
 import BodyParametersCard from "@/components/BodyParametersCard";
 import PageHeader from "@/components/PageHeader";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import TargetsCard from "@/components/TargetsCard";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 
-export default async function Page() {
-  const session = await getServerSession(authOptions);
+export default function Page() {
+  const { data: session, status } = useSession();
+  const healthParameters = useQuery(
+    api.healthParameters.fetchHealthParameters,
+    { user: session?.user?.email! }
+  );
+
+  if (status == "loading") {
+    return;
+  }
 
   if (!session || !session.user || !session.user.email) {
     redirect("/");
+  }
+
+  console.log(healthParameters);
+
+  if (healthParameters == undefined) {
+    <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
+      <PageHeader text="Your Nutrition Plan" />
+      <div className="flex justify-center gap-24">
+        <Loader2 className="animate-spin h-12 w-12" />
+      </div>
+    </main>;
   }
 
   return (
@@ -16,11 +40,45 @@ export default async function Page() {
       <PageHeader text="Your Nutrition Plan" />
 
       <div className="flex justify-center gap-24">
-        <BodyParametersCard />
-
-        <div className="flex flex-col items-center w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
-          <p className="font-semibold text-xl">Targets</p>
-        </div>
+        {healthParameters ? (
+          <BodyParametersCard
+            user={session.user.email}
+            id={healthParameters?._id}
+            weight={healthParameters?.weight}
+            height={healthParameters?.height}
+            age={healthParameters?.age}
+            sex={healthParameters?.sex}
+            pal={healthParameters?.pal}
+          />
+        ) : (
+          <BodyParametersCard
+            user={session.user.email}
+            id={null}
+            weight={60}
+            height={175}
+            age={30}
+            sex={"male"}
+            pal={1.2}
+          />
+        )}
+        {healthParameters && healthParameters.caloricIntake ? (
+          <TargetsCard
+            id={healthParameters?._id}
+            caloricIntake={healthParameters?.caloricIntake}
+            fatIntake={healthParameters?.fatIntake}
+            proteinIntake={healthParameters?.proteinIntake}
+            carbsIntake={healthParameters?.carbsIntake}
+          />
+        ) : (
+          <TargetsCard
+            id={null}
+            caloricIntake={1850}
+            fatIntake={50}
+            proteinIntake={100}
+            carbsIntake={250}
+            disableButton={!healthParameters}
+          />
+        )}
       </div>
     </main>
   );
