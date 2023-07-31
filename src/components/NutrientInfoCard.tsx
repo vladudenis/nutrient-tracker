@@ -1,18 +1,16 @@
 import { round } from "@/lib/utilFuncs";
 
-type Props = {
-  nutrientInfo: any;
-  hidden?: boolean;
-  mealName?: string;
-  id?: string;
-};
-
 export default function NutrientInfoCard({
   nutrientInfo,
   hidden,
   mealName,
   id,
-}: Props) {
+}: {
+  nutrientInfo: any;
+  hidden?: boolean;
+  mealName?: string;
+  id?: string;
+}) {
   const parsed = nutrientInfo?.ingredients[0].parsed;
   let foodName;
 

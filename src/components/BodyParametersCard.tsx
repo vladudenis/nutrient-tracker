@@ -26,7 +26,8 @@ import useStore from "@/lib/store";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
-import { Loader2 } from "lucide-react";
+import { Loader2, InfoIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function BodyParametersCard({
   user,
@@ -63,8 +64,12 @@ export default function BodyParametersCard({
   const bmi = weightValue / Math.pow(heightValue / 100, 2);
 
   const onSubmit = () => {
+    const rCaloricIntake =
+      sexValue == "male"
+        ? Math.round((bmr + 5) * Number(palValue))
+        : Math.round((bmr - 161) * Number(palValue));
     setIsLoading(true);
-    setRCaloricIntake(Math.round((bmr - 161) * Number(palValue)));
+    setRCaloricIntake(rCaloricIntake);
 
     if (id) {
       updateBodyParameters({
@@ -74,9 +79,9 @@ export default function BodyParametersCard({
         sex: sexValue,
         age: ageValue,
         pal: palValue,
+        recommendedCalories: rCaloricIntake,
       });
-    }
-    {
+    } else {
       setBodyParameters({
         user,
         weight: weightValue,
@@ -84,9 +89,11 @@ export default function BodyParametersCard({
         sex: sexValue,
         age: ageValue,
         pal: palValue,
+        recommendedCalories: rCaloricIntake,
       });
     }
 
+    toast.success("Body parameters have been updated!");
     setIsLoading(false);
   };
 
@@ -217,10 +224,12 @@ export default function BodyParametersCard({
           {isLoading ? (
             <Button>
               <Loader2 className="animate-spin mr-2" />
-              Update Parameters
+              {id ? "Update Parameters" : "Set Parameters"}
             </Button>
           ) : (
-            <Button type="submit">Update Parameters</Button>
+            <Button type="submit">
+              {id ? "Update Parameters" : "Set Parameters"}
+            </Button>
           )}
         </form>
       </Form>
@@ -251,6 +260,13 @@ export default function BodyParametersCard({
           </p>
         </span>
       </div>
+
+      <Separator orientation="horizontal" />
+
+      <Label className="text-xs flex gap-2 items-center">
+        <InfoIcon />
+        Click the button to override existing parameters.
+      </Label>
     </div>
   );
 }

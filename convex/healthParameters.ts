@@ -14,6 +14,7 @@ export const setBodyParameters = mutation(
       sex,
       age,
       pal,
+      recommendedCalories,
     }: {
       user: string;
       weight: number;
@@ -21,6 +22,7 @@ export const setBodyParameters = mutation(
       sex: string;
       age: number;
       pal: number;
+      recommendedCalories: number;
     }
   ) => {
     const id = await db.insert("healthParameters", {
@@ -30,6 +32,7 @@ export const setBodyParameters = mutation(
       sex,
       age,
       pal,
+      recommendedCalories,
       caloricIntake: null,
       fatIntake: null,
       proteinIntake: null,
@@ -53,6 +56,7 @@ export const updateBodyParameters = mutation(
       sex,
       age,
       pal,
+      recommendedCalories,
     }: {
       id: Id;
       weight: number;
@@ -60,9 +64,17 @@ export const updateBodyParameters = mutation(
       sex: string;
       age: number;
       pal: number;
+      recommendedCalories: number;
     }
   ) => {
-    const { oldWeight, oldHeight, oldSex, oldAge, oldPal } = await db.get(id);
+    const {
+      oldWeight,
+      oldHeight,
+      oldSex,
+      oldAge,
+      oldPal,
+      oldRecommendedCalories,
+    } = await db.get(id);
 
     await db.patch(id, {
       weight: weight || oldWeight,
@@ -70,6 +82,7 @@ export const updateBodyParameters = mutation(
       sex: sex || oldSex,
       age: age || oldAge,
       pal: pal || oldPal,
+      recommendedCalories: recommendedCalories || oldRecommendedCalories,
     });
   }
 );

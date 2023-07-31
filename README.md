@@ -21,9 +21,6 @@ npx convex dev
 ## TODO
 
 - Nutrition Plan page
-  - User should enter % instead of grams of macronutrients to ensure that 100% of caloric value cannot be surpassed (steps of 5)
-  - User cannot set/update daily target unless the total is equal to 100%
-  - Fix problems with insert/update
   - Update % Daily Value for every nutrientInfo of a signed in user that has configured their body info
 - Profile hover menu
   - Caloric intake so far today out of recommended value / target

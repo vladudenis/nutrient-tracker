@@ -12,7 +12,8 @@ import { calculateCaloricResult, round } from "@/lib/utilFuncs";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
-import { Loader2 } from "lucide-react";
+import { InfoIcon, Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function TargetsCard({
   id,
@@ -21,6 +22,8 @@ export default function TargetsCard({
   proteinIntake,
   carbsIntake,
   disableButton,
+  recommendedCalories,
+  notSet,
 }: {
   id: Id | null;
   caloricIntake: number;
@@ -28,30 +31,38 @@ export default function TargetsCard({
   proteinIntake: number;
   carbsIntake: number;
   disableButton?: boolean;
+  recommendedCalories?: number;
+  notSet?: boolean;
 }) {
   const addDailyTargets = useMutation(api.healthParameters.addDailyTargets);
   const form = useForm();
   const { rCaloricIntake } = useStore();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [caloricValue, setCaloricValue] = useState(caloricIntake);
+  const [caloricValue, setCaloricValue] = useState(
+    recommendedCalories || caloricIntake
+  );
   const [fatValue, setFatValue] = useState(fatIntake);
   const [proteinValue, setProteinValue] = useState(proteinIntake);
   const [carbsValue, setCarbsValue] = useState(carbsIntake);
+  const totalValue = fatValue + proteinValue + carbsValue;
 
   const onSubmit = () => {
     setIsLoading(true);
 
-    if (id) {
-      addDailyTargets({
-        id,
-        caloricIntake: caloricValue,
-        fatIntake: fatValue,
-        proteinIntake: proteinValue,
-        carbsIntake: carbsValue,
-      });
+    if (!id) {
+      return;
     }
 
+    addDailyTargets({
+      id,
+      caloricIntake: caloricValue,
+      fatIntake: fatValue,
+      proteinIntake: proteinValue,
+      carbsIntake: carbsValue,
+    });
+
+    toast.success("Daily targets have been updated!");
     setIsLoading(false);
   };
 
@@ -70,7 +81,7 @@ export default function TargetsCard({
             </span>
             <Slider
               id="calories"
-              defaultValue={[caloricIntake]}
+              defaultValue={[caloricValue]}
               max={6000}
               min={500}
               step={1}
@@ -80,13 +91,13 @@ export default function TargetsCard({
           <div className="flex flex-col gap-2 w-full">
             <span className="flex justify-between">
               <Label htmlFor="fat">Fat</Label>
-              <Label htmlFor="fatValue">{fatValue} g</Label>
+              <Label htmlFor="fatValue">{fatValue} %</Label>
             </span>
             <Slider
               id="fat"
               defaultValue={[fatIntake]}
-              max={400}
-              min={10}
+              max={100}
+              min={0}
               step={1}
               onValueChange={(value) => setFatValue(value[0])}
             />
@@ -94,13 +105,13 @@ export default function TargetsCard({
           <div className="flex flex-col gap-2 w-full">
             <span className="flex justify-between">
               <Label htmlFor="protein">Protein</Label>
-              <Label htmlFor="proteinValue">{proteinValue} g</Label>
+              <Label htmlFor="proteinValue">{proteinValue} %</Label>
             </span>
             <Slider
               id="protein"
               defaultValue={[proteinIntake]}
-              max={600}
-              min={10}
+              max={100}
+              min={0}
               step={1}
               onValueChange={(value) => setProteinValue(value[0])}
             />
@@ -108,26 +119,37 @@ export default function TargetsCard({
           <div className="flex flex-col gap-2 w-full">
             <span className="flex justify-between">
               <Label htmlFor="carbs">Carbohydrate</Label>
-              <Label htmlFor="carbsValue">{carbsValue} g</Label>
+              <Label htmlFor="carbsValue">{carbsValue} %</Label>
             </span>
             <Slider
               id="carbs"
               defaultValue={[carbsIntake]}
-              max={800}
-              min={10}
+              max={100}
+              min={0}
               step={1}
               onValueChange={(value) => setCarbsValue(value[0])}
             />
           </div>
+          <div className="flex justify-between w-full">
+            <p>Total</p>
+            {totalValue === 100 ? (
+              <p>{totalValue} %</p>
+            ) : (
+              <p className="text-red-500">{totalValue} %</p>
+            )}
+          </div>
 
           {isLoading ? (
-            <Button className="mt-2">
+            <Button>
               <Loader2 className="animate-spin mr-2" />
-              Update Targets
+              {notSet ? "Set Targets" : "Update Targets"}
             </Button>
           ) : (
-            <Button className="mt-2" disabled={disableButton} type="submit">
-              Update Targets
+            <Button
+              disabled={disableButton || totalValue !== 100}
+              type="submit"
+            >
+              {notSet ? "Set Targets" : "Update Targets"}
             </Button>
           )}
         </form>
@@ -137,25 +159,33 @@ export default function TargetsCard({
 
       <div className="w-full flex flex-col gap-2">
         <span className="w-full flex justify-between">
+          <p>Fat</p>
+          <p>{round((fatValue * caloricValue) / 900)} g</p>
+        </span>
+        <span className="w-full flex justify-between">
+          <p>Protein</p>
+          <p>{round((proteinValue * caloricValue) / 400)} g</p>
+        </span>
+        <span className="w-full flex justify-between">
+          <p>Carbohydrate</p>
+          <p>{round((carbsValue * caloricValue) / 400)} g</p>
+        </span>
+        <span className="w-full flex justify-between">
           <p>Result</p>
-          <p>{calculateCaloricResult(rCaloricIntake, caloricValue)}</p>
-        </span>
-        <span className="w-full flex justify-between">
-          <p>Fat%</p>
-          <p>{round((fatValue * 900) / caloricValue)} %</p>
-        </span>
-        <span className="w-full flex justify-between">
-          <p>Protein%</p>
-          <p>{round((proteinValue * 400) / caloricValue)} %</p>
-        </span>
-        <span className="w-full flex justify-between">
-          <p>Carbohydrate%</p>
-          <p>{round((carbsValue * 400) / caloricValue)} %</p>
+          <p>
+            {calculateCaloricResult(
+              recommendedCalories || rCaloricIntake,
+              caloricValue
+            )}
+          </p>
         </span>
       </div>
 
-      <Label className="text-xs mt-4">
-        Update Body Parameters or Targets to change the result!
+      <Separator orientation="horizontal" />
+
+      <Label className="text-xs flex gap-2 items-center">
+        <InfoIcon />
+        Update parameters or targets to change the result!
       </Label>
     </div>
   );

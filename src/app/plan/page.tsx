@@ -24,62 +24,71 @@ export default function Page() {
     redirect("/");
   }
 
-  console.log(healthParameters);
-
-  if (healthParameters == undefined) {
-    <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
-      <PageHeader text="Your Nutrition Plan" />
-      <div className="flex justify-center gap-24">
-        <Loader2 className="animate-spin h-12 w-12" />
-      </div>
-    </main>;
-  }
-
   return (
     <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
       <PageHeader text="Your Nutrition Plan" />
 
-      <div className="flex justify-center gap-24">
-        {healthParameters ? (
-          <BodyParametersCard
-            user={session.user.email}
-            id={healthParameters?._id}
-            weight={healthParameters?.weight}
-            height={healthParameters?.height}
-            age={healthParameters?.age}
-            sex={healthParameters?.sex}
-            pal={healthParameters?.pal}
-          />
-        ) : (
-          <BodyParametersCard
-            user={session.user.email}
-            id={null}
-            weight={60}
-            height={175}
-            age={30}
-            sex={"male"}
-            pal={1.2}
-          />
-        )}
-        {healthParameters && healthParameters.caloricIntake ? (
-          <TargetsCard
-            id={healthParameters?._id}
-            caloricIntake={healthParameters?.caloricIntake}
-            fatIntake={healthParameters?.fatIntake}
-            proteinIntake={healthParameters?.proteinIntake}
-            carbsIntake={healthParameters?.carbsIntake}
-          />
-        ) : (
-          <TargetsCard
-            id={null}
-            caloricIntake={1850}
-            fatIntake={50}
-            proteinIntake={100}
-            carbsIntake={250}
-            disableButton={!healthParameters}
-          />
-        )}
-      </div>
+      {healthParameters !== undefined ? (
+        <div className="flex justify-center gap-24">
+          {healthParameters ? (
+            <BodyParametersCard
+              user={session.user.email}
+              id={healthParameters._id}
+              weight={healthParameters.weight}
+              height={healthParameters.height}
+              age={healthParameters.age}
+              sex={healthParameters.sex}
+              pal={healthParameters.pal}
+            />
+          ) : (
+            <BodyParametersCard
+              user={session.user.email}
+              id={null}
+              weight={60}
+              height={175}
+              age={30}
+              sex={"male"}
+              pal={1.2}
+            />
+          )}
+          {healthParameters ? (
+            healthParameters.caloricIntake ? (
+              <TargetsCard
+                id={healthParameters._id}
+                caloricIntake={healthParameters.caloricIntake}
+                fatIntake={healthParameters.fatIntake}
+                proteinIntake={healthParameters.proteinIntake}
+                carbsIntake={healthParameters.carbsIntake}
+                recommendedCalories={healthParameters.recommendedCalories}
+              />
+            ) : (
+              <TargetsCard
+                id={healthParameters._id}
+                caloricIntake={1850}
+                fatIntake={25}
+                proteinIntake={25}
+                carbsIntake={50}
+                recommendedCalories={healthParameters.recommendedCalories}
+                notSet={true}
+              />
+            )
+          ) : (
+            <TargetsCard
+              id={null}
+              caloricIntake={1850}
+              fatIntake={25}
+              proteinIntake={25}
+              carbsIntake={50}
+              disableButton={true}
+              notSet={true}
+            />
+          )}
+        </div>
+      ) : (
+        <div className="flex justify-center gap-24">
+          <Loader2 className="animate-spin h-12 w-12" />
+        </div>
+      )}
     </main>
   );
 }

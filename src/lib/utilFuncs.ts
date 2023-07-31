@@ -135,10 +135,10 @@ export function calculateSurpluses(obj: any | null | undefined) {
 
 export enum caloricResults {
   SLIGHT_GAIN = "Slow Weight Gain",
-  GAIN = "Weight Gain",
+  GAIN = "Decent Weight Gain",
   EXTREME_GAIN = "Extreme Weight Gain",
   SLIGHT_LOSS = "Slow Weight Loss",
-  LOSS = "Weight Loss",
+  LOSS = "Decent Weight Loss",
   EXTREME_LOSS = "Extreme Weight Loss",
   NEUTRAL = "Weight Maintenance",
 }
@@ -150,18 +150,18 @@ export function calculateCaloricResult(
   const prcntDiff = caloricIntake / rCaloricIntake;
   let result;
 
-  if (prcntDiff >= 1.1) {
-    result = caloricResults.SLIGHT_GAIN;
-  } else if (prcntDiff >= 1.2) {
-    result = caloricResults.GAIN;
-  } else if (prcntDiff >= 1.4) {
+  if (prcntDiff >= 1.4) {
     result = caloricResults.EXTREME_GAIN;
-  } else if (prcntDiff <= 0.9) {
-    result = caloricResults.SLIGHT_LOSS;
-  } else if (prcntDiff <= 0.8) {
-    result = caloricResults.LOSS;
   } else if (prcntDiff <= 0.6) {
     result = caloricResults.EXTREME_LOSS;
+  } else if (prcntDiff >= 1.2 && prcntDiff <= 1.4) {
+    result = caloricResults.GAIN;
+  } else if (prcntDiff <= 0.8 && prcntDiff >= 0.6) {
+    result = caloricResults.LOSS;
+  } else if (prcntDiff >= 1.1 && prcntDiff <= 1.2) {
+    result = caloricResults.SLIGHT_GAIN;
+  } else if (prcntDiff <= 0.9 && prcntDiff >= 0.8) {
+    result = caloricResults.SLIGHT_LOSS;
   } else {
     result = caloricResults.NEUTRAL;
   }

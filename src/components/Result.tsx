@@ -24,14 +24,12 @@ export default function Result() {
         {nutrients?.map((nutrientInfo, idx) => (
           <NutrientInfo key={idx} nutrientInfo={nutrientInfo} />
         ))}
-        {
-          <NutrientInfo
-            nutrientInfo={totalNutrients}
-            hidden={true}
-            mealName="Total"
-            id="totalNutrientInfo"
-          />
-        }
+        <NutrientInfo
+          nutrientInfo={totalNutrients}
+          hidden={true}
+          mealName="Total"
+          id="totalNutrientInfo"
+        />
       </div>
 
       <div className="flex justify-center">
