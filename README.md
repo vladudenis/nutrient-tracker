@@ -20,16 +20,12 @@ npx convex dev
 
 ## TODO
 
-- Nutrition Plan page
-  - Update % Daily Value for every nutrientInfo of a signed in user that has configured their body info
-- Profile hover menu
-  - Caloric intake so far today out of recommended value / target
-  - Caloric intake status: Red arrow down = heavy deficit, yellow wave = small deficit or surplus, green check = approximately reached goal, red arrow up = heavy surplus
-  - Same for all macros
 - Nutrition History page
   - Implement logic for calculating deficiencies and surpluses
   - Pagination or "load 10 more entries" logic
+- Add Statistics
 
 ## Test cases and bug fix
 
+- Make app responsive for tablet and smart phone
 - Nutrient intake + parse failure

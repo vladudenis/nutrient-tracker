@@ -1,24 +1,36 @@
 import { round } from "@/lib/utilFuncs";
+import { Settings } from "lucide-react";
+import Link from "next/link";
 
 export default function NutrientInfoCard({
   nutrientInfo,
   hidden,
   mealName,
   id,
+  healthParams,
 }: {
   nutrientInfo: any;
   hidden?: boolean;
   mealName?: string;
   id?: string;
+  healthParams?: any;
 }) {
+  const fatCaloricValue = healthParams
+    ? (healthParams.fatIntake / 900) * healthParams.caloricIntake
+    : 0;
+  const proteinCaloricValue = healthParams
+    ? (healthParams.proteinIntake / 400) * healthParams.caloricIntake
+    : 0;
+  const carbsCaloricValue = healthParams
+    ? (healthParams.carbsIntake / 400) * healthParams.caloricIntake
+    : 0;
+
   const parsed = nutrientInfo?.ingredients[0].parsed;
   let foodName;
 
   if (parsed) {
     foodName = parsed[0].foodMatch;
   }
-
-  const { totalWeight, calories, totalNutrients, totalDaily } = nutrientInfo;
 
   if (!parsed) {
     return (
@@ -29,6 +41,8 @@ export default function NutrientInfoCard({
       </div>
     );
   }
+
+  const { totalWeight, calories, totalNutrients, totalDaily } = nutrientInfo;
 
   return (
     <div
@@ -58,8 +72,18 @@ export default function NutrientInfoCard({
               {round(totalNutrients.FAT?.quantity || 0)}
               {totalNutrients.FAT?.unit || "g"}
             </span>
-            <p>
-              {round(totalDaily.FAT?.quantity || 0)}
+            <p className="flex items-center gap-1">
+              {healthParams && (
+                <Link href="/plan">
+                  <Settings className="h-5 w-5" />
+                </Link>
+              )}
+              {healthParams
+                ? round(
+                    ((totalNutrients.FAT?.quantity || 0) * fatCaloricValue) /
+                      100
+                  )
+                : round(totalDaily.FAT?.quantity || 0)}
               {totalDaily.FAT?.unit || "%"}
             </p>
           </li>
@@ -107,8 +131,19 @@ export default function NutrientInfoCard({
               {round(totalNutrients.CHOCDF?.quantity || 0)}
               {totalNutrients.CHOCDF?.unit || "g"}
             </span>
-            <p>
-              {round(totalDaily.CHOCDF?.quantity || 0)}
+            <p className="flex items-center gap-1">
+              {healthParams && (
+                <Link href="/plan">
+                  <Settings className="h-5 w-5" />
+                </Link>
+              )}
+              {healthParams
+                ? round(
+                    ((totalNutrients.CHOCDF?.quantity || 0) /
+                      carbsCaloricValue) *
+                      100
+                  )
+                : round(totalDaily.CHOCDF?.quantity || 0)}
               {totalDaily.CHOCDF?.unit || "%"}
             </p>
           </li>
@@ -120,8 +155,19 @@ export default function NutrientInfoCard({
               {round(totalNutrients.PROCNT?.quantity || 0)}
               {totalNutrients.PROCNT?.unit || "g"}
             </span>
-            <p>
-              {round(totalDaily.PROCNT?.quantity || 0)}
+            <p className="flex items-center gap-1">
+              {healthParams && (
+                <Link href="/plan">
+                  <Settings className="h-5 w-5" />
+                </Link>
+              )}
+              {healthParams
+                ? round(
+                    ((totalNutrients.PROCNT?.quantity || 0) /
+                      proteinCaloricValue) *
+                      100
+                  )
+                : round(totalDaily.PROCNT?.quantity || 0)}
               {totalDaily.PROCNT?.unit || "%"}
             </p>
           </li>

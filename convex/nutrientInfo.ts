@@ -38,6 +38,15 @@ export const fetchNutrientInfo = action(
 /**
  * Saves multiple nutritional values and inserts a single entry of nutritional info into the db
  */
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 export const saveNutritionalInformation = mutation(
   async (
     { db, scheduler },
@@ -53,16 +62,6 @@ export const saveNutritionalInformation = mutation(
       notes: string;
     }
   ) => {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
     const id = await db.insert("nutritionalInfo", {
       day: days[new Date().getDay()],
       user,
@@ -134,5 +133,46 @@ export const fetchNutritionalInformations = query(
     }
 
     return nutritionalInformations || [];
+  }
+);
+
+export const fetchTodaysNutrition = query(
+  async (
+    { db },
+    {
+      user,
+    }: {
+      user: string;
+    }
+  ) => {
+    const dayStart = new Date();
+    dayStart.setUTCHours(0, 0, 0, 0);
+    const dayEnd = new Date();
+    dayEnd.setUTCHours(23, 59, 59, 999);
+
+    const nutritionalInformations = await db
+      .query("nutritionalInfo")
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("user"), user),
+          q.gte(q.field("_creationTime"), dayStart.getTime()),
+          q.lte(q.field("_creationTime"), dayEnd.getTime())
+        )
+      )
+      .collect();
+
+    const todaysNutrientIntakes: any[] = [];
+    for (const nutritionalInformation of nutritionalInformations) {
+      const entries = await db
+        .query("nutrientIntake")
+        .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
+        .collect();
+
+      entries.map((entry: any) =>
+        todaysNutrientIntakes.push(JSON.parse(entry.nutrientIntake))
+      );
+    }
+
+    return todaysNutrientIntakes;
   }
 );

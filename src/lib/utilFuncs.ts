@@ -133,20 +133,20 @@ export function calculateSurpluses(obj: any | null | undefined) {
   // TODO
 }
 
-export enum caloricResults {
-  SLIGHT_GAIN = "Slow Weight Gain",
-  GAIN = "Decent Weight Gain",
-  EXTREME_GAIN = "Extreme Weight Gain",
-  SLIGHT_LOSS = "Slow Weight Loss",
-  LOSS = "Decent Weight Loss",
-  EXTREME_LOSS = "Extreme Weight Loss",
-  NEUTRAL = "Weight Maintenance",
-}
-
 export function calculateCaloricResult(
   rCaloricIntake: number,
   caloricIntake: number
 ) {
+  enum caloricResults {
+    SLIGHT_GAIN = "Slow Weight Gain",
+    GAIN = "Decent Weight Gain",
+    EXTREME_GAIN = "Extreme Weight Gain",
+    SLIGHT_LOSS = "Slow Weight Loss",
+    LOSS = "Decent Weight Loss",
+    EXTREME_LOSS = "Extreme Weight Loss",
+    NEUTRAL = "Weight Maintenance",
+  }
+
   const prcntDiff = caloricIntake / rCaloricIntake;
   let result;
 
@@ -164,6 +164,39 @@ export function calculateCaloricResult(
     result = caloricResults.SLIGHT_LOSS;
   } else {
     result = caloricResults.NEUTRAL;
+  }
+
+  return result;
+}
+
+export function calculateDailyTargetProgress(actual: number, target: number) {
+  enum caloricResults {
+    SLIGHT_OVERSHOOT = "text-yellow-500",
+    OVERSHOOT = "text-orange-500",
+    EXTREME_OVERSHOOT = "text-red-500",
+    SLIGHT_UNDERSHOOT = "text-yellow-500",
+    UNDERSHOOT = "text-orange-500",
+    EXTREME_UNDERSHOOT = "text-red-500",
+    BULLSEYE = "text-emerald-500",
+  }
+
+  const prcntDiff = actual / target;
+  let result;
+
+  if (prcntDiff >= 1.4) {
+    result = caloricResults.EXTREME_OVERSHOOT;
+  } else if (prcntDiff <= 0.6) {
+    result = caloricResults.EXTREME_UNDERSHOOT;
+  } else if (prcntDiff >= 1.2 && prcntDiff <= 1.4) {
+    result = caloricResults.OVERSHOOT;
+  } else if (prcntDiff <= 0.8 && prcntDiff >= 0.6) {
+    result = caloricResults.UNDERSHOOT;
+  } else if (prcntDiff >= 1.1 && prcntDiff <= 1.2) {
+    result = caloricResults.SLIGHT_OVERSHOOT;
+  } else if (prcntDiff <= 0.9 && prcntDiff >= 0.8) {
+    result = caloricResults.SLIGHT_UNDERSHOOT;
+  } else {
+    result = caloricResults.BULLSEYE;
   }
 
   return result;

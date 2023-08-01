@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import SignInDialog from "./SignInDialog";
 import { Separator } from "./ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage } from "./ui/avatar";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,9 +15,43 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
 import { LogOut, Bug, UserCircle } from "lucide-react";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import {
+  calculateDailyTargetProgress,
+  calculateTotal,
+  round,
+} from "@/lib/utilFuncs";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const todaysNutrition = useQuery(api.nutrientInfo.fetchTodaysNutrition, {
+    user: session?.user?.email || "",
+  });
+  const healthParameters = useQuery(
+    api.healthParameters.fetchHealthParameters,
+    { user: session?.user?.email || "" }
+  );
+
+  const totalNutrientIntake = calculateTotal(todaysNutrition);
+  const todaysCaloricIntake =
+    totalNutrientIntake && totalNutrientIntake.calories;
+  const todaysFatIntake =
+    totalNutrientIntake && totalNutrientIntake.totalNutrients.FAT?.quantity;
+  const todaysProteinIntake =
+    totalNutrientIntake && totalNutrientIntake.totalNutrients.PROCNT?.quantity;
+  const todaysCarbsIntake =
+    totalNutrientIntake && totalNutrientIntake.totalNutrients.CHOCDF?.quantity;
+
+  const fatIntake =
+    healthParameters &&
+    (healthParameters.fatIntake / 900) * healthParameters.caloricIntake;
+  const proteinIntake =
+    healthParameters &&
+    (healthParameters.proteinIntake / 400) * healthParameters.caloricIntake;
+  const carbsIntake =
+    healthParameters &&
+    (healthParameters.carbsIntake / 400) * healthParameters.caloricIntake;
 
   return (
     <nav className="w-full px-64 py-4 border-b">
@@ -99,6 +133,71 @@ export default function Navbar() {
                           </span>
                         </div>
                         <div className="my-2 px-4 flex flex-col gap-2">
+                          {todaysNutrition && healthParameters && (
+                            <>
+                              <Separator orientation="horizontal" />
+                              <p className="text-sm font-semibold self-center">
+                                Today's Nutrition
+                              </p>
+                              <div className="flex flex-col gap-1">
+                                <span
+                                  className={`flex justify-between text-sm`}
+                                >
+                                  <p>Calories</p>
+                                  <p
+                                    className={calculateDailyTargetProgress(
+                                      todaysCaloricIntake,
+                                      healthParameters.caloricIntake
+                                    )}
+                                  >
+                                    {round(todaysCaloricIntake)}/
+                                    {round(healthParameters.caloricIntake)}kcal
+                                  </p>
+                                </span>
+                                <span
+                                  className={`flex justify-between text-sm`}
+                                >
+                                  <p>Fat</p>
+                                  <p
+                                    className={calculateDailyTargetProgress(
+                                      todaysFatIntake,
+                                      fatIntake
+                                    )}
+                                  >
+                                    {round(todaysFatIntake)}/{round(fatIntake)}g
+                                  </p>
+                                </span>
+                                <span
+                                  className={`flex justify-between text-sm`}
+                                >
+                                  <p>Protein</p>
+                                  <p
+                                    className={calculateDailyTargetProgress(
+                                      todaysProteinIntake,
+                                      proteinIntake
+                                    )}
+                                  >
+                                    {round(todaysProteinIntake)}/
+                                    {round(proteinIntake)}g
+                                  </p>
+                                </span>
+                                <span
+                                  className={`flex justify-between text-sm`}
+                                >
+                                  <p>Carbs</p>
+                                  <p
+                                    className={calculateDailyTargetProgress(
+                                      todaysCarbsIntake,
+                                      carbsIntake
+                                    )}
+                                  >
+                                    {round(todaysCarbsIntake)}/
+                                    {round(carbsIntake)}g
+                                  </p>
+                                </span>
+                              </div>
+                            </>
+                          )}
                           <Separator orientation="horizontal" />
                           <Button
                             className="w-full border-none"

@@ -9,10 +9,16 @@ import { useSession } from "next-auth/react";
 import NutrientIntakeDialog from "./NutrientIntakeDialog";
 import { useState } from "react";
 import { calculateTotal } from "@/lib/utilFuncs";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 export default function Result() {
   const { nutrients, setNutrients } = store();
   const { data: session } = useSession();
+  const healthParameters = useQuery(
+    api.healthParameters.fetchHealthParameters,
+    { user: session?.user?.email || "" }
+  );
   const hideButtons =
     nutrients && nutrients.length == 1 && !nutrients[0]?.ingredients[0].parsed;
   const [showTotal, setShowTotal] = useState(false);
@@ -22,13 +28,18 @@ export default function Result() {
     <div className="flex flex-col gap-12">
       <div className="flex gap-8 justify-center">
         {nutrients?.map((nutrientInfo, idx) => (
-          <NutrientInfo key={idx} nutrientInfo={nutrientInfo} />
+          <NutrientInfo
+            key={idx}
+            nutrientInfo={nutrientInfo}
+            healthParams={healthParameters}
+          />
         ))}
         <NutrientInfo
           nutrientInfo={totalNutrients}
           hidden={true}
           mealName="Total"
           id="totalNutrientInfo"
+          healthParams={healthParameters}
         />
       </div>
 
