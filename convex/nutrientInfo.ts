@@ -78,33 +78,6 @@ export const saveNutritionalInformation = mutation(
 );
 
 /**
- * Fetches a single entry of nutritional info and the list of all corresponding nutritional values
- */
-export const fetchNutritionalInformation = query(
-  async (
-    { db },
-    {
-      id,
-    }: {
-      id: Id;
-    }
-  ) => {
-    const nutritionalInformation = await db.get(id);
-
-    const entries = await db
-      .query("nutrientIntake")
-      .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
-      .collect();
-
-    nutritionalInformation.intakes = entries.map((entry) =>
-      JSON.parse(entry.nutrientIntake)
-    );
-
-    return nutritionalInformation;
-  }
-);
-
-/**
  * Fetches 10 entries of nutritional info and a list of all the corresponding nutritional values for every nutritional info from the db
  */
 export const fetchNutritionalInformations = query(
@@ -119,6 +92,7 @@ export const fetchNutritionalInformations = query(
     const nutritionalInformations = await db
       .query("nutritionalInfo")
       .filter((q) => q.eq(q.field("user"), user))
+      .order("desc")
       .take(10);
 
     for (const nutritionalInformation of nutritionalInformations) {

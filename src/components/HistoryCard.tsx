@@ -1,6 +1,11 @@
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
-import { calculateTotal, round } from "@/lib/utilFuncs";
+import {
+  calculateInsufficiencies,
+  calculateSurpluses,
+  calculateTotal,
+  round,
+} from "@/lib/utilFuncs";
 import { Separator } from "./ui/separator";
 import useStore from "@/lib/store";
 
@@ -11,8 +16,8 @@ export default function HistoryCard({
 }) {
   const { day, _creationTime, mealType, notes } = nutritionalInfo;
   const totalNutrientIntake = calculateTotal(nutritionalInfo.intakes);
-  const insufficiencies: any[] = [];
-  const surpluses: any[] = [];
+  const insufficiencies = calculateInsufficiencies(totalNutrientIntake);
+  const surpluses = calculateSurpluses(totalNutrientIntake);
 
   const date = new Date(_creationTime);
   const formattedDate = `${date.getDate()}/${
@@ -81,21 +86,27 @@ export default function HistoryCard({
 
       <div className="grid grid-rows-4 px-4 py-2 w-48">
         <div className="flex items-end justify-center">
-          <p className="text-lg font-semibold text-center">Insufficiencies</p>
+          <p className="text-lg font-semibold text-center">Low Intakes</p>
         </div>
-        {insufficiencies.length ? (
-          <ScrollArea className="rounded-md border row-span-3 mb-8">
+        {insufficiencies && insufficiencies.length && (
+          <ScrollArea className="rounded-md border row-span-3 mb-4 px-2">
             <div className="flex flex-col">
-              {insufficiencies.map((insuff) => (
-                <p className="text-red-400">Low levels of {insuff}</p>
+              {insufficiencies[0].map((insuff) => (
+                <span className="text-orange-400 flex justify-between">
+                  <p>{insuff.label}</p>
+                  <p>{Math.round(insuff.quantity)}%</p>
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-col">
+              {insufficiencies[1].map((deff) => (
+                <span className="text-red-400 flex justify-between">
+                  <p>{deff.label}</p>
+                  <p>{Math.round(deff.quantity)}%</p>
+                </span>
               ))}
             </div>
           </ScrollArea>
-        ) : (
-          <div className="row-span-3 mb-8">
-            <Separator orientation="horizontal" />
-            <p className="text-center">No insufficiencies!</p>
-          </div>
         )}
       </div>
 
@@ -105,21 +116,33 @@ export default function HistoryCard({
 
       <div className="grid grid-rows-4 px-4 py-2 w-48">
         <div className="flex items-end justify-center">
-          <p className="text-lg font-semibold text-center">Surpluses</p>
+          <p className="text-lg font-semibold text-center">High Intakes</p>
         </div>
-        {surpluses.length ? (
-          <ScrollArea className="rounded-md border">
+        {surpluses && surpluses.length && (
+          <ScrollArea className="rounded-md border row-span-3 mb-4 px-2">
             <div className="flex flex-col">
-              {surpluses.map((surpl) => (
-                <p className="text-emerald-400">High levels of {surpl}</p>
+              {surpluses[0].map((suff, idx) => (
+                <span
+                  key={idx}
+                  className="text-emerald-400 flex justify-between"
+                >
+                  <p>{suff.label}</p>
+                  <p>{Math.round(suff.quantity)}%</p>
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-col">
+              {surpluses[1].map((surpl, idx) => (
+                <span
+                  key={idx}
+                  className="text-yellow-400 flex justify-between"
+                >
+                  <p>{surpl.label}</p>
+                  <p>{Math.round(surpl.quantity)}%</p>
+                </span>
               ))}
             </div>
           </ScrollArea>
-        ) : (
-          <div className="row-span-3 mb-8">
-            <Separator orientation="horizontal" />
-            <p className="text-center">No surpluses!</p>
-          </div>
         )}
       </div>
 

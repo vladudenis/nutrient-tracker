@@ -21,7 +21,6 @@ npx convex dev
 ## TODO
 
 - Nutrition History page
-  - Implement logic for calculating deficiencies and surpluses
   - Pagination or "load 10 more entries" logic
 - Add Statistics
 

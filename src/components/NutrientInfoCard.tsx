@@ -15,16 +15,6 @@ export default function NutrientInfoCard({
   id?: string;
   healthParams?: any;
 }) {
-  const fatCaloricValue = healthParams
-    ? (healthParams.fatIntake / 900) * healthParams.caloricIntake
-    : 0;
-  const proteinCaloricValue = healthParams
-    ? (healthParams.proteinIntake / 400) * healthParams.caloricIntake
-    : 0;
-  const carbsCaloricValue = healthParams
-    ? (healthParams.carbsIntake / 400) * healthParams.caloricIntake
-    : 0;
-
   const parsed = nutrientInfo?.ingredients[0].parsed;
   let foodName;
 
@@ -42,6 +32,15 @@ export default function NutrientInfoCard({
     );
   }
 
+  const fatCaloricValue = healthParams
+    ? (healthParams.fatIntake / 900) * healthParams.caloricIntake
+    : 0;
+  const proteinCaloricValue = healthParams
+    ? (healthParams.proteinIntake / 400) * healthParams.caloricIntake
+    : 0;
+  const carbsCaloricValue = healthParams
+    ? (healthParams.carbsIntake / 400) * healthParams.caloricIntake
+    : 0;
   const { totalWeight, calories, totalNutrients, totalDaily } = nutrientInfo;
 
   return (
@@ -57,7 +56,17 @@ export default function NutrientInfoCard({
       <div className="border-b-4 pt-1">
         <span className="flex justify-between">
           <h1 className="text-2xl">Calories</h1>
-          <h1 className="text-2xl">{calories}kcal</h1>
+          <h1 className="text-2xl">
+            {calories}kcal (
+            {healthParams
+              ? round(
+                  (totalNutrients.ENERC_KCAL?.quantity /
+                    healthParams.caloricIntake) *
+                    100
+                )
+              : totalDaily.ENERC_KCAL?.quantity || 0}
+            {totalDaily.ENERC_KICAL?.unit || "%"})
+          </h1>
         </span>
         <span className="flex justify-between pt-2">
           <p></p>
@@ -145,6 +154,17 @@ export default function NutrientInfoCard({
                   )
                 : round(totalDaily.CHOCDF?.quantity || 0)}
               {totalDaily.CHOCDF?.unit || "%"}
+            </p>
+          </li>
+          <li className="flex justify-between border-b">
+            <span className="capitalize pl-8 flex gap-2">
+              <p>{totalNutrients.FIBTG?.label?.split(", ")[0] || "Fiber"}</p>{" "}
+              {round(totalNutrients.FIBTG?.quantity || 0)}
+              {totalNutrients.FIBTG?.unit || "g"}
+            </span>
+            <p>
+              {round(totalDaily.FIBTG?.quantity || 0)}
+              {totalDaily.FIBTG?.unit || "%"}
             </p>
           </li>
           <li className="flex justify-between border-b">

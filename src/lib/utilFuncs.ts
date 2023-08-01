@@ -2,37 +2,38 @@ export function round(num: number) {
   return Math.round(num * 10) / 10;
 }
 
+const essentialProperties = [
+  "FAT",
+  "FASAT",
+  "FAMS",
+  "FAPU",
+  "CHOCDF",
+  "PROCNT",
+  "CHOLE",
+  "NA",
+  "CA",
+  "MG",
+  "K",
+  "FE",
+  "ZN",
+  "P",
+  "VITC",
+  "THIA",
+  "RIBF",
+  "NIA",
+  "VITB6A",
+  "FOLDFE",
+  "FOLAC",
+  "VITB12",
+  "VITD",
+];
+
 export function calculateTotal(objs: any[] | null | undefined) {
-  if (!objs) {
+  if (!objs || !objs.length) {
     return null;
   }
 
   const totalObj = JSON.parse(JSON.stringify(objs[0]));
-  const essentialProperties = [
-    "FAT",
-    "FASAT",
-    "FAMS",
-    "FAPU",
-    "CHOCDF",
-    "PROCNT",
-    "CHOLE",
-    "NA",
-    "CA",
-    "MG",
-    "K",
-    "FE",
-    "ZN",
-    "P",
-    "VITC",
-    "THIA",
-    "RIBF",
-    "NIA",
-    "VITB6A",
-    "FOLDFE",
-    "FOLAC",
-    "VITB12",
-    "VITD",
-  ];
 
   for (const prop of essentialProperties) {
     if (!Object.hasOwn(totalObj.totalNutrients, prop)) {
@@ -64,12 +65,15 @@ export function calculateTotal(objs: any[] | null | undefined) {
       obj.totalNutrients.PROCNT?.quantity || 0;
     totalObj.totalNutrients.CHOLE.quantity +=
       obj.totalNutrients.CHOLE?.quantity || 0;
+    totalObj.totalNutrients.FIBTG.quantity +=
+      obj.totalNutrients.FIBTG?.quantity || 0;
 
     totalObj.totalDaily.FAT.quantity += obj.totalDaily.FAT?.quantity || 0;
     totalObj.totalDaily.FASAT.quantity += obj.totalDaily.FASAT?.quantity || 0;
     totalObj.totalDaily.CHOCDF.quantity += obj.totalDaily.CHOCDF?.quantity || 0;
     totalObj.totalDaily.PROCNT.quantity += obj.totalDaily.PROCNT?.quantity || 0;
     totalObj.totalDaily.CHOLE.quantity += obj.totalDaily.CHOLE?.quantity || 0;
+    totalObj.totalDaily.FIBTG.quantity += obj.totalDaily.FIBTG?.quantity || 0;
 
     totalObj.totalNutrients.NA.quantity += obj.totalNutrients.NA?.quantity || 0;
     totalObj.totalNutrients.CA.quantity += obj.totalNutrients.CA?.quantity || 0;
@@ -117,12 +121,48 @@ export function calculateTotal(objs: any[] | null | undefined) {
   return totalObj;
 }
 
+const toAvoid = ["FAT", "CHOCDF", "PROCNT", "ENERC_KCAL", "FOLDFE"];
 export function calculateInsufficiencies(obj: any | null | undefined) {
   if (!obj) {
     return null;
   }
 
-  // TODO
+  for (const prop of essentialProperties) {
+    if (!Object.hasOwn(obj.totalDaily, prop)) {
+      obj.totalDaily[prop] = { quantity: 0 };
+    }
+  }
+
+  const insufficiencies: any[] = [];
+  const deficiencies: any[] = [];
+  for (const prop in obj.totalDaily) {
+    if (
+      Math.round(obj.totalDaily[prop].quantity) < 80 &&
+      Math.round(obj.totalDaily[prop].quantity) >= 50 &&
+      obj.totalDaily[prop].label &&
+      !toAvoid.includes(prop)
+    ) {
+      insufficiencies.push({
+        label: obj.totalDaily[prop].label,
+        quantity: obj.totalDaily[prop].quantity,
+      });
+    } else if (
+      Math.round(obj.totalDaily[prop].quantity) < 50 &&
+      obj.totalDaily[prop].label &&
+      !toAvoid.includes(prop)
+    ) {
+      deficiencies.push({
+        label: obj.totalDaily[prop].label,
+        quantity: obj.totalDaily[prop].quantity,
+      });
+    }
+  }
+
+  const total = [];
+  total.push(insufficiencies);
+  total.push(deficiencies);
+
+  return total;
 }
 
 export function calculateSurpluses(obj: any | null | undefined) {
@@ -130,7 +170,43 @@ export function calculateSurpluses(obj: any | null | undefined) {
     return null;
   }
 
-  // TODO
+  for (const prop of essentialProperties) {
+    if (!Object.hasOwn(obj.totalDaily, prop)) {
+      obj.totalDaily[prop] = { quantity: 0 };
+    }
+  }
+
+  const sufficiencies: any[] = [];
+  const surpluses: any[] = [];
+
+  for (const prop in obj.totalDaily) {
+    if (
+      Math.round(obj.totalDaily[prop].quantity) >= 80 &&
+      Math.round(obj.totalDaily[prop].quantity) < 120 &&
+      obj.totalDaily[prop].label &&
+      !toAvoid.includes(prop)
+    ) {
+      sufficiencies.push({
+        label: obj.totalDaily[prop].label,
+        quantity: obj.totalDaily[prop].quantity,
+      });
+    } else if (
+      Math.round(obj.totalDaily[prop].quantity) >= 120 &&
+      obj.totalDaily[prop].label &&
+      !toAvoid.includes(prop)
+    ) {
+      surpluses.push({
+        label: obj.totalDaily[prop].label,
+        quantity: obj.totalDaily[prop].quantity,
+      });
+    }
+  }
+
+  const total = [];
+  total.push(sufficiencies);
+  total.push(surpluses);
+
+  return total;
 }
 
 export function calculateCaloricResult(
