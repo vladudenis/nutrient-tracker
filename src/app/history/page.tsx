@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { usePaginatedQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import HistoryCard from "@/components/HistoryCard";
 import { useSession } from "next-auth/react";
@@ -9,17 +9,21 @@ import { Loader2 } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import useStore from "@/lib/store";
 import SavedResult from "@/components/SavedResult";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
+  const batch = 10;
   const { data: session, status } = useSession();
-  const nutritionalInfos = useQuery(
+  const {
+    results,
+    status: paginationStatus,
+    loadMore,
+  } = usePaginatedQuery(
     api.nutrientInfo.fetchNutritionalInformations,
-    {
-      user: session?.user?.email!,
-    }
+    { user: session?.user?.email || "" },
+    { initialNumItems: batch }
   );
   const { showHistoryDetails, nutritionInfo } = useStore();
-  // TODO maybe render notes on the page too
 
   if (status == "loading") {
     return;
@@ -58,19 +62,27 @@ export default function Page() {
       {showHistoryDetails ? (
         <SavedResult />
       ) : (
-        <div className="flex flex-col gap-8">
-          {nutritionalInfos ? (
-            nutritionalInfos.length ? (
-              nutritionalInfos.map((nutritionalInfo, idx) => (
-                <HistoryCard key={idx} nutritionalInfo={nutritionalInfo} />
-              ))
+        <>
+          <div className="flex flex-col gap-8">
+            {paginationStatus !== "LoadingFirstPage" ? (
+              results.length ? (
+                results.map((nutritionalInfo, idx) => (
+                  <HistoryCard key={idx} nutritionalInfo={nutritionalInfo} />
+                ))
+              ) : (
+                <p className="text-lg">No entries found!</p>
+              )
             ) : (
-              <p className="text-lg">No entries found!</p>
-            )
-          ) : (
+              <Loader2 className="animate-spin h-12 w-12" />
+            )}
+          </div>
+          {paginationStatus == "CanLoadMore" && (
+            <Button onClick={() => loadMore(batch)}>Load More</Button>
+          )}
+          {paginationStatus == "LoadingMore" && (
             <Loader2 className="animate-spin h-12 w-12" />
           )}
-        </div>
+        </>
       )}
     </main>
   );

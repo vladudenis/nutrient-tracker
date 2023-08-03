@@ -20,8 +20,6 @@ npx convex dev
 
 ## TODO
 
-- Nutrition History page
-  - Pagination or "load 10 more entries" logic
 - Add Statistics
 
 ## Test cases and bug fix

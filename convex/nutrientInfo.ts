@@ -1,6 +1,7 @@
 import { action, mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
-import { Id } from "./_generated/dataModel";
+import { paginationOptsValidator } from "convex/server";
+import { v } from "convex/values";
 
 /**
  * Fetches nutritional value from edamame api given a text input
@@ -80,23 +81,17 @@ export const saveNutritionalInformation = mutation(
 /**
  * Fetches 10 entries of nutritional info and a list of all the corresponding nutritional values for every nutritional info from the db
  */
-export const fetchNutritionalInformations = query(
-  async (
-    { db },
-    {
-      user,
-    }: {
-      user: string;
-    }
-  ) => {
-    const nutritionalInformations = await db
+export const fetchNutritionalInformations = query({
+  args: { paginationOpts: paginationOptsValidator, user: v.string() },
+  handler: async (ctx, args) => {
+    const nutritionalInformations = await ctx.db
       .query("nutritionalInfo")
-      .filter((q) => q.eq(q.field("user"), user))
+      .filter((q) => q.eq(q.field("user"), args.user))
       .order("desc")
-      .take(10);
+      .paginate(args.paginationOpts);
 
-    for (const nutritionalInformation of nutritionalInformations) {
-      const entries = await db
+    for (const nutritionalInformation of nutritionalInformations.page) {
+      const entries = await ctx.db
         .query("nutrientIntake")
         .filter((q) => q.eq(q.field("refId"), nutritionalInformation._id))
         .collect();
@@ -107,8 +102,8 @@ export const fetchNutritionalInformations = query(
     }
 
     return nutritionalInformations || [];
-  }
-);
+  },
+});
 
 export const fetchTodaysNutrition = query(
   async (
