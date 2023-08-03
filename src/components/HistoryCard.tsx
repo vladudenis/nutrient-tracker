@@ -91,16 +91,16 @@ export default function HistoryCard({
         {insufficiencies && insufficiencies.length && (
           <ScrollArea className="rounded-md border row-span-3 mb-4 px-2">
             <div className="flex flex-col">
-              {insufficiencies[0].map((insuff) => (
-                <span className="text-orange-400 flex justify-between">
+              {insufficiencies[0].map((insuff, i) => (
+                <span key={i} className="text-orange-400 flex justify-between">
                   <p>{insuff.label}</p>
                   <p>{Math.round(insuff.quantity)}%</p>
                 </span>
               ))}
             </div>
             <div className="flex flex-col">
-              {insufficiencies[1].map((deff) => (
-                <span className="text-red-400 flex justify-between">
+              {insufficiencies[1].map((deff, j) => (
+                <span key={j} className="text-red-400 flex justify-between">
                   <p>{deff.label}</p>
                   <p>{Math.round(deff.quantity)}%</p>
                 </span>

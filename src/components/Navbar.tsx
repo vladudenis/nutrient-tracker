@@ -174,7 +174,7 @@ export default function Navbar() {
                             <>
                               <Separator orientation="horizontal" />
                               <p className="text-sm font-semibold self-center">
-                                Today's Nutrition
+                                Today&#39;s Nutrition
                               </p>
                               <div className="flex flex-col gap-1">
                                 <span
