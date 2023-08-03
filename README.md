@@ -20,4 +20,4 @@ npx convex dev
 
 ## TODO
 
-- Add Statistics
+Add Statistics
