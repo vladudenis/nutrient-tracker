@@ -31,7 +31,7 @@ export default function HistoryCard({
 
   return (
     <div className="flex gap-4 justify-center h-[250px] rounded-lg shadow-md hover:shadow-2xl border duration-500 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
-      <div className="flex flex-col items-center justify-center gap-5 px-4 py-2 w-48">
+      <div className="flex flex-col items-center justify-center gap-5 px-2 xl:px-4 py-1 xl:py-2 w-48 lg:w-40 xl:w-48">
         <span className="text-center">
           <p className="text-2xl font-semibold">{day}</p>
           <p>{formattedDate}</p>
@@ -49,12 +49,12 @@ export default function HistoryCard({
         </Button>
       </div>
 
-      <div className="py-6">
+      <div className="py-6 hidden xs:block">
         <Separator orientation="vertical" />
       </div>
 
-      <div className="flex flex-col items-center justify-center px-4 py-2">
-        <div className="flex flex-col gap-1 w-48 px-4 py-2">
+      <div className="flex flex-col items-center justify-center px-2 xl:px-4 py-1 xl:py-2 hidden xs:flex">
+        <div className="flex flex-col gap-1 w-48 lg:w-40 xl:w-48 px-2 xl:px-4 py-1 xl:py-2">
           <p className="text-lg font-semibold text-center">Macros</p>
           <span className="flex justify-between">
             <p>Calories:</p>
@@ -80,11 +80,11 @@ export default function HistoryCard({
         </div>
       </div>
 
-      <div className="py-6">
+      <div className="py-6 hidden lg:block">
         <Separator orientation="vertical" />
       </div>
 
-      <div className="grid grid-rows-4 px-4 py-2 w-48">
+      <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-40 xl:w-48 hidden lg:grid">
         <div className="flex items-end justify-center">
           <p className="text-lg font-semibold text-center">Low Intakes</p>
         </div>
@@ -110,11 +110,11 @@ export default function HistoryCard({
         )}
       </div>
 
-      <div className="py-6">
+      <div className="py-6 hidden lg:block">
         <Separator orientation="vertical" />
       </div>
 
-      <div className="grid grid-rows-4 px-4 py-2 w-48">
+      <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-40 xl:w-48 hidden lg:grid">
         <div className="flex items-end justify-center">
           <p className="text-lg font-semibold text-center">High Intakes</p>
         </div>
@@ -150,7 +150,7 @@ export default function HistoryCard({
         <Separator orientation="vertical" />
       </div>
 
-      <div className="grid grid-rows-4 px-4 py-2 w-48">
+      <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-48 lg:w-40 xl:w-48 hidden md:grid">
         <div className="flex items-end justify-center">
           <p className="text-lg font-semibold">Notes</p>
         </div>

@@ -21,8 +21,3 @@ npx convex dev
 ## TODO
 
 - Add Statistics
-
-## Test cases and bug fix
-
-- Make app responsive for tablet and smart phone
-- Nutrient intake + parse failure

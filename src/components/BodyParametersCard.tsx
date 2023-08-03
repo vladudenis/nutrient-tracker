@@ -98,7 +98,7 @@ export default function BodyParametersCard({
   };
 
   return (
-    <div className="flex flex-col gap-5 items-center w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
+    <div className="flex flex-col gap-5 items-center sm:w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
       <p className="font-semibold text-xl mb-2">Body Parameters</p>
       <Form {...form}>
         <form
@@ -237,14 +237,14 @@ export default function BodyParametersCard({
       <Separator orientation="horizontal" />
 
       <div className="w-full flex flex-col gap-2">
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Basal Metabolic Rate</p>
           <p>
             {sexValue == "male" ? Math.round(bmr + 5) : Math.round(bmr - 161)}{" "}
             kcal/day
           </p>
         </span>
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Weight Maintenance</p>
           <p>
             {sexValue == "male"
@@ -253,7 +253,7 @@ export default function BodyParametersCard({
             kcal/day
           </p>
         </span>
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>BMI</p>
           <p>
             {round(bmi)} kg/m<sup>2</sup>{" "}

@@ -14,7 +14,7 @@ import {
 } from "./ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "./ui/skeleton";
-import { LogOut, Bug, UserCircle } from "lucide-react";
+import { LogOut, Bug, UserCircle, MenuIcon } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import {
@@ -22,6 +22,7 @@ import {
   calculateTotal,
   round,
 } from "@/lib/utilFuncs";
+import React from "react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -54,10 +55,10 @@ export default function Navbar() {
     (healthParameters.carbsIntake / 400) * healthParameters.caloricIntake;
 
   return (
-    <nav className="w-full px-64 py-4 border-b">
+    <nav className="w-full px-12 xl:px-48 2xl:px-64 py-4 border-b">
       <ul className="flex justify-between">
         <li className="flex gap-4 h-10 py-2">
-          <Link href="/">
+          <Link className="hidden md:inline" href="/">
             <span className="font-semibold text-lg">NutriTracker</span>
           </Link>
           {status == "loading" ? (
@@ -68,8 +69,8 @@ export default function Navbar() {
             </span>
           ) : session ? (
             <>
-              <Separator orientation="vertical" />
-              <span className="h-10 flex gap-8">
+              <Separator className="hidden md:inline" orientation="vertical" />
+              <span className="h-10 flex gap-8 hidden md:flex">
                 <Link href="/history">
                   <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
                     Nutrition History
@@ -86,12 +87,46 @@ export default function Navbar() {
                   </span>
                 </Link>
               </span>
+
+              <NavigationMenu className="md:hidden">
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="flex gap-4">
+                      <MenuIcon />
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-6 w-48 lg:grid-cols-[.75fr_1fr]">
+                        <li>
+                          <Link href="/">
+                            <span className="font-semibold">Home</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/history">
+                            <p className="font-semibold">Nutritional History</p>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/plan">
+                            <p className="font-semibold">Nutritional Plan</p>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/statistics">
+                            <p className="font-semibold">Statistics</p>
+                          </Link>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </>
           ) : (
             <></>
           )}
         </li>
-        <li className="pr-24 flex gap-4 items-center">
+        <li className="flex gap-4 items-center">
           {status == "loading" ? (
             <div className="flex items-center gap-4 pt-1">
               <Skeleton className="h-8 w-8 rounded-full" />
@@ -111,10 +146,12 @@ export default function Navbar() {
                       ) : (
                         <UserCircle className="h-8 w-8" />
                       )}
-                      <span className="py-2">{session.user?.name}</span>
+                      <span className="py-2 hidden lg:inline">
+                        {session.user?.name}
+                      </span>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-[200px]">
+                      <div className="sm:w-[200px]">
                         <div className="flex flex-col justify-center items-center gap-2 my-2">
                           <div className="flex justify-center items-center gap-2">
                             {session.user?.image ? (

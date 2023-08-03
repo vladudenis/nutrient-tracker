@@ -46,7 +46,7 @@ export default function NutrientInfoCard({
   return (
     <div
       id={`${id ? id : "nutrientInfo"}`}
-      className={`w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl duration-500 border py-2 px-3 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out${
+      className={`w-full md:w-[500px] flex flex-col rounded-lg shadow-md hover:shadow-2xl duration-500 border py-2 px-3 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out${
         hidden && " hidden"
       }`}
     >
@@ -55,8 +55,8 @@ export default function NutrientInfoCard({
       </h1>
       <div className="border-b-4 pt-1">
         <span className="flex justify-between">
-          <h1 className="text-2xl">Calories</h1>
-          <h1 className="text-2xl">
+          <h1 className="text-lg sm:text-2xl">Calories</h1>
+          <h1 className="text-lg sm:text-2xl">
             {calories}kcal (
             {healthParams
               ? round(
@@ -73,7 +73,7 @@ export default function NutrientInfoCard({
           <p>% Daily Value</p>
         </span>
         <ul>
-          <li className="flex justify-between border-y">
+          <li className="flex justify-between border-y text-sm md:text-base">
             <span className="flex gap-2 capitalize">
               <p className="font-semibold">
                 {totalNutrients.FAT?.label || "Total Lipid (Fat)"}
@@ -96,7 +96,7 @@ export default function NutrientInfoCard({
               {totalDaily.FAT?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="capitalize pl-8 flex gap-2">
               <p>
                 {totalNutrients.FASAT?.label?.split(", ")[1] ||
@@ -110,7 +110,7 @@ export default function NutrientInfoCard({
               {totalDaily.FASAT?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="capitalize pl-8 flex gap-2">
               <p>
                 {totalNutrients.FAMS?.label?.split(", ")[1] ||
@@ -121,7 +121,7 @@ export default function NutrientInfoCard({
             </span>
             <p></p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="capitalize pl-8 flex gap-2">
               <p>
                 {totalNutrients.FAPU?.label?.split(", ")[1] ||
@@ -132,7 +132,7 @@ export default function NutrientInfoCard({
             </span>
             <p></p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p className="font-semibold">
                 {totalNutrients.CHOCDF?.label?.split(", ")[0] || "Carbohydrate"}
@@ -156,7 +156,7 @@ export default function NutrientInfoCard({
               {totalDaily.CHOCDF?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="capitalize pl-8 flex gap-2">
               <p>{totalNutrients.FIBTG?.label?.split(", ")[0] || "Fiber"}</p>{" "}
               {round(totalNutrients.FIBTG?.quantity || 0)}
@@ -167,7 +167,7 @@ export default function NutrientInfoCard({
               {totalDaily.FIBTG?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p className="font-semibold">
                 {totalNutrients.PROCNT?.label || "Protein"}
@@ -191,7 +191,7 @@ export default function NutrientInfoCard({
               {totalDaily.PROCNT?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between text-sm md:text-base">
             <span className="flex gap-2">
               <p className="font-semibold">
                 {totalNutrients.CHOLE?.label || "Cholesterol"}
@@ -208,7 +208,7 @@ export default function NutrientInfoCard({
       </div>
       <div>
         <ul>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.NA?.label?.split(", ")[0] || "Sodium"}</p>{" "}
               {round(totalNutrients.NA?.quantity || 0)}
@@ -219,7 +219,7 @@ export default function NutrientInfoCard({
               {totalDaily.NA?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.CA?.label?.split(", ")[0] || "Calcium"}</p>{" "}
               {round(totalNutrients.CA?.quantity || 0)}
@@ -230,7 +230,7 @@ export default function NutrientInfoCard({
               {totalDaily.CA?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.MG?.label?.split(", ")[0] || "Magnesium"}</p>{" "}
               {round(totalNutrients.MG?.quantity || 0)}
@@ -241,7 +241,7 @@ export default function NutrientInfoCard({
               {totalDaily.MG?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.K?.label?.split(", ")[0] || "Potassium"}</p>{" "}
               {round(totalNutrients.K?.quantity || 0)}
@@ -252,7 +252,7 @@ export default function NutrientInfoCard({
               {totalDaily.K?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.FE?.label?.split(", ")[0] || "Iron"}</p>{" "}
               {round(totalNutrients.FE?.quantity || 0)}
@@ -263,7 +263,7 @@ export default function NutrientInfoCard({
               {totalDaily.FE?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.ZN?.label?.split(", ")[0] || "Zinc"}</p>{" "}
               {round(totalNutrients.ZN?.quantity || 0)}
@@ -274,7 +274,7 @@ export default function NutrientInfoCard({
               {totalDaily.ZN?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.P?.label?.split(", ")[0] || "Phosphorus"}</p>{" "}
               {round(totalNutrients.P?.quantity || 0)}
@@ -285,7 +285,7 @@ export default function NutrientInfoCard({
               {totalDaily.P?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.VITC?.label?.split(", ")[0] || "Vitamin C"}</p>{" "}
               {round(totalNutrients.VITC?.quantity || 0)}
@@ -296,7 +296,7 @@ export default function NutrientInfoCard({
               {totalDaily.VITC?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.THIA?.label || "Thiamin"}</p>{" "}
               {round(totalNutrients.THIA?.quantity || 0)}
@@ -307,7 +307,7 @@ export default function NutrientInfoCard({
               {totalDaily.THIA?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.RIBF?.label || "Riboflavin"}</p>{" "}
               {round(totalNutrients.RIBF?.quantity || 0)}
@@ -318,7 +318,7 @@ export default function NutrientInfoCard({
               {totalDaily.RIBF?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.NIA?.label || "Niacin"}</p>{" "}
               {round(totalNutrients.NIA?.quantity || 0)}
@@ -329,7 +329,7 @@ export default function NutrientInfoCard({
               {totalDaily.NIA?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.VITB6A?.label || "Vitamin B-6"}</p>{" "}
               {round(totalNutrients.VITB6A?.quantity || 0)}
@@ -340,7 +340,7 @@ export default function NutrientInfoCard({
               {totalDaily.VITB6A?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.FOLDFE?.label?.split(", ")[0] || "Folate"}</p>{" "}
               {round(totalNutrients.FOLDFE?.quantity || 0)}
@@ -351,7 +351,7 @@ export default function NutrientInfoCard({
               {totalDaily.FOLDFE?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between border-b capitalize">
+          <li className="flex justify-between border-b capitalize text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.FOLAC?.label || "Folic Acid"}</p>{" "}
               {round(totalNutrients.FOLAC?.quantity || 0)}
@@ -359,7 +359,7 @@ export default function NutrientInfoCard({
             </span>
             <p></p>
           </li>
-          <li className="flex justify-between border-b">
+          <li className="flex justify-between border-b text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.VITB12?.label || "Vitamin B-12"}</p>{" "}
               {round(totalNutrients.VITB12?.quantity || 0)}
@@ -370,7 +370,7 @@ export default function NutrientInfoCard({
               {totalDaily.VITB12?.unit || "%"}
             </p>
           </li>
-          <li className="flex justify-between">
+          <li className="flex justify-between text-sm md:text-base">
             <span className="flex gap-2">
               <p>{totalNutrients.VITD?.label || "Vitamin D (D2 + D3)"}</p>{" "}
               {round(totalNutrients.VITD?.quantity || 0)}

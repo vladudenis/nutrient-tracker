@@ -8,7 +8,7 @@ export default function HomeAction() {
   const { nutrients } = store();
 
   return (
-    <div className="mx-auto flex justify-center items-center">
+    <div className="flex justify-center items-center">
       {nutrients ? <Result /> : <Form />}
     </div>
   );

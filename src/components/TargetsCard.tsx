@@ -67,7 +67,7 @@ export default function TargetsCard({
   };
 
   return (
-    <div className="flex flex-col gap-5 items-center w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
+    <div className="flex flex-col gap-5 items-center sm:w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
       <p className="font-semibold text-xl mb-2">Daily Targets</p>
       <Form {...form}>
         <form
@@ -158,19 +158,19 @@ export default function TargetsCard({
       <Separator orientation="horizontal" />
 
       <div className="w-full flex flex-col gap-2">
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Fat</p>
           <p>{round((fatValue * caloricValue) / 900)} g</p>
         </span>
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Protein</p>
           <p>{round((proteinValue * caloricValue) / 400)} g</p>
         </span>
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Carbohydrate</p>
           <p>{round((carbsValue * caloricValue) / 400)} g</p>
         </span>
-        <span className="w-full flex justify-between">
+        <span className="w-full flex justify-between text-sm xs:text-base">
           <p>Result</p>
           <p>
             {calculateCaloricResult(

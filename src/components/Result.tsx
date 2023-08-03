@@ -26,7 +26,7 @@ export default function Result() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex gap-8 justify-center">
+      <div className="flex gap-8 justify-center flex-wrap">
         {nutrients?.map((nutrientInfo, idx) => (
           <NutrientInfo
             key={idx}
@@ -44,7 +44,7 @@ export default function Result() {
       </div>
 
       <div className="flex justify-center">
-        <div className="flex gap-12">
+        <div className="flex justify-center gap-4 md:gap-12 flex-wrap">
           {nutrients &&
             nutrients.length >= 2 &&
             !hideButtons &&

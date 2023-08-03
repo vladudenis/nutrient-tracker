@@ -25,11 +25,11 @@ export default function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-24 px-24 py-16">
+    <main className="flex min-h-screen flex-col items-center gap-24 px-8 lg:px-24 py-16">
       <PageHeader text="Your Nutrition Plan" />
 
       {healthParameters !== undefined ? (
-        <div className="flex justify-center gap-24">
+        <div className="flex justify-center gap-12 md:gap-24 flex-wrap">
           {healthParameters ? (
             <BodyParametersCard
               user={session.user.email}
