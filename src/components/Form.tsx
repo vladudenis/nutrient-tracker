@@ -23,8 +23,15 @@ export default function Form() {
 
   const onSubmit = async (data: any) => {
     const textInputs = data.textInput.split("\n");
+
     setIsLoading(true);
     setIsParseFailure(false);
+
+    if (textInputs.length > 6) {
+      setIsLoading(false);
+      setIsParseFailure(true);
+      return;
+    }
 
     const allNutrients = await fetchNutrients({ textInputs });
 
