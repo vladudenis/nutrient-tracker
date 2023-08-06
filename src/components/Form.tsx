@@ -41,6 +41,8 @@ export default function Form() {
       return;
     }
 
+    console.log(allNutrients);
+
     for (const nutrientInfo of allNutrients) {
       if (!nutrientInfo.ingredients[0].parsed) {
         setIsLoading(false);
