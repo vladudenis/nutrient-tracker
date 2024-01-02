@@ -17,7 +17,3 @@ Run the Convex development environment:
 ```bash
 npx convex dev
 ```
-
-## TODO
-
-Add Statistics
