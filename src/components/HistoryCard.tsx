@@ -135,7 +135,7 @@ export default function HistoryCard({
               {surpluses[1].map((surpl, idx) => (
                 <span
                   key={idx}
-                  className="text-yellow-400 flex justify-between"
+                  className="text-purple-700 flex justify-between"
                 >
                   <p>{surpl.label}</p>
                   <p>{Math.round(surpl.quantity)}%</p>

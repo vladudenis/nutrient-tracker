@@ -1,5 +1,5 @@
-import { Id } from "./_generated/dataModel";
-import { mutation, query } from "./_generated/server";
+import {Id} from "./_generated/dataModel";
+import {mutation, query} from "./_generated/server";
 
 /**
  * Inserts the body parameters into the db
@@ -131,11 +131,9 @@ export const fetchHealthParameters = query(
       user: string;
     }
   ) => {
-    const healthParameters = await db
-      .query("healthParameters")
-      .filter((q) => q.eq(q.field("user"), user))
-      .unique();
-
-    return healthParameters;
+      return await db
+        .query("healthParameters")
+        .filter((q) => q.eq(q.field("user"), user))
+        .unique();
   }
 );
