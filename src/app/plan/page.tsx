@@ -1,15 +1,15 @@
 'use client'
 
-import BodyParametersCard from '@/components/BodyParametersCard'
+import BodyParametersCard from '@/components/plan/BodyParametersCard'
 import PageHeader from '@/components/PageHeader'
 import { redirect } from 'next/navigation'
-import TargetsCard from '@/components/TargetsCard'
+import TargetsCard from '@/components/plan/TargetsCard'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { useSession } from 'next-auth/react'
 
 export default function Page() {
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const healthParameters = useQuery(
         api.healthParameters.fetchHealthParameters,
         { user: session?.user?.email! }

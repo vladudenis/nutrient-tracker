@@ -1,12 +1,12 @@
-import { Button } from './ui/button'
-import { ScrollArea } from './ui/scroll-area'
+import { Button } from '../ui/button'
+import { ScrollArea } from '../ui/scroll-area'
 import {
     calculateInsufficiencies,
     calculateSurpluses,
     calculateTotalNutrients,
     round,
 } from '@/lib/utilFuncs'
-import { Separator } from './ui/separator'
+import { Separator } from '../ui/separator'
 import useStore from '@/lib/store'
 
 export default function HistoryCard({
@@ -30,7 +30,7 @@ export default function HistoryCard({
     const { setShowHistoryDetails, setNutritionInfo } = useStore()
 
     return (
-        <div className="flex gap-4 justify-center h-[250px] rounded-lg shadow-md hover:shadow-2xl border duration-500 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
+        <div className="flex justify-center h-[250px] rounded-lg shadow-md hover:shadow-2xl border duration-500 transition-shadow animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
             <div className="flex flex-col items-center justify-center gap-5 px-2 xl:px-4 py-1 xl:py-2 w-48 lg:w-40 xl:w-48">
                 <span className="text-center">
                     <p className="text-2xl font-semibold">{day}</p>

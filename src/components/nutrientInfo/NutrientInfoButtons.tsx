@@ -6,7 +6,12 @@ import { Calculator, Eye } from 'lucide-react'
 import store from '@/lib/store'
 
 export default function NutrientInfoButtons() {
-    const { nutrients } = store()
+    let { nutrients, nutritionInfo } = store()
+
+    if (!nutrients) {
+        nutrients = nutritionInfo.intakes
+    }
+
     const [showTotal, setShowTotal] = useState(false)
     const hideButtons =
         nutrients &&

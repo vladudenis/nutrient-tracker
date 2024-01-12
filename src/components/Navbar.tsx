@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from './ui/button'
-import SignInDialog from './SignInDialog'
+import SignInDialog from './dialogs/SignInDialog'
 import { Separator } from './ui/separator'
 import { Avatar, AvatarImage } from './ui/avatar'
 import {
@@ -80,12 +80,12 @@ export default function Navbar() {
                             <span className="h-10 flex gap-8 hidden md:flex">
                                 <Link href="/history">
                                     <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Nutrition History
+                                        History
                                     </span>
                                 </Link>
                                 <Link href="/plan">
                                     <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Nutrition Plan
+                                        Plan
                                     </span>
                                 </Link>
                                 <Link href="/statistics">
@@ -111,16 +111,16 @@ export default function Navbar() {
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link href="/history">
+                                                    <Link href="/history/History">
                                                         <p className="font-semibold">
-                                                            Nutritional History
+                                                            History
                                                         </p>
                                                     </Link>
                                                 </li>
                                                 <li>
                                                     <Link href="/plan">
                                                         <p className="font-semibold">
-                                                            Nutritional Plan
+                                                            Plan
                                                         </p>
                                                     </Link>
                                                 </li>
