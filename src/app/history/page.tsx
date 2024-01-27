@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
-import HistoryAction from "@/components/actions/HistoryAction"
-import {getServerSession} from "next-auth";
+import HistoryAction from '@/components/actions/HistoryAction'
+import { getServerSession } from 'next-auth'
 
 export default async function Page() {
     const session = await getServerSession()
