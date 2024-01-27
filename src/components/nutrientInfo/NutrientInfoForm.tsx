@@ -27,7 +27,7 @@ export default function NutrientInfoForm() {
         setIsLoading(true)
         setIsParseFailure(false)
 
-        if (textInputs.length > 6) {
+        if (textInputs.length > 12) {
             setIsLoading(false)
             setIsParseFailure(true)
             return
