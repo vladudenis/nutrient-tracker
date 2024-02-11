@@ -67,9 +67,10 @@ export default function Navbar() {
                     </Link>
                     {status == 'loading' ? (
                         <span className="flex items-center gap-8 pt-2">
-                            <Skeleton className="h-5 w-[125px]" />
+                            <Skeleton className="h-5 w-[150px]" />
                             <Skeleton className="h-5 w-[100px]" />
-                            <Skeleton className="h-5 w-[80px]" />
+                            <Skeleton className="h-5 w-[50px]" />
+                            <Skeleton className="h-5 w-[75px]" />
                         </span>
                     ) : session ? (
                         <>
@@ -78,14 +79,19 @@ export default function Navbar() {
                                 orientation="vertical"
                             />
                             <span className="h-10 flex gap-8 hidden md:flex">
+                                <Link href="/params">
+                                    <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                                        Physical Parameters
+                                    </span>
+                                </Link>
                                 <Link href="/history">
                                     <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        History
+                                        Nutrition History
                                     </span>
                                 </Link>
                                 <Link href="/plan">
                                     <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Plan
+                                        Planner
                                     </span>
                                 </Link>
                                 <Link href="/statistics">
@@ -145,7 +151,7 @@ export default function Navbar() {
                     {status == 'loading' ? (
                         <div className="flex items-center gap-4 pt-1">
                             <Skeleton className="h-8 w-8 rounded-full" />
-                            <Skeleton className="h-5 w-[200px]" />
+                            <Skeleton className="h-5 w-[125px]" />
                             <Skeleton className="h-6 w-6" />
                         </div>
                     ) : session ? (
