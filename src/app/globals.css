@@ -4,6 +4,6 @@
 
 @layer base {
     *:focus, *:active {
-        outline: none;
+        @apply outline-none;
     }
 }

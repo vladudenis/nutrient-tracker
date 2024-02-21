@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { Calculator, Eye } from 'lucide-react'
 import store from '@/lib/store'
 
@@ -64,21 +63,21 @@ export default function NutrientInfoButtons() {
                 nutrients.length >= 2 &&
                 !hideButtons &&
                 (showTotal ? (
-                    <Button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2"
+                    <button
+                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn"
                         onClick={showDetails}
                     >
                         <Eye />
                         Show Details
-                    </Button>
+                    </button>
                 ) : (
-                    <Button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2"
+                    <button
+                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn"
                         onClick={calculateTotal}
                     >
                         <Calculator />
                         Calculate Total
-                    </Button>
+                    </button>
                 ))}
         </>
     )

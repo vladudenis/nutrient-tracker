@@ -7,14 +7,6 @@ import {
     ReactPortal,
     PromiseLikeOfReactNode,
 } from 'react'
-import { Button } from '../ui/button'
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '../ui/dialog'
 import toast from 'react-hot-toast'
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
@@ -22,18 +14,7 @@ import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import store from '@/lib/store'
 import { Loader2, Save } from 'lucide-react'
-import { Label } from '../ui/label'
-import { Textarea } from '../ui/textarea'
 import { useForm } from 'react-hook-form'
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
 
 export default function NutrientIntakeDialog(props: {
     children:
@@ -79,73 +60,71 @@ export default function NutrientIntakeDialog(props: {
     }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>{props.children}</DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Save Nutrient Intake</DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid gap-4 py-4">
-                        <div className="mb-4 flex flex-col gap-2">
-                            <Label className="text-left">Meal Type</Label>
-                            <Select
-                                onValueChange={(v) => setMealType(v)}
-                                value={mealType}
-                                defaultValue="Breakfast"
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select a meal type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>Meal Type</SelectLabel>
-                                        <SelectItem value="Breakfast">
-                                            Breakfast
-                                        </SelectItem>
-                                        <SelectItem value="Brunch">
-                                            Brunch
-                                        </SelectItem>
-                                        <SelectItem value="Lunch">
-                                            Lunch
-                                        </SelectItem>
-                                        <SelectItem value="Dinner">
-                                            Dinner
-                                        </SelectItem>
-                                        <SelectItem value="Snack">
-                                            Snack
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+        <>
+            <button
+                className="btn"
+                onClick={() =>
+                    // @ts-ignore
+                    document.getElementById('sign-in_modal').showModal()
+                }
+            >
+                {props.children}
+            </button>
+            <dialog id="sign-in_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Save Nutrient Intake</h3>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="grid gap-4 py-4">
+                            <div className="mb-4 flex flex-col gap-2">
+                                <label
+                                    htmlFor="meal-type"
+                                    className="text-left"
+                                >
+                                    Meal Type
+                                </label>
+                                <select
+                                    {...register('mealType')}
+                                    id="meal-type"
+                                    className="select select-bordered w-full max-w-xs"
+                                >
+                                    <option disabled selected>
+                                        Select a meal type
+                                    </option>
+                                    <option>Breakfast</option>
+                                    <option>Brunch</option>
+                                    <option>Lunch</option>
+                                    <option>Dinner</option>
+                                    <option>Snack</option>
+                                </select>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <label htmlFor="notes" className="text-left">
+                                    Additional Notes
+                                </label>
+                                <textarea
+                                    {...register('notes')}
+                                    id="notes"
+                                    className="textarea textarea-bordered resize-none"
+                                />
+                            </div>
+                            {isLoading ? (
+                                <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
+                                    <Loader2 className="animate-spin" />
+                                    Save
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn"
+                                >
+                                    <Save />
+                                    Save
+                                </button>
+                            )}
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="notes" className="text-left">
-                                Additional Notes
-                            </Label>
-                            <Textarea
-                                {...register('notes')}
-                                id="notes"
-                                className="resize-none"
-                            />
-                        </div>
-                        {isLoading ? (
-                            <Button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2">
-                                <Loader2 className="animate-spin" />
-                                Save
-                            </Button>
-                        ) : (
-                            <Button
-                                type="submit"
-                                className="bg-emerald-600 hover:bg-emerald-500 flex gap-2"
-                            >
-                                <Save />
-                                Save
-                            </Button>
-                        )}
-                    </div>
-                </form>
-            </DialogContent>
-        </Dialog>
+                    </form>
+                </div>
+            </dialog>
+        </>
     )
 }

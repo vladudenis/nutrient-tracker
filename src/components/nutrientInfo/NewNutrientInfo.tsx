@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '../ui/button'
 import NutrientInfoCard from './NutrientInfoCard'
 import store from '@/lib/store'
 import { Save, RotateCw } from 'lucide-react'
@@ -50,29 +49,29 @@ export default function NewNutrientInfo() {
                     {session
                         ? !hideButtons && (
                               <NutrientIntakeDialog>
-                                  <Button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2">
+                                  <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
                                       <Save />
                                       Save nutrient intake
-                                  </Button>
+                                  </button>
                               </NutrientIntakeDialog>
                           )
                         : !hideButtons && (
                               <SignInDialog>
-                                  <Button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2">
+                                  <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
                                       <Save />
                                       Save nutrient intake
-                                  </Button>
+                                  </button>
                               </SignInDialog>
                           )}
-                    <Button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2"
+                    <button
+                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn"
                         onClick={() => {
                             setNutrients(null)
                         }}
                     >
                         <RotateCw />
                         Try with other food
-                    </Button>
+                    </button>
                 </div>
             </div>
         </div>

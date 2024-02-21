@@ -1,12 +1,7 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import { Form } from '../ui/form'
-import { Label } from '../ui/label'
-import { Slider } from '../ui/slider'
 import { useState } from 'react'
-import { Button } from '../ui/button'
-import { Separator } from '../ui/separator'
 import useStore from '@/lib/store'
 import { calculateCaloricResult, round } from '@/lib/utilFuncs'
 import { useMutation } from 'convex/react'
@@ -69,97 +64,102 @@ export default function TargetsCard({
     return (
         <div className="flex flex-col gap-5 items-center sm:w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
             <p className="font-semibold text-xl mb-2">Daily Targets</p>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col items-center w-full gap-5"
-                >
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="calories">Calories</Label>
-                            <Label htmlFor="caloricValue">
-                                {caloricValue} kcal/day
-                            </Label>
-                        </span>
-                        <Slider
-                            id="calories"
-                            defaultValue={[caloricValue]}
-                            max={6000}
-                            min={500}
-                            step={1}
-                            onValueChange={(value) => setCaloricValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="fat">Fat</Label>
-                            <Label htmlFor="fatValue">{fatValue} %</Label>
-                        </span>
-                        <Slider
-                            id="fat"
-                            defaultValue={[fatIntake]}
-                            max={100}
-                            min={0}
-                            step={1}
-                            onValueChange={(value) => setFatValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="protein">Protein</Label>
-                            <Label htmlFor="proteinValue">
-                                {proteinValue} %
-                            </Label>
-                        </span>
-                        <Slider
-                            id="protein"
-                            defaultValue={[proteinIntake]}
-                            max={100}
-                            min={0}
-                            step={1}
-                            onValueChange={(value) => setProteinValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="carbs">Carbohydrate</Label>
-                            <Label htmlFor="carbsValue">{carbsValue} %</Label>
-                        </span>
-                        <Slider
-                            id="carbs"
-                            defaultValue={[carbsIntake]}
-                            max={100}
-                            min={0}
-                            step={1}
-                            onValueChange={(value) => setCarbsValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex justify-between w-full">
-                        <p>Total</p>
-                        {totalValue === 100 ? (
-                            <p>{totalValue} %</p>
-                        ) : (
-                            <p className="text-red-500">{totalValue} %</p>
-                        )}
-                    </div>
-
-                    {isLoading ? (
-                        <Button>
-                            <Loader2 className="animate-spin mr-2" />
-                            {notSet ? 'Set Targets' : 'Update Targets'}
-                        </Button>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col items-center w-full gap-5"
+            >
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="calories">Calories</label>
+                        <label htmlFor="caloricValue">
+                            {caloricValue} kcal/day
+                        </label>
+                    </span>
+                    <input
+                        id="calories"
+                        type="range"
+                        min={500}
+                        max={6000}
+                        value={caloricValue}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) =>
+                            setCaloricValue(value[0])
+                        }
+                    />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="fat">Fat</label>
+                        <label htmlFor="fatValue">{fatValue} %</label>
+                    </span>
+                    <input
+                        id="fat"
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={fatIntake}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) => setFatValue(value[0])}
+                    />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="protein">Protein</label>
+                        <label htmlFor="proteinValue">{proteinValue} %</label>
+                    </span>
+                    <input
+                        id="protein"
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={proteinIntake}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) =>
+                            setProteinValue(value[0])
+                        }
+                    />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="carbs">Carbohydrate</label>
+                        <label htmlFor="carbsValue">{carbsValue} %</label>
+                    </span>
+                    <input
+                        id="carbs"
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={carbsIntake}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) => setCarbsValue(value[0])}
+                    />
+                </div>
+                <div className="flex justify-between w-full">
+                    <p>Total</p>
+                    {totalValue === 100 ? (
+                        <p>{totalValue} %</p>
                     ) : (
-                        <Button
-                            disabled={disableButton || totalValue !== 100}
-                            type="submit"
-                        >
-                            {notSet ? 'Set Targets' : 'Update Targets'}
-                        </Button>
+                        <p className="text-red-500">{totalValue} %</p>
                     )}
-                </form>
-            </Form>
+                </div>
 
-            <Separator orientation="horizontal" />
+                {isLoading ? (
+                    <button className="btn">
+                        <Loader2 className="animate-spin mr-2" />
+                        {notSet ? 'Set Targets' : 'Update Targets'}
+                    </button>
+                ) : (
+                    <button
+                        className="btn"
+                        disabled={disableButton || totalValue !== 100}
+                        type="submit"
+                    >
+                        {notSet ? 'Set Targets' : 'Update Targets'}
+                    </button>
+                )}
+            </form>
+
+            <div className="divider" />
 
             <div className="w-full flex flex-col gap-2">
                 <span className="w-full flex justify-between text-sm xs:text-base">
@@ -185,12 +185,12 @@ export default function TargetsCard({
                 </span>
             </div>
 
-            <Separator orientation="horizontal" />
+            <div className="divider" />
 
-            <Label className="text-xs flex gap-2 items-center">
+            <label className="text-xs flex gap-2 items-center">
                 <InfoIcon />
                 Update parameters or targets to change the result!
-            </Label>
+            </label>
         </div>
     )
 }

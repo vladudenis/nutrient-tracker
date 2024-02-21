@@ -1,12 +1,9 @@
-import { Button } from '../ui/button'
-import { ScrollArea } from '../ui/scroll-area'
 import {
     calculateInsufficiencies,
     calculateSurpluses,
     calculateTotalNutrients,
     round,
 } from '@/lib/utilFuncs'
-import { Separator } from '../ui/separator'
 import useStore from '@/lib/store'
 
 export default function HistoryCard({
@@ -37,7 +34,8 @@ export default function HistoryCard({
                     <p>{formattedDate}</p>
                 </span>
                 <p className="text-lg font-mono">{mealType}</p>
-                <Button
+                <button
+                    className="btn"
                     onClick={() => {
                         nutritionalInfo.totalNutrientIntake =
                             totalNutrientIntake
@@ -47,11 +45,11 @@ export default function HistoryCard({
                     }}
                 >
                     See Details
-                </Button>
+                </button>
             </div>
 
             <div className="py-6 hidden xs:block">
-                <Separator orientation="vertical" />
+                <div className="divider divider-horizontal" />
             </div>
 
             <div className="flex flex-col items-center justify-center px-2 xl:px-4 py-1 xl:py-2 hidden xs:flex">
@@ -61,7 +59,7 @@ export default function HistoryCard({
                         <p>Calories:</p>
                         <p>{round(totalNutrientIntake.calories)}kcal</p>
                     </span>
-                    <Separator orientation="horizontal" />
+                    <div className="divider divider-horizontal" />
                     <span className="flex justify-between">
                         <p>Fat:</p>
                         <p>
@@ -105,7 +103,7 @@ export default function HistoryCard({
             </div>
 
             <div className="py-6 hidden lg:block">
-                <Separator orientation="vertical" />
+                <div className="divider divider-horizontal" />
             </div>
 
             <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-40 xl:w-48 hidden lg:grid">
@@ -115,7 +113,7 @@ export default function HistoryCard({
                     </p>
                 </div>
                 {insufficiencies && insufficiencies.length && (
-                    <ScrollArea className="rounded-md border row-span-3 mb-4 px-2">
+                    <div className="rounded-md border row-span-3 mb-4 px-2">
                         <div className="flex flex-col">
                             {insufficiencies[0].map((insuff, i) => (
                                 <span
@@ -138,12 +136,12 @@ export default function HistoryCard({
                                 </span>
                             ))}
                         </div>
-                    </ScrollArea>
+                    </div>
                 )}
             </div>
 
             <div className="py-6 hidden lg:block">
-                <Separator orientation="vertical" />
+                <div className="divider divider-horizontal" />
             </div>
 
             <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-40 xl:w-48 hidden lg:grid">
@@ -153,7 +151,7 @@ export default function HistoryCard({
                     </p>
                 </div>
                 {surpluses && surpluses.length && (
-                    <ScrollArea className="rounded-md border row-span-3 mb-4 px-2">
+                    <div className="rounded-md border row-span-3 mb-4 px-2">
                         <div className="flex flex-col">
                             {surpluses[0].map((suff, idx) => (
                                 <span
@@ -176,12 +174,12 @@ export default function HistoryCard({
                                 </span>
                             ))}
                         </div>
-                    </ScrollArea>
+                    </div>
                 )}
             </div>
 
             <div className="py-6">
-                <Separator orientation="vertical" />
+                <div className="divider divider-horizontal" />
             </div>
 
             <div className="grid grid-rows-4 px-2 xl:px-4 py-1 xl:py-2 w-48 lg:w-40 xl:w-48 hidden md:grid">
@@ -189,7 +187,7 @@ export default function HistoryCard({
                     <p className="text-lg font-semibold">Notes</p>
                 </div>
                 <div className="row-span-3 mb-8 flex flex-col items-center">
-                    <Separator orientation="horizontal" />
+                    <div className="divider divider-horizontal" />
                     <span>{notes}</span>
                 </div>
             </div>

@@ -1,26 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-} from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
-import { Slider } from '@/components/ui/slider'
-import { Label } from '@/components/ui/label'
 import { round } from '@/lib/utilFuncs'
 import useStore from '@/lib/store'
 import { useMutation } from 'convex/react'
@@ -102,160 +83,123 @@ export default function BodyParametersCard({
     return (
         <div className="flex flex-col gap-5 items-center sm:w-[400px] px-6 pt-4 pb-6 rounded-lg shadow-md hover:shadow-2xl duration-500 border animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out">
             <p className="font-semibold text-xl mb-2">Body Parameters</p>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col items-center w-full gap-5"
-                >
-                    <FormField
-                        control={form.control}
-                        name="sex"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={() =>
-                                            setSexValue(field.value)
-                                        }
-                                        defaultValue={sex}
-                                        className="flex gap-12"
-                                    >
-                                        <FormItem className="flex items-center space-x-1 space-y-0">
-                                            <FormControl>
-                                                <RadioGroupItem
-                                                    value="male"
-                                                    onClick={() =>
-                                                        (field.value = 'male')
-                                                    }
-                                                />
-                                            </FormControl>
-                                            <FormLabel>Male</FormLabel>
-                                        </FormItem>
-                                        <FormItem className="flex items-center space-x-1 space-y-0">
-                                            <FormControl>
-                                                <RadioGroupItem
-                                                    value="female"
-                                                    onClick={() =>
-                                                        (field.value = 'female')
-                                                    }
-                                                />
-                                            </FormControl>
-                                            <FormLabel>Female</FormLabel>
-                                        </FormItem>
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
-                        )}
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col items-center w-full gap-5"
+            >
+                <div className="form-control">
+                    <label className="label cursor-pointer">
+                        <span className="label-text">Male</span>
+                        <input
+                            type="radio"
+                            name="radio-10"
+                            className="radio checked:bg-red-500"
+                            checked
+                        />
+                    </label>
+                </div>
+                <div className="form-control">
+                    <label className="label cursor-pointer">
+                        <span className="label-text">Female</span>
+                        <input
+                            type="radio"
+                            name="radio-10"
+                            className="radio checked:bg-blue-500"
+                            checked
+                        />
+                    </label>
+                </div>
+
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="height">Height</label>
+                        <label htmlFor="heightValue">{heightValue} cm</label>
+                    </span>
+                    <input
+                        id="height"
+                        type="range"
+                        min={120}
+                        max={250}
+                        value={weight}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) =>
+                            setHeightValue(value[0])
+                        }
                     />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="weight">Weight</label>
+                        <label htmlFor="weightValue">{weightValue} kg</label>
+                    </span>
+                    <input
+                        id="weight"
+                        type="range"
+                        min={1}
+                        max={200}
+                        value={weight}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) =>
+                            setWeightValue(value[0])
+                        }
+                    />
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="flex justify-between">
+                        <label htmlFor="age">Age</label>
+                        <label htmlFor="ageValue">{ageValue} yrs</label>
+                    </span>
+                    <input
+                        id="age"
+                        type="range"
+                        min={18}
+                        max={100}
+                        value={age}
+                        className="range range-primary"
+                        onVolumeChange={(value: any) => setAgeValue(value[0])}
+                    />
+                </div>
 
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="height">Height</Label>
-                            <Label htmlFor="heightValue">
-                                {heightValue} cm
-                            </Label>
-                        </span>
-                        <Slider
-                            id="height"
-                            defaultValue={[height]}
-                            max={250}
-                            min={120}
-                            step={1}
-                            onValueChange={(value) => setHeightValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="weight">Weight</Label>
-                            <Label htmlFor="weightValue">
-                                {weightValue} kg
-                            </Label>
-                        </span>
-                        <Slider
-                            id="weight"
-                            defaultValue={[weight]}
-                            max={200}
-                            min={1}
-                            step={1}
-                            onValueChange={(value) => setWeightValue(value[0])}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="flex justify-between">
-                            <Label htmlFor="age">Age</Label>
-                            <Label htmlFor="ageValue">{ageValue} yrs</Label>
-                        </span>
-                        <Slider
-                            id="age"
-                            defaultValue={[age]}
-                            max={100}
-                            min={18}
-                            step={1}
-                            onValueChange={(value) => setAgeValue(value[0])}
-                        />
-                    </div>
+                <div className="flex flex-col gap-2 w-full mt-2">
+                    <label className="text-left">
+                        Intensity of physical exercise
+                    </label>
+                    <select
+                        id="pal"
+                        className="select select-bordered w-full max-w-xs"
+                    >
+                        <option disabled selected>
+                            Select intensity of physical act
+                        </option>
+                        <option value="1.2">Little/No Exercise</option>
+                        <option value="1.4">
+                            Light Exercise 1-2 times/week
+                        </option>
+                        <option value="1.6">
+                            Moderate Exercise 2-3 times/week
+                        </option>
+                        <option value="1.75">
+                            Hard Exercise 3-5 times/week
+                        </option>
+                        <option value="2">
+                            Physical Job or Hard Exercise 6-7 times/week
+                        </option>
+                    </select>
+                </div>
 
-                    <div className="flex flex-col gap-2 w-full mt-2">
-                        <Label className="text-left">
-                            Intensity of physical exercise
-                        </Label>
-                        <FormField
-                            control={form.control}
-                            name="pal"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <Select
-                                            onValueChange={(v) =>
-                                                setPalValue(Number(v))
-                                            }
-                                            value={palValue.toString()}
-                                            defaultValue={pal.toString()}
-                                        >
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select intensity of physical activity" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="1.2">
-                                                    Little/No Exercise
-                                                </SelectItem>
-                                                <SelectItem value="1.4">
-                                                    Light Exercise 1-2
-                                                    times/week
-                                                </SelectItem>
-                                                <SelectItem value="1.6">
-                                                    Moderate Exercise 2-3
-                                                    times/week
-                                                </SelectItem>
-                                                <SelectItem value="1.75">
-                                                    Hard Exercise 3-5 times/week
-                                                </SelectItem>
-                                                <SelectItem value="2">
-                                                    Physical Job or Hard
-                                                    Exercise 6-7 times/week
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                {isLoading ? (
+                    <button className="btn">
+                        <Loader2 className="animate-spin mr-2" />
+                        {id ? 'Update Parameters' : 'Set Parameters'}
+                    </button>
+                ) : (
+                    <button className="btn" type="submit">
+                        {id ? 'Update Parameters' : 'Set Parameters'}
+                    </button>
+                )}
+            </form>
 
-                    {isLoading ? (
-                        <Button>
-                            <Loader2 className="animate-spin mr-2" />
-                            {id ? 'Update Parameters' : 'Set Parameters'}
-                        </Button>
-                    ) : (
-                        <Button type="submit">
-                            {id ? 'Update Parameters' : 'Set Parameters'}
-                        </Button>
-                    )}
-                </form>
-            </Form>
-
-            <Separator orientation="horizontal" />
+            <div className="divider" />
 
             <div className="w-full flex flex-col gap-2">
                 <span className="w-full flex justify-between text-sm xs:text-base">
@@ -284,12 +228,12 @@ export default function BodyParametersCard({
                 </span>
             </div>
 
-            <Separator orientation="horizontal" />
+            <div className="divider" />
 
-            <Label className="text-xs flex gap-2 items-center">
+            <label className="text-xs flex gap-2 items-center">
                 <InfoIcon />
                 Click the button to override existing parameters.
-            </Label>
+            </label>
         </div>
     )
 }

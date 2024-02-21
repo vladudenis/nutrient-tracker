@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '../ui/button'
 import NutrientInfoCard from './NutrientInfoCard'
 import store from '@/lib/store'
 import { ArrowBigLeft } from 'lucide-react'
@@ -30,15 +29,15 @@ export default function SavedNutrientInfo() {
             <div className="flex justify-center">
                 <div className="flex gap-12">
                     <NutrientInfoButtons />
-                    <Button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2"
+                    <button
+                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn"
                         onClick={() => {
                             setShowHistoryDetails(false)
                         }}
                     >
                         <ArrowBigLeft />
                         Go back to history
-                    </Button>
+                    </button>
                 </div>
             </div>
         </div>

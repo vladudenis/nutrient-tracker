@@ -1,67 +1,53 @@
 'use client'
 
-import {
-    ReactElement,
-    JSXElementConstructor,
-    ReactNode,
-    ReactPortal,
-    PromiseLikeOfReactNode,
-} from 'react'
-import { Button } from '../ui/button'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '../ui/dialog'
 import { BsDiscord, BsGoogle, BsGithub } from 'react-icons/bs'
 import { signIn } from 'next-auth/react'
 
-export default function SignInDialog(props: {
-    children:
-        | string
-        | number
-        | boolean
-        | ReactElement<any, string | JSXElementConstructor<any>>
-        | Iterable<ReactNode>
-        | ReactPortal
-        | PromiseLikeOfReactNode
-        | null
-        | undefined
-}) {
+export default function SignInDialog({ text }: { text: string }) {
     return (
-        <Dialog>
-            <DialogTrigger asChild>{props.children}</DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Sign In</DialogTitle>
-                    <DialogDescription>
+        <>
+            <button
+                className="btn"
+                onClick={() =>
+                    // @ts-ignore
+                    document.getElementById('sign-in_modal').showModal()
+                }
+            >
+                {text}
+            </button>
+            <dialog id="sign-in_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Sign In</h3>
+                    <p className="py-4">
                         Please sign in using an authentication provider below.
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <Button
-                        className="flex gap-2"
-                        onClick={() => signIn('github')}
-                    >
-                        <BsGithub /> Sign in with GitHub
-                    </Button>
-                    <Button
-                        className="flex gap-2 bg-amber-500 hover:bg-amber-400"
-                        onClick={() => signIn('google')}
-                    >
-                        <BsGoogle /> Sign in with Google
-                    </Button>
-                    <Button
-                        className="flex gap-2 bg-blue-600 hover:bg-blue-500"
-                        onClick={() => signIn('discord')}
-                    >
-                        <BsDiscord /> Sign in with Discord
-                    </Button>
+                    </p>
+                    <div className="grid gap-4 py-4">
+                        <button
+                            className="flex gap-2 btn"
+                            onClick={() => signIn('github')}
+                        >
+                            <BsGithub /> Sign in with GitHub
+                        </button>
+                        <button
+                            className="flex gap-2 bg-amber-500 hover:bg-amber-400 btn"
+                            onClick={() => signIn('google')}
+                        >
+                            <BsGoogle /> Sign in with Google
+                        </button>
+                        <button
+                            className="flex gap-2 bg-blue-600 hover:bg-blue-500 btn"
+                            onClick={() => signIn('discord')}
+                        >
+                            <BsDiscord /> Sign in with Discord
+                        </button>
+                    </div>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn">Close</button>
+                        </form>
+                    </div>
                 </div>
-            </DialogContent>
-        </Dialog>
+            </dialog>
+        </>
     )
 }

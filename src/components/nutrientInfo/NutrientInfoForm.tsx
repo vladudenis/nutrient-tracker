@@ -1,9 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '../ui/button'
-import { Label } from '../ui/label'
-import { Textarea } from '../ui/textarea'
 import { Loader2 } from 'lucide-react'
 import store from '@/lib/store'
 import { useForm } from 'react-hook-form'
@@ -59,14 +56,14 @@ export default function NutrientInfoForm() {
             className="flex flex-col gap-8 animate-jump-in animate-once animate-duration-[400ms] animate-delay-100 animate-ease-in-out"
         >
             <div className="flex flex-col gap-4">
-                <Label htmlFor="food-info" className="text-lg">
+                <p className="text-lg">
                     Enter some food and a unit of measurement:
-                </Label>
-                <Textarea
+                </p>
+                <textarea
                     {...register('textInput', { required: true })}
-                    className="md:w-[500px] h-[250px] resize-none text-lg"
+                    className="md:w-[500px] h-[250px] resize-none text-lg textarea textarea-bordered"
                     placeholder={
-                        '200 grams of chicken thigh\nthree ounces of rice\none cup of rapsberries'
+                        '200 g chicken thigh\n3 ounces of rice\n150 ml orange juice\n1 cup of broccoli'
                     }
                     id="info"
                 />
@@ -94,14 +91,14 @@ export default function NutrientInfoForm() {
 
             <div className="flex justify-center">
                 {isLoading ? (
-                    <Button className="h-10 w-40 text-lg">
+                    <button className="h-10 w-40 text-lg btn">
                         <Loader2 className="animate-spin mr-2" />
                         Submit
-                    </Button>
+                    </button>
                 ) : (
-                    <Button type="submit" className="h-10 w-40 text-lg">
+                    <button type="submit" className="h-10 w-40 text-lg btn">
                         Submit
-                    </Button>
+                    </button>
                 )}
             </div>
         </form>

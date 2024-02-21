@@ -5,7 +5,6 @@ import SavedNutrientInfo from '@/components/nutrientInfo/SavedNutrientInfo'
 import PageHeader from '@/components/PageHeader'
 import HistoryCard from '@/components/history/HistoryCard'
 import { Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
 import { usePaginatedQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
@@ -72,9 +71,12 @@ export default function HistoryAction() {
                             )}
                         </div>
                         {paginationStatus == 'CanLoadMore' && (
-                            <Button onClick={() => loadMore(batchSize)}>
+                            <button
+                                onClick={() => loadMore(batchSize)}
+                                className="btn"
+                            >
                                 Load More
-                            </Button>
+                            </button>
                         )}
                         {paginationStatus == 'LoadingMore' && (
                             <Loader2 className="animate-spin h-12 w-12" />
