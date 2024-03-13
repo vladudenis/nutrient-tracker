@@ -64,7 +64,7 @@ export default function NutrientInfoButtons() {
                 !hideButtons &&
                 (showTotal ? (
                     <button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn"
+                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn text-white"
                         onClick={showDetails}
                     >
                         <Eye />
@@ -72,7 +72,7 @@ export default function NutrientInfoButtons() {
                     </button>
                 ) : (
                     <button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn"
+                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn text-white"
                         onClick={calculateTotal}
                     >
                         <Calculator />

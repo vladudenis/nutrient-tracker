@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'NutriTracker',
+    title: 'NutrientTracker',
     description: 'Nutrition Tracker',
 }
 
@@ -24,9 +24,7 @@ export default async function RootLayout({
                 <AuthContext>
                     <ConvexClientProvider>
                         <Toaster position="top-center" reverseOrder={false} />
-                        <div className="w-full flex">
-                            <Navbar />
-                        </div>
+                        <Navbar />
                         {children}
                     </ConvexClientProvider>
                 </AuthContext>

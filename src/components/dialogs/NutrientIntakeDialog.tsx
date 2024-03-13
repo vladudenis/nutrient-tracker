@@ -62,7 +62,7 @@ export default function NutrientIntakeDialog(props: {
     return (
         <>
             <button
-                className="btn"
+                className="btn bg-emerald-600 hover:bg-emerald-500 flex gap-2 text-white"
                 onClick={() =>
                     // @ts-ignore
                     document.getElementById('sign-in_modal').showModal()
@@ -108,14 +108,14 @@ export default function NutrientIntakeDialog(props: {
                                 />
                             </div>
                             {isLoading ? (
-                                <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
+                                <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn text-white">
                                     <Loader2 className="animate-spin" />
                                     Save
                                 </button>
                             ) : (
                                 <button
                                     type="submit"
-                                    className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn"
+                                    className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn text-white"
                                 >
                                     <Save />
                                     Save

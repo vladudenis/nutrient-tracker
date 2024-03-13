@@ -1,6 +1,6 @@
 'use client'
 
-import NutrientInfoCard from './NutrientInfoCard'
+import NutrientInfoCard from '../cards/NutrientInfoCard'
 import store from '@/lib/store'
 import { Save, RotateCw } from 'lucide-react'
 import SignInDialog from '../dialogs/SignInDialog'
@@ -49,22 +49,17 @@ export default function NewNutrientInfo() {
                     {session
                         ? !hideButtons && (
                               <NutrientIntakeDialog>
-                                  <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
-                                      <Save />
-                                      Save nutrient intake
-                                  </button>
+                                  <Save />
+                                  Save nutrient intake
                               </NutrientIntakeDialog>
                           )
                         : !hideButtons && (
-                              <SignInDialog>
-                                  <button className="bg-emerald-600 hover:bg-emerald-500 flex gap-2 btn">
-                                      <Save />
-                                      Save nutrient intake
-                                  </button>
-                              </SignInDialog>
+                              <button className="btn" disabled>
+                                  Sign In To Save
+                              </button>
                           )}
                     <button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn"
+                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn text-white"
                         onClick={() => {
                             setNutrients(null)
                         }}

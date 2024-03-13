@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import SignInDialog from './dialogs/SignInDialog'
 import { signOut, useSession } from 'next-auth/react'
-import { LogOut, Bug, UserCircle, MenuIcon } from 'lucide-react'
+import { LogOut, UserCircle, MenuIcon } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Navbar() {
@@ -11,42 +11,39 @@ export default function Navbar() {
 
     return (
         <nav className="w-full px-12 xl:px-48 2xl:px-64 py-4 border-b">
-            <ul className="flex justify-between">
-                <li className="flex gap-4 h-10 py-2">
+            <ul className="flex justify-between items-center">
+                <li className="flex gap-4 items-center">
                     <Link className="hidden md:inline" href="/">
                         <span className="font-semibold text-lg">
-                            NutriTracker
+                            NutrientTracker
                         </span>
                     </Link>
                     {status == 'loading' ? (
-                        <span className="flex items-center gap-8 pt-2">
-                            <div className="skeleton h-5 w-[150px]" />
-                            <div className="skeleton h-5 w-[100px]" />
-                            <div className="skeleton h-5 w-[50px]" />
-                            <div className="skeleton h-5 w-[75px]" />
-                        </span>
-                    ) : session ? (
                         <>
                             <div className="hidden md:inline divider divider-horizontal" />
-                            <span className="h-10 flex gap-8 hidden md:flex">
-                                <Link href="/params">
-                                    <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Physical Parameters
+                            <span className="h-10 flex gap-8 items-center">
+                                <div className="skeleton h-5 w-[75px]" />
+                                <div className="skeleton h-5 w-[75px]" />
+                                <div className="skeleton h-5 w-[75px]" />
+                            </span>
+                        </>
+                    ) : session ? (
+                        <>
+                            <div className="hidden md:inline h-10 divider divider-horizontal" />
+                            <span className="h-10 flex gap-8 md:flex items-center">
+                                <Link href="/dashboard">
+                                    <span className="font-semibold text-md p-2 rounded-lg hover:bg-gray-200 transition-colors">
+                                        Dashboard
                                     </span>
                                 </Link>
-                                <Link href="/history">
-                                    <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Nutrition History
-                                    </span>
-                                </Link>
-                                <Link href="/plan">
-                                    <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
+                                <Link href="/planner">
+                                    <span className="font-semibold text-md p-2 rounded-lg hover:bg-gray-200 transition-colors">
                                         Planner
                                     </span>
                                 </Link>
-                                <Link href="/statistics">
-                                    <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                        Statistics
+                                <Link href="/history">
+                                    <span className="font-semibold text-md p-2 rounded-lg hover:bg-gray-200 transition-colors">
+                                        History
                                     </span>
                                 </Link>
                             </span>
@@ -55,15 +52,17 @@ export default function Navbar() {
                         <></>
                     )}
                 </li>
-                <li className="flex gap-4 items-center">
+                <li className="flex gap-4">
                     {status == 'loading' ? (
-                        <div className="flex items-center gap-4 pt-1">
-                            <div className="skeleton h-8 w-8 rounded-full" />
+                        <div className="h-10 flex gap-4 items-center">
                             <div className="skeleton h-5 w-[125px]" />
-                            <div className="skeleton h-6 w-6" />
+                            <div className="skeleton h-8 w-8 rounded-full" />
                         </div>
                     ) : session ? (
                         <>
+                            <span className="flex items-center">
+                                {session.user?.name}
+                            </span>
                             <div className="dropdown dropdown-end">
                                 <div
                                     tabIndex={0}
@@ -75,8 +74,8 @@ export default function Navbar() {
                                             <Image
                                                 alt="User Image"
                                                 src={session.user.image}
-                                                height={10}
-                                                width={10}
+                                                height={100}
+                                                width={100}
                                             />
                                         ) : (
                                             <UserCircle />
@@ -85,33 +84,21 @@ export default function Navbar() {
                                 </div>
                                 <ul
                                     tabIndex={0}
-                                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                                    className="mt-1 z-[1] p-1 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                                 >
                                     <li>
-                                        <a className="justify-between">
-                                            Profile
-                                            <span className="badge">New</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>Settings</a>
-                                    </li>
-                                    <li>
                                         <a onClick={() => signOut()}>
-                                            <LogOut className="mr-2" />
+                                            <LogOut />
                                             Sign Out
                                         </a>
                                     </li>
                                 </ul>
                             </div>
-                            <Link href="https://github.com/vladudenis/nutrient-tracker/issues/new">
-                                <span className="font-semibold text-sm hover:text-gray-500 transition-colors">
-                                    <Bug />
-                                </span>
-                            </Link>
                         </>
                     ) : (
-                        <SignInDialog text="Sign In" />
+                        <div>
+                            <SignInDialog text="Sign In" />
+                        </div>
                     )}
                 </li>
             </ul>

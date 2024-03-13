@@ -1,6 +1,6 @@
 'use client'
 
-import NutrientInfoCard from './NutrientInfoCard'
+import NutrientInfoCard from '../cards/NutrientInfoCard'
 import store from '@/lib/store'
 import { ArrowBigLeft } from 'lucide-react'
 import NutrientInfoButtons from '@/components/nutrientInfo/NutrientInfoButtons'
@@ -30,7 +30,7 @@ export default function SavedNutrientInfo() {
                 <div className="flex gap-12">
                     <NutrientInfoButtons />
                     <button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn"
+                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn text-white"
                         onClick={() => {
                             setShowHistoryDetails(false)
                         }}

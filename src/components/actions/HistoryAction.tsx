@@ -3,7 +3,7 @@
 import store from '@/lib/store'
 import SavedNutrientInfo from '@/components/nutrientInfo/SavedNutrientInfo'
 import PageHeader from '@/components/PageHeader'
-import HistoryCard from '@/components/history/HistoryCard'
+import HistoryCard from '@/components/cards/HistoryCard'
 import { Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { usePaginatedQuery } from 'convex/react'

@@ -7,7 +7,7 @@ export default function SignInDialog({ text }: { text: string }) {
     return (
         <>
             <button
-                className="btn"
+                className="btn bg-slate-500 hover:bg-slate-400 text-white"
                 onClick={() =>
                     // @ts-ignore
                     document.getElementById('sign-in_modal').showModal()
@@ -23,19 +23,19 @@ export default function SignInDialog({ text }: { text: string }) {
                     </p>
                     <div className="grid gap-4 py-4">
                         <button
-                            className="flex gap-2 btn"
+                            className="flex gap-2 btn bg-slate-500 hover:bg-slate-400 text-white"
                             onClick={() => signIn('github')}
                         >
                             <BsGithub /> Sign in with GitHub
                         </button>
                         <button
-                            className="flex gap-2 bg-amber-500 hover:bg-amber-400 btn"
+                            className="flex gap-2 bg-amber-500 hover:bg-amber-400 btn text-white"
                             onClick={() => signIn('google')}
                         >
                             <BsGoogle /> Sign in with Google
                         </button>
                         <button
-                            className="flex gap-2 bg-blue-600 hover:bg-blue-500 btn"
+                            className="flex gap-2 bg-blue-600 hover:bg-blue-500 btn text-white"
                             onClick={() => signIn('discord')}
                         >
                             <BsDiscord /> Sign in with Discord

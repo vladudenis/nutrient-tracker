@@ -96,7 +96,7 @@ export default function HistoryCard({
                                 totalNutrientIntake.totalNutrients.CHOLE
                                     .quantity
                             )}
-                            g
+                            mg
                         </p>
                     </span>
                 </div>
@@ -113,7 +113,7 @@ export default function HistoryCard({
                     </p>
                 </div>
                 {insufficiencies && insufficiencies.length && (
-                    <div className="rounded-md border row-span-3 mb-4 px-2">
+                    <div className="rounded-md border row-span-3 mb-4 px-2 overflow-scroll">
                         <div className="flex flex-col">
                             {insufficiencies[0].map((insuff, i) => (
                                 <span
@@ -151,7 +151,7 @@ export default function HistoryCard({
                     </p>
                 </div>
                 {surpluses && surpluses.length && (
-                    <div className="rounded-md border row-span-3 mb-4 px-2">
+                    <div className="rounded-md border row-span-3 mb-4 px-2 overflow-scroll">
                         <div className="flex flex-col">
                             {surpluses[0].map((suff, idx) => (
                                 <span
