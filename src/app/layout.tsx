@@ -1,10 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navbar from '../components/Navbar'
+import TopNavbar from '../components/navbars/TopNavbar'
+import SideNavbar from '@/components/navbars/SideNavbar'
 import AuthContext from './AuthContext'
 import ConvexClientProvider from './ConvexClientProvider'
 import { Toaster } from 'react-hot-toast'
+import { getServerSession } from 'next-auth'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,13 +20,15 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    const session = await getServerSession()
+
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
                 <AuthContext>
                     <ConvexClientProvider>
                         <Toaster position="top-center" reverseOrder={false} />
-                        <Navbar />
+                        {session ? <SideNavbar /> : <TopNavbar />}
                         {children}
                     </ConvexClientProvider>
                 </AuthContext>

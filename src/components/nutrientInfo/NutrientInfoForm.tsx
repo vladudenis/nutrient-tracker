@@ -63,7 +63,7 @@ export default function NutrientInfoForm() {
                     {...register('textInput', { required: true })}
                     className="md:w-[500px] h-[250px] resize-none text-lg textarea textarea-bordered"
                     placeholder={
-                        '200 g chicken thigh\n3 ounces of rice\n150 ml orange juice\n1 cup of broccoli'
+                        '3 large sunny side up eggs\n2 slices of bacon\n2 slices of buttered bread\n50 ml orange juice'
                     }
                     id="info"
                 />
