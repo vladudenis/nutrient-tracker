@@ -136,10 +136,11 @@ export function calculateTotalNutrients(objs: any[] | null | undefined) {
     return totalObj
 }
 
-const toAvoid = ['FAT', 'CHOCDF', 'PROCNT', 'ENERC_KCAL', 'FOLDFE']
-export function calculateInsufficiencies(obj: any | null | undefined) {
+export function getMicronutrientRows(obj: any | null | undefined): string[][] {
+    const micronutrients = [['Micronutrient', 'DV%']]
+
     if (!obj) {
-        return null
+        return micronutrients
     }
 
     for (const prop of essentialProperties) {
@@ -148,39 +149,19 @@ export function calculateInsufficiencies(obj: any | null | undefined) {
         }
     }
 
-    const insufficiencies: any[] = []
-    const deficiencies: any[] = []
     for (const prop in obj.totalDaily) {
-        if (
-            Math.round(obj.totalDaily[prop].quantity) < 80 &&
-            Math.round(obj.totalDaily[prop].quantity) >= 50 &&
-            obj.totalDaily[prop].label &&
-            !toAvoid.includes(prop)
-        ) {
-            insufficiencies.push({
-                label: obj.totalDaily[prop].label,
-                quantity: obj.totalDaily[prop].quantity,
-            })
-        } else if (
-            Math.round(obj.totalDaily[prop].quantity) < 50 &&
-            obj.totalDaily[prop].label &&
-            !toAvoid.includes(prop)
-        ) {
-            deficiencies.push({
-                label: obj.totalDaily[prop].label,
-                quantity: obj.totalDaily[prop].quantity,
-            })
-        }
+        micronutrients.push([
+            obj.totalDaily[prop].label,
+            `${Math.round(obj.totalDaily[prop].quantity)}%`,
+        ])
     }
 
-    const total = []
-    total.push(insufficiencies)
-    total.push(deficiencies)
-
-    return total
+    return micronutrients
 }
 
 export function calculateSurpluses(obj: any | null | undefined) {
+    const toAvoid = ['FAT', 'CHOCDF', 'PROCNT', 'ENERC_KCAL', 'FOLDFE']
+
     if (!obj) {
         return null
     }

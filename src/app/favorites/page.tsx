@@ -9,6 +9,6 @@ export default async function Page() {
     }
 
     return (
-        <main className="flex flex-col items-center gap-24 px-8 xl:px-24 py-16"></main>
+        <main className="flex flex-col items-center gap-24 pl-64 py-16"></main>
     )
 }
