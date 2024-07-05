@@ -1,34 +1,40 @@
-import { create } from "zustand";
+import { create } from 'zustand'
 
 type Store = {
-  nutrients: any[] | null;
-  setNutrients: (nutrients: any[] | null) => void;
+    session: any | null
+    setSession: (session: any) => void
 
-  nutritionInfo: any | null;
-  setNutritionInfo: (nutritionInfo: any | null) => void;
+    nutrients: any[] | null
+    setNutrients: (nutrients: any[] | null) => void
 
-  showHistoryDetails: boolean;
-  setShowHistoryDetails: (showHistoryDetails: boolean) => void;
+    nutritionInfo: any | null
+    setNutritionInfo: (nutritionInfo: any | null) => void
 
-  rCaloricIntake: number;
-  setRCaloricIntake: (caloricIntake: number) => void;
-};
+    showHistoryDetails: boolean
+    setShowHistoryDetails: (showHistoryDetails: boolean) => void
+
+    rCaloricIntake: number
+    setRCaloricIntake: (caloricIntake: number) => void
+}
 
 const useStore = create<Store>((set) => ({
-  nutrients: null,
-  setNutrients: (nutrients) => set((state) => ({ ...state, nutrients })),
+    session: null,
+    setSession: (session) => set((state) => ({ ...state, session })),
 
-  nutritionInfo: null,
-  setNutritionInfo: (nutritionInfo) =>
-    set((state) => ({ ...state, nutritionInfo })),
+    nutrients: null,
+    setNutrients: (nutrients) => set((state) => ({ ...state, nutrients })),
 
-  showHistoryDetails: false,
-  setShowHistoryDetails: (showHistoryDetails) =>
-    set((state) => ({ ...state, showHistoryDetails })),
+    nutritionInfo: null,
+    setNutritionInfo: (nutritionInfo) =>
+        set((state) => ({ ...state, nutritionInfo })),
 
-  rCaloricIntake: 1850,
-  setRCaloricIntake: (caloricIntake) =>
-    set((state) => ({ ...state, caloricIntake })),
-}));
+    showHistoryDetails: false,
+    setShowHistoryDetails: (showHistoryDetails) =>
+        set((state) => ({ ...state, showHistoryDetails })),
 
-export default useStore;
+    rCaloricIntake: 1850,
+    setRCaloricIntake: (caloricIntake) =>
+        set((state) => ({ ...state, caloricIntake })),
+}))
+
+export default useStore

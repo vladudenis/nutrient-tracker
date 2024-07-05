@@ -30,11 +30,8 @@ export default function NutrientIntakeDialog(props: {
 }) {
     const { register, handleSubmit } = useForm()
     const { data: session } = useSession()
-    const saveNutrientIntakeMutation = useMutation(
-        api.nutrientInfo.saveNutritionalInformation
-    )
+    const saveNutrientIntakeMutation = useMutation(api.meal.saveMeal)
     const [isLoading, setIsLoading] = useState(false)
-    const [mealType, setMealType] = useState('Breakfast')
     const { nutrients, setNutrients } = store()
 
     const onSubmit = async (data: any) => {
@@ -42,15 +39,13 @@ export default function NutrientIntakeDialog(props: {
             return
         }
 
-        const notes = data.notes || ''
-
         setIsLoading(true)
 
         await saveNutrientIntakeMutation({
             nutrientIntake: nutrients,
             user: session?.user?.email,
-            mealType,
-            notes,
+            mealType: data.mealType,
+            notes: data.notes || '',
         })
 
         toast.success('Nutrient intake was saved.')
@@ -87,9 +82,6 @@ export default function NutrientIntakeDialog(props: {
                                     id="meal-type"
                                     className="select select-bordered w-full max-w-xs"
                                 >
-                                    <option disabled selected>
-                                        Select a meal type
-                                    </option>
                                     <option>Breakfast</option>
                                     <option>Brunch</option>
                                     <option>Lunch</option>

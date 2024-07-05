@@ -6,7 +6,7 @@ import {
     Notebook,
     PieChart,
     History,
-    View,
+    Target,
     UserCircle,
     Star,
     Apple,
@@ -16,9 +16,11 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 export default function SideNavbar() {
     const { data: session } = useSession()
+    const pathname = usePathname()
 
     return (
         <>
@@ -56,8 +58,8 @@ export default function SideNavbar() {
                                     href="#"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
-                                    <View />
-                                    <span className="ms-3">Quick Overview</span>
+                                    <Target />
+                                    <span className="ms-3">Set Targets</span>
                                 </Link>
                             </li>
 
@@ -65,7 +67,11 @@ export default function SideNavbar() {
                                 <hr className="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700 w-[90%]" />
                             </span>
 
-                            <li>
+                            <li
+                                className={
+                                    pathname == '/tracker' ? 'bg-gray-100' : ''
+                                }
+                            >
                                 <Link
                                     href="/tracker"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -81,7 +87,13 @@ export default function SideNavbar() {
                                 <hr className="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700 w-[90%]" />
                             </span>
 
-                            <li>
+                            <li
+                                className={
+                                    pathname == '/dashboard'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                }
+                            >
                                 <Link
                                     href="/dashboard"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -90,7 +102,11 @@ export default function SideNavbar() {
                                     <span className="ms-3">Dashboard</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li
+                                className={
+                                    pathname == '/planner' ? 'bg-gray-100' : ''
+                                }
+                            >
                                 <Link
                                     href="/planner"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -99,7 +115,11 @@ export default function SideNavbar() {
                                     <span className="ms-3">Planner</span>
                                 </Link>
                             </li>
-                            <li>
+                            <li
+                                className={
+                                    pathname == '/history' ? 'bg-gray-100' : ''
+                                }
+                            >
                                 <Link
                                     href="/history"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -113,7 +133,13 @@ export default function SideNavbar() {
                                 <hr className="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700 w-[90%]" />
                             </span>
 
-                            <li>
+                            <li
+                                className={
+                                    pathname == '/favorites'
+                                        ? 'bg-gray-100'
+                                        : ''
+                                }
+                            >
                                 <Link
                                     href="/favorites"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"

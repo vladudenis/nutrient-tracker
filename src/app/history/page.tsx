@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import HistoryAction from '@/components/actions/HistoryAction'
+import HistorySwitch from '@/components/switches/HistorySwitch'
 import { getServerSession } from 'next-auth'
 
 export default async function Page() {
@@ -11,7 +11,7 @@ export default async function Page() {
 
     return (
         <main className="flex flex-col items-center gap-24 pl-64 py-16">
-            <HistoryAction />
+            <HistorySwitch />
         </main>
     )
 }
