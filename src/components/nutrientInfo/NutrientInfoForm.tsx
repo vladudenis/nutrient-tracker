@@ -16,7 +16,7 @@ export default function NutrientInfoForm() {
     const [isLoading, setIsLoading] = useState(false)
     const [isParseFailure, setIsParseFailure] = useState(false)
     const { setNutrients } = store()
-    const fetchNutrients = useAction(api.nutrientInfo.fetchNutrientInfo)
+    const fetchNutrients = useAction(api.nutrition.fetchNutrientInfo)
 
     const onSubmit = async (data: any) => {
         const textInputs = data.textInput.split('\n')

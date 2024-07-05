@@ -15,8 +15,8 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as healthParameters from "../healthParameters";
-import type * as nutrientInfo from "../nutrientInfo";
-import type * as nutrientIntake from "../nutrientIntake";
+import type * as meal from "../meal";
+import type * as nutrition from "../nutrition";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -28,8 +28,8 @@ import type * as nutrientIntake from "../nutrientIntake";
  */
 declare const fullApi: ApiFromModules<{
   healthParameters: typeof healthParameters;
-  nutrientInfo: typeof nutrientInfo;
-  nutrientIntake: typeof nutrientIntake;
+  meal: typeof meal;
+  nutrition: typeof nutrition;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

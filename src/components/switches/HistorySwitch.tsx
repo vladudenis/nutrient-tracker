@@ -3,23 +3,26 @@
 import store from '@/lib/store'
 import SavedNutrientInfo from '@/components/nutrientInfo/SavedNutrientInfo'
 import PageHeader from '@/components/PageHeader'
-import HistoryCard from '@/components/cards/HistoryCard'
+import HistoryMealCard from '@/components/cards/HistoryMealCard'
+import HistoryDayCard from '@/components/cards/HistoryDayCard'
 import { Loader2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import { usePaginatedQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
+import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
-export default function HistoryAction() {
+export default function HistorySwitch() {
     const { showHistoryDetails, nutritionInfo } = store()
+    const [view, setView] = useState('meal')
+    const { data: session } = useSession()
 
     const batchSize = 10
-    const { data: session } = useSession()
     const {
         results,
         status: paginationStatus,
         loadMore,
     } = usePaginatedQuery(
-        api.nutrientInfo.fetchNutritionalInformations,
+        api.meal.fetchMeals,
         { user: session?.user?.email || '' },
         { initialNumItems: batchSize }
     )
@@ -49,7 +52,27 @@ export default function HistoryAction() {
                         : 'Your Nutrition History'
                 }
             />
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center gap-4">
+                {!showHistoryDetails && results.length > 0 && (
+                    <div className="w-full h-12 flex justify-start gap-4">
+                        <button
+                            className={`btn ${
+                                view == 'meal' ? 'bg-neutral-300' : ''
+                            }`}
+                            onClick={() => setView('meal')}
+                        >
+                            Meal View
+                        </button>
+                        <button
+                            className={`btn ${
+                                view == 'day' ? 'bg-neutral-300' : ''
+                            }`}
+                            onClick={() => setView('day')}
+                        >
+                            Day View
+                        </button>
+                    </div>
+                )}
                 {showHistoryDetails ? (
                     <SavedNutrientInfo />
                 ) : (
@@ -57,12 +80,23 @@ export default function HistoryAction() {
                         <div className="flex flex-col gap-8">
                             {paginationStatus !== 'LoadingFirstPage' ? (
                                 results.length ? (
-                                    results.map((nutritionalInfo, idx) => (
-                                        <HistoryCard
-                                            key={idx}
-                                            nutritionalInfo={nutritionalInfo}
-                                        />
-                                    ))
+                                    results.map((nutritionalInfo, idx) =>
+                                        view == 'meal' ? (
+                                            <HistoryMealCard
+                                                key={idx}
+                                                nutritionalInfo={
+                                                    nutritionalInfo
+                                                }
+                                            />
+                                        ) : (
+                                            <HistoryDayCard
+                                                key={idx}
+                                                nutritionalInfo={
+                                                    nutritionalInfo
+                                                }
+                                            />
+                                        )
+                                    )
                                 ) : (
                                     <p className="text-lg">No entries found!</p>
                                 )

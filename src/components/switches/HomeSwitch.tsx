@@ -4,7 +4,7 @@ import store from '@/lib/store'
 import NewNutrientInfo from '../nutrientInfo/NewNutrientInfo'
 import NutrientInfoForm from '../nutrientInfo/NutrientInfoForm'
 
-export default function HomeAction() {
+export default function HomeSwitch() {
     const { nutrients } = store()
 
     return (
