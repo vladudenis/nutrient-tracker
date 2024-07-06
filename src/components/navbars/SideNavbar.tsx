@@ -54,13 +54,10 @@ export default function SideNavbar() {
                     <div className="h-full font-medium flex flex-col justify-between">
                         <ul className="space-y-2">
                             <li>
-                                <Link
-                                    href="#"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
+                                <button className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <Target />
                                     <span className="ms-3">Set Targets</span>
-                                </Link>
+                                </button>
                             </li>
 
                             <span className="flex items-center ps-2.5">

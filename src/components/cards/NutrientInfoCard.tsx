@@ -64,7 +64,7 @@ export default function NutrientInfoCard({
                                       healthParams.caloricIntake) *
                                       100
                               )
-                            : totalDaily.ENERC_KCAL?.quantity || 0}
+                            : round(totalDaily.ENERC_KCAL?.quantity || 0)}
                         {totalDaily.ENERC_KICAL?.unit || '%'})
                     </h1>
                 </span>
