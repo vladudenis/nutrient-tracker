@@ -80,6 +80,8 @@ export function calculateTotalNutrients(objs: any[] | null | undefined) {
         totalObj.totalNutrients.FIBTG.quantity +=
             obj.totalNutrients.FIBTG?.quantity || 0
 
+        totalObj.totalDaily.ENERC_KCAL.quantity +=
+            obj.totalDaily.ENERC_KCAL?.quantity || 0
         totalObj.totalDaily.FAT.quantity += obj.totalDaily.FAT?.quantity || 0
         totalObj.totalDaily.FASAT.quantity +=
             obj.totalDaily.FASAT?.quantity || 0
