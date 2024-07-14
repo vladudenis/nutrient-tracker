@@ -6,17 +6,19 @@ import {
     Notebook,
     PieChart,
     History,
-    Target,
     UserCircle,
     Star,
     Apple,
     TextCursorInput,
     Menu,
+    LogOutIcon,
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
+import SetTargetsModal from '@/components/modals/SetTargetsModal'
+import { Menu as MantineMenu } from '@mantine/core'
 
 export default function SideNavbar() {
     const { data: session } = useSession()
@@ -54,10 +56,7 @@ export default function SideNavbar() {
                     <div className="h-full font-medium flex flex-col justify-between">
                         <ul className="space-y-2">
                             <li>
-                                <button className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <Target />
-                                    <span className="ms-3">Set Targets</span>
-                                </button>
+                                <SetTargetsModal session={session} />
                             </li>
 
                             <span className="flex items-center ps-2.5">
@@ -153,39 +152,39 @@ export default function SideNavbar() {
                             </span>
 
                             <li className="dropdown dropdown-top">
-                                <div
-                                    tabIndex={0}
-                                    role="button"
-                                    className="flex items-center gap-2 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <span className="h-10 w-10">
-                                        {session && session.user?.image ? (
-                                            <Image
-                                                alt="User Image"
-                                                src={session.user.image}
-                                                height={128}
-                                                width={128}
-                                                className="rounded-full"
-                                            />
-                                        ) : (
-                                            <UserCircle />
-                                        )}
-                                    </span>
-                                    <span className="ms-3">
-                                        {session && session.user?.name}
-                                    </span>
+                                <MantineMenu shadow="md" width={200}>
+                                    <MantineMenu.Target>
+                                        <div className="flex items-center gap-2 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 p-4 cursor-pointer">
+                                            <span className="h-10 w-10">
+                                                {session &&
+                                                session.user?.image ? (
+                                                    <Image
+                                                        alt="User Image"
+                                                        src={session.user.image}
+                                                        height={48}
+                                                        width={48}
+                                                        className="rounded-full"
+                                                    />
+                                                ) : (
+                                                    <UserCircle />
+                                                )}
+                                            </span>
+                                            <span className="ms-3">
+                                                {session && session.user?.name}
+                                            </span>
+                                        </div>
+                                    </MantineMenu.Target>
 
-                                    <div
-                                        tabIndex={0}
-                                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                                    >
-                                        <ul>
-                                            <li onClick={() => signOut()}>
+                                    <MantineMenu.Dropdown>
+                                        <MantineMenu.Item
+                                            leftSection={<LogOutIcon />}
+                                        >
+                                            <span onClick={() => signOut()}>
                                                 Sign Out
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                            </span>
+                                        </MantineMenu.Item>
+                                    </MantineMenu.Dropdown>
+                                </MantineMenu>
                             </li>
                         </ul>
                     </div>

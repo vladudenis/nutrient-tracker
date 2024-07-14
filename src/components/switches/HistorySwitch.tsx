@@ -10,6 +10,7 @@ import { usePaginatedQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { Button } from '@mantine/core'
 
 export default function HistorySwitch() {
     const { showHistoryDetails, nutritionInfo } = store()
@@ -55,22 +56,25 @@ export default function HistorySwitch() {
             <div className="flex flex-col justify-center items-center gap-4">
                 {!showHistoryDetails && results.length > 0 && (
                     <div className="w-full h-12 flex justify-start gap-4">
-                        <button
-                            className={`btn ${
-                                view == 'meal' ? 'bg-neutral-300' : ''
-                            }`}
+                        <Button
+                            variant={view == 'meal' ? 'filled' : 'outline'}
+                            size="lg"
+                            color="blue"
                             onClick={() => setView('meal')}
                         >
                             Meal View
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant={view == 'day' ? 'filled' : 'outline'}
+                            size="lg"
+                            color="blue"
                             className={`btn ${
                                 view == 'day' ? 'bg-neutral-300' : ''
                             }`}
                             onClick={() => setView('day')}
                         >
                             Day View
-                        </button>
+                        </Button>
                     </div>
                 )}
                 {showHistoryDetails ? (

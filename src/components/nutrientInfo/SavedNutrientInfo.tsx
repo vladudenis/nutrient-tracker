@@ -4,6 +4,7 @@ import NutrientInfoCard from '../cards/NutrientInfoCard'
 import store from '@/lib/store'
 import { ArrowBigLeft } from 'lucide-react'
 import NutrientInfoButtons from '@/components/nutrientInfo/NutrientInfoButtons'
+import { Button } from '@mantine/core'
 
 export default function SavedNutrientInfo() {
     const { nutritionInfo, setShowHistoryDetails } = store()
@@ -29,15 +30,18 @@ export default function SavedNutrientInfo() {
             <div className="flex justify-center">
                 <div className="flex gap-12">
                     <NutrientInfoButtons />
-                    <button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn text-white"
+                    <Button
+                        variant="filled"
+                        color="red"
+                        size="lg"
+                        radius="md"
                         onClick={() => {
                             setShowHistoryDetails(false)
                         }}
                     >
                         <ArrowBigLeft />
                         Go back to history
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

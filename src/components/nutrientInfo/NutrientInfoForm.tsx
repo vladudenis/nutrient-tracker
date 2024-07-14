@@ -6,6 +6,7 @@ import store from '@/lib/store'
 import { useForm } from 'react-hook-form'
 import { api } from '../../../convex/_generated/api'
 import { useAction } from 'convex/react'
+import { Button } from '@mantine/core'
 
 export default function NutrientInfoForm() {
     const {
@@ -61,7 +62,7 @@ export default function NutrientInfoForm() {
                 </p>
                 <textarea
                     {...register('textInput', { required: true })}
-                    className="md:w-[500px] h-[250px] resize-none text-lg textarea textarea-bordered"
+                    className="md:w-[500px] h-[250px] resize-none text-lg p-2 border-[2px] border-gray focus:border-blue-400 transition-colors rounded-lg"
                     placeholder={
                         '3 large sunny side up eggs\n2 slices of bacon\n2 slices of buttered bread\n50 ml orange juice'
                     }
@@ -91,14 +92,19 @@ export default function NutrientInfoForm() {
 
             <div className="flex justify-center">
                 {isLoading ? (
-                    <button className="h-10 w-40 text-lg btn">
+                    <Button variant="filled" size="lg" radius="md">
                         <Loader2 className="animate-spin mr-2" />
                         Submit
-                    </button>
+                    </Button>
                 ) : (
-                    <button type="submit" className="h-10 w-40 text-lg btn">
+                    <Button
+                        variant="filled"
+                        size="lg"
+                        radius="md"
+                        type="submit"
+                    >
                         Submit
-                    </button>
+                    </Button>
                 )}
             </div>
         </form>

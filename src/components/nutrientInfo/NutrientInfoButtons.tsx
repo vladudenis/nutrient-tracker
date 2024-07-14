@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Calculator, Eye } from 'lucide-react'
 import store from '@/lib/store'
+import { Button } from '@mantine/core'
 
 export default function NutrientInfoButtons() {
     let { nutrients, nutritionInfo } = store()
@@ -63,21 +64,25 @@ export default function NutrientInfoButtons() {
                 nutrients.length >= 2 &&
                 !hideButtons &&
                 (showTotal ? (
-                    <button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn text-white"
+                    <Button
+                        variant="filled"
+                        radius="md"
+                        size="lg"
                         onClick={showDetails}
                     >
-                        <Eye />
+                        <Eye className="mr-2" />
                         Show Details
-                    </button>
+                    </Button>
                 ) : (
-                    <button
-                        className="bg-cyan-600 hover:bg-cyan-500 flex gap-2 btn text-white"
+                    <Button
+                        variant="filled"
+                        radius="md"
+                        size="lg"
                         onClick={calculateTotal}
                     >
-                        <Calculator />
+                        <Calculator className="mr-2" />
                         Calculate Total
-                    </button>
+                    </Button>
                 ))}
         </>
     )

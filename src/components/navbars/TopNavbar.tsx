@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import SignInDialog from '../dialogs/SignInDialog'
+import SignInModal from '@/components/modals/SignInModal'
 
 export default function TopNavbar() {
     return (
@@ -13,7 +13,7 @@ export default function TopNavbar() {
                     </Link>
                 </li>
                 <li>
-                    <SignInDialog text="Sign In" />
+                    <SignInModal text="Sign In" />
                 </li>
             </ul>
         </nav>

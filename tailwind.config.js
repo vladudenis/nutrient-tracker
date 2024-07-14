@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: 'selector',
-    daisyui: {
-        darkTheme: false,
-    },
     content: [
         './pages/**/*.{ts,tsx}',
         './components/**/*.{ts,tsx}',
@@ -43,9 +40,5 @@ module.exports = {
             xxl: '1536px',
         },
     },
-    plugins: [
-        require('tailwindcss-animate'),
-        require('tailwindcss-animated'),
-        require('daisyui'),
-    ],
+    plugins: [require('tailwindcss-animate'), require('tailwindcss-animated')],
 }
