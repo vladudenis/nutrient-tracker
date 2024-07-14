@@ -3,13 +3,13 @@
 import NutrientInfoCard from '../cards/NutrientInfoCard'
 import store from '@/lib/store'
 import { Save, RotateCw } from 'lucide-react'
-import SignInDialog from '../dialogs/SignInDialog'
 import { useSession } from 'next-auth/react'
-import NutrientIntakeDialog from '../dialogs/NutrientIntakeDialog'
+import NutrientIntakeModal from '@/components/modals/NutrientIntakeModal'
 import { calculateTotalNutrients } from '@/lib/utils'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import NutrientInfoButtons from '@/components/nutrientInfo/NutrientInfoButtons'
+import { Button } from '@mantine/core'
 
 export default function NewNutrientInfo() {
     const { nutrients, setNutrients } = store()
@@ -48,25 +48,28 @@ export default function NewNutrientInfo() {
                     <NutrientInfoButtons />
                     {session
                         ? !hideButtons && (
-                              <NutrientIntakeDialog>
-                                  <Save />
+                              <NutrientIntakeModal>
+                                  <Save className="mr-2" />
                                   Save nutrient intake
-                              </NutrientIntakeDialog>
+                              </NutrientIntakeModal>
                           )
                         : !hideButtons && (
                               <button className="btn" disabled>
                                   Sign In To Save
                               </button>
                           )}
-                    <button
-                        className="bg-red-600 hover:bg-red-500 flex gap-2 btn text-white"
+                    <Button
+                        variant="filled"
+                        size="lg"
+                        color="red"
+                        radius="md"
                         onClick={() => {
                             setNutrients(null)
                         }}
                     >
-                        <RotateCw />
+                        <RotateCw className="mr-2" />
                         Try with other food
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
